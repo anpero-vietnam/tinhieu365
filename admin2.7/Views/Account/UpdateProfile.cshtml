@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Update thông tin cá nhân";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-user"></i>Thay đổi thông tin cá nhân
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <div class="clearfix">
+            <div class="form-body">
+                <form class="form">
+                    @if (ViewData["CurrentPofile"] != null)
+                    {
+                        Models.UserInStore user = (Models.UserInStore)ViewData["CurrentPofile"];
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">
+                                Link ảnh đại diện :
+                                <span class="required" aria-required="true"> * </span>
+                            </label>
+                            <div class="col-md-5">
+                                <img src="@user.Thumb" id="thumb" style="max-height:200px;" />
+                                <button type="button" class="btn blue start" id="thumbLink2" >
+                                    <i class="fa fa-upload"></i>
+                                    <span> Chọn file ảnh </span>
+                                </button>
+                                
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">
+                                Tên liên hệ:
+                                <span class="required" aria-required="true"> * </span>
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" value="@user.SureName" name="SureName" id="SureName">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">
+                                Điện thoại:
+                                <span class="required" aria-required="true"> * </span>
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" value="@user.Phone" name="Phone" id="Phone">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">
+                                Mail dự phòng:
+                                <span class="required" aria-required="true"> * </span>
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" value="@user.Web" name="Web" id="Web">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">
+                                Địa chỉ:
+                                <span class="required" aria-required="true"> * </span>
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" value="@user.Address" name="Address" id="Address">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" class="btn btn-success reveicemoney" onclick="Store.UpdateUserProfile();"><i class="fa fa-check"></i>Cập nhật</button>
+                                <br />
+                                <a href="/Account/Manage">
+                                    Đổi mật khẩu
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/Scripts/News.js"></script>
+<style>
+    #thumbLink2{
+        display:block;
+    }
+    .control-label {
+        text-align: right;
+    }
+</style>
+@section scripts{
+    
+    <script src="/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+    <script src="~/Scripts/store/StoreHandler.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#thumbLink2").smallFileUpload({
+                Size: "400x400",
+                allowExtension: ".jpg,.png,.jpeg,.svg,.gif,.ico",
+                success: function (data) {
+                    
+                    $("#thumb").fadeOut().attr("src", data.uploadedImages[0].Url).fadeIn();
+                }
+            });
+        });
+
+
+    </script>
+}
+
+
+

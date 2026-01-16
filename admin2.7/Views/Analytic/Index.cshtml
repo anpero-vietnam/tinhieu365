@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Báo cáo lượt xem trên web";
+}
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <span class="caption-subject bold uppercase">
+                Lượt xem nội dung                
+            </span>
+        </div>
+        <div class="actions">            
+            <div class="btn-group">                
+                <button type="button" class="btn green btn-sm dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <i class="fa fa-file-excel-o"></i><span class="hidden-sm hidden-xs">Export&nbsp;</span>
+                    <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="/analytic/ExportToExcel?month=0&day=0&type=pr">
+                            <i class="icon-docs"></i> Lượt xem tháng trước
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/analytic/ExportToExcel?month=@DateTime.Now.Month.ToString()&day=0&type=pr">
+                            <i class="icon-tag"></i> Lượt xem tháng này
+                        </a>
+                    </li>                 
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs tabstorepage">
+                <li class="active"><a href="#tab_1" data-toggle="tab" id="t1" class="active">Lượt xem tháng trước</a></li>
+                <li><a href="#tab_2" data-toggle="tab" id="t2">lượt xem tháng này</a></li>                
+            </ul>
+            <div class="tab-content form-horizontal">
+                <div class="tab-pane active" id="tab_1">
+                    <div id="prViewCt" class="table-scrollable">@Html.Raw(ViewBag.DefaultTable)</div>                
+                </div>
+                <div class="tab-pane  table-scrollable" id="tab_2">
+                    <div id="montCt">Đang tải dữ liệu</div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+      
+        var dateObj = new Date();
+        var _month = dateObj.getUTCMonth() + 1
+        
+        $("#tab_1 .table").addClass("table-striped table-bordered table-hover");
+        //$("#t2").click(function() {
+        //    $.ajax({
+        //        type: "post",
+        //        url: "Analytic/Get",
+        //        data: { month: _month, day: 0, st: Anpero.CurentStore },
+        //        success:function(rs){
+        //            $("#montCt").html(rs);
+        //            $("#montCt .table").addClass("table-striped table-bordered table-hover");
+        //        }
+        //    });
+        //});
+        $.ajax({
+            type: "post",
+            url: "Analytic/Get",
+            data: { month: _month, day: 0, st: Anpero.CurentStore },
+            success: function (rs) {
+                $("#montCt").html(rs);
+                $("#montCt .table").addClass("table-striped table-bordered table-hover");
+            }
+        });
+    });
+    function exportToExcel() {
+        $.ajax({
+            type: "post",
+            url: "Analytic/ExportToExcel",
+            data: { month: _month, day: 0, st: Anpero.CurentStore },
+            success: function (rs) {
+              
+            }
+        });
+    }
+</script>

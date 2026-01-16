@@ -1,0 +1,158 @@
+﻿@using FrontEnd.Controllers;
+@{
+    ViewBag.Title = "Update Profile";
+    Dal.UserProfileControl profileControl = new Dal.UserProfileControl();
+    var currentProfile = profileControl.GetUserProfileById(AppSession.CurentProfile.UserId);
+}
+<div class="box-page-profile">
+    <div class="container">
+        <div class="main-page-profile row">
+            <div class="col-sm-7 col-md-8 col-lg-9 left-profile">
+                <div class="main-left-profile">
+                    <div class="item-profile">
+                        <h4 class="title title-3">Edit my profile</h4>
+
+                        <div class="row form-group">
+                            <div class="col-sm-5 text-right">
+                                <label class="txt-lable txt-lable-1">Tên đăng nhập <span class="color-main">*</span></label>
+                            </div>
+                            <div class="col-sm-7">
+                                <p class="txt-info">@AppSession.CurentProfile.UserName</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-5 text-right">
+                                <label class="txt-lable txt-lable-1">Nick name  <span class="color-main">*</span></label>
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="text" placeholder="" value="@currentProfile.SureName" class="input-form" id="txt-Nickname">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-5 text-right">
+                                <label class="txt-lable txt-lable-1">Tự giới thiệu</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <textarea class="input-form" id="IntroduceYourself">@currentProfile.IntroduceYourself</textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group change-password">
+                            <div class="col-md-5 text-right">
+                            </div>
+                            <div class="col-md-7">
+                                <button id="btn-profile-update" class="button button-type01 text-transform">Update Profile</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item-profile">
+                        <h4 class="title title-3">Thông tin liên hệ <span class="text-success"></span></h4>
+                        <div class="row form-group">
+                            <div class="col-sm-5 text-right">
+                                <label class="txt-lable txt-lable-1">Email <span class="color-main">*</span></label>
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="text" value="@currentProfile.Email" class="input-form" name="contact-Email" id="contact-Email">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-5 text-right">
+                                <label class="txt-lable txt-lable-1">Điện thoại <span class="color-main">*</span></label>
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="text" value="@currentProfile.Phone" class="input-form" name="Phone" id="Phone">
+                            </div>
+                        </div>
+       
+                        <div class="row form-group">
+                            <div class="col-sm-5 text-right">
+                                <label class="txt-lable txt-lable-1">Địa chỉ</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="text" placeholder="" class="input-form" id="txt-Address" value="@currentProfile.Address">
+                            </div>
+                        </div>
+                        <div class="row form-group change-password">
+                            <div class="col-md-5 text-right">
+                            </div>
+                            <div class="col-md-7">
+                                <button id="btn-updateCotact" class="button button-type01 text-transform">Cập nhật liên hệ</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="col-sm-5 col-md-4 col-lg-3 right-profile">
+                @Html.Partial("_partial/_profileLeftMenuPartial")
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .scroll-menu {
+        max-height: 250px;
+        overflow-y: scroll;
+    }
+</style>
+
+@section scripts{
+
+    <link href="/Assets/js/Modul/Small-fileUpload/Small-fileUpload.css" rel="stylesheet" />
+    <script src="/Assets/js/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+    <script src="/Assets/js/Modul/Edit-Profile.js"></script>
+    <script src="~/Assets/js/jquery.qrcode-0.11.0.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+                    $('#qrc').qrcode(
+        {
+            // render method: 'canvas', 'image' or 'div'
+            render: 'image',
+
+            // version range somewhere in 1 .. 40
+            minVersion: 1,
+            maxVersion: 40,
+            // error correction level: 'L', 'M', 'Q' or 'H'
+            ecLevel: 'L',
+            // offset in pixel if drawn onto existing canvas
+            left: 0,
+            top: 0,
+            // size in pixel
+            size: 140,
+            // code color or image element
+            fill: '#000',
+
+            // background color or image element, null for transparent background
+            background: null,
+
+            // content
+                   text: window.location.origin +'/profile-'+@currentProfile.UserId.ToString(),
+            // corner radius relative to module width: 0.0 .. 0.5
+            radius: 0,
+
+            // quiet zone in modules
+            quiet: 0,
+            // modes
+            // 0: normal
+            // 1: label strip
+            // 2: label box
+            // 3: image strip
+            // 4: image box
+            mode: 2,
+            mSize: 0.1,
+            mPosX: 0.5,
+            mPosY: 0.5,
+            label: 'WV',
+            fontname: 'sans',
+            fontcolor: '#000',
+            image: '//media.whereviet.com/images/1/122020/22020120117483947.png'
+        });
+        Profile.init();
+        });
+    </script>
+
+}

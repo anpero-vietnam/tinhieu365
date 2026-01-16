@@ -1,0 +1,4 @@
+Update-Package –reinstall Microsoft.AspNet.WebPages
+Update-Package –reinstall DotNetOpenAuth.Core
+Update-Package –reinstall Microsoft.AspNet.WebPages.WebData
+Update-Package –reinstall DotNetOpenAuth.AspNet

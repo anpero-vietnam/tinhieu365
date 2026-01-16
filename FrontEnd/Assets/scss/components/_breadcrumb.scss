@@ -1,0 +1,14 @@
+.box-breadcrumb {
+    .breadcrumb {
+      background-color: #fff; font-size: 18px; color: $color-text-2; padding: 20px 0; margin: 0;
+      a {
+        color: $color-text-2;
+        &:hover {
+          text-decoration: none; color: $color-blue;
+        }
+      }
+    }
+    .breadcrumb-item+.breadcrumb-item::before {
+      content: '>';
+    }
+  }

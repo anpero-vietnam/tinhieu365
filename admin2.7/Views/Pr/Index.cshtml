@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "Bán hàng";
+}
+@section head{
+    <script src="~/Scripts/order/wareHouse.js"></script>
+    <script src="~/Scripts/News.js"></script>
+    <script src="~/Scripts/product/addPr.js"></script>
+    <script src="~/Scripts/product/prType.js"></script>
+<link href="~/assets/ckeditor/contents.css" rel="stylesheet" />
+
+}
+<div class="portlet light">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs tabstorepage">
+                <li  class="active"><a href="#tab_1" data-toggle="tab" id="table11">Bán Hàng</a></li>
+                <li><a href="#tab_4" data-toggle="tab" id="table4" class="active">Đơn Hàng</a></li>
+            </ul>
+            <div class="tab-content form-horizontal">
+                <div class="tab-pane active" id="tab_1">
+                    <div id="cardContent" class="table-scrollable"></div>
+                    @Html.Partial("_partial/product/product")
+                </div>
+                <div class="tab-pane  table-scrollable" id="tab_4">@Html.Partial("_partial/product/_partialSearchOrder")</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        //   BindPROD();
+        searchOrder(1);
+    })
+    $(document).ready(function () {
+        var _keybuffer = "";
+        $('.spSeria').on("keyup", function (e) {
+            var code = e.which;
+            var id = this.id;
+
+            if (code == 13) {
+                var quantyti = countLine("#" + id, true);
+                $('#spquantyti_' + id.replace("spSeria_", "")).val(quantyti);
+                UpdatePrOdByseria(id.replace("spSeria_", ""));
+            }
+        });
+        $("#product_name").keyup(function (e) {
+            if (e.keyCode == 13) {
+                Product.seachProduct();
+            }
+        });
+        $("#product_id").change(function () {
+            Product.seachProduct();
+        });
+        $("#wareHouseId2").change(function () {
+            Product.seachProduct();
+        });
+        $("#prcatSelect").change(function () {
+           Product.seachProduct();
+        });
+
+        $("#prStatus").change(function () {
+            Product.seachProduct();
+        });
+        // seachProduct();
+       //  BindWHSelect2();
+       
+        
+        $('#table11').click(function () {
+            BindPROD();
+        });
+        $('#tab4').click(function () {
+            //getQuantytiInWh();
+            searchOrder(1);
+        });
+        $('#table4').click(function () {
+            //getQuantytiInWh();
+            searchOrder(1);
+        });
+
+
+        $('#seria').on("keyup", function (e) {
+            var code = e.which;
+            if (code == 13) {
+                searchOrder(1);
+            }
+        });
+        $('#odid').on("keyup", function (e) {
+            var code = e.which;
+            if (code == 13) {
+                searchOrder(1);
+            }
+        });
+
+        $('#ODbeginDate').change(function () {
+            searchOrder(1);
+        });
+        $('#ODendDate').click(function () {
+            searchOrder(1);
+        });
+        $('#makh2').click(function () {
+            searchOrder(1);
+        });
+        //$('#odSSt').click(function () {
+        //    searchOrder(1);
+        //});
+
+    });
+    function delAddr(_adid) {
+        $.ajax({
+            dataType: "text",
+            mothod: "post",
+            url: "/handler/address.ashx",
+            data: { op: "delAddress", adid: _adid },
+            success: function (msg) {
+                showNotice("Xóa địa chỉ", msg);
+            }
+        });
+
+    }
+</script>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="Prwh">
+    <div class="modal-dialog modal-lg bs-example-modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Thêm kho bãi</h4>
+            </div>
+            <div class="modal-body">
+                <label>Vị trí kho </label>
+                <input type="text" id="whN" class="form-control" />
+                <button onclick="addwh();">Thêm</button><br />
+                <div id="tablewh">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("_partial/addAddress")
+@Html.Partial("_partial/searchAddress")
+
+<style>
+    .spcontent .headerPr {
+        background-color: #eee !important;
+        float: left;
+        width: 100%;
+        border-bottom: 1px #CCC dashed;
+        margin: 15px 0 15px 0;
+        padding: 5px 0 5px 0;
+    }
+</style>
+<script type="text/javascript" src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/order/wareHouse.js"></script>

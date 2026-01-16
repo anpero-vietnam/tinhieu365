@@ -1,0 +1,80 @@
+﻿
+
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+
+<html lang="vi" class="no-js">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="Anpero" name="author" />
+
+    <title>@ViewBag.Title</title>
+    <link href="/assets/fonts/OprenSan-font.css" rel="stylesheet" />
+    <script src="//cdn.anpero.com/cdn/plugins/jquery-1.10.2.min.js"></script>
+    @System.Web.Optimization.Styles.Render("~/bundles/global.css")
+    @RenderSection("head", false)
+    <link rel="dns-prefetch" href="https://www.google-analytics.com/">
+    <link rel="dns-prefetch" href="https://www.facebook.com/">
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NMK5NT4');</script>
+    <!-- End Google Tag Manager -->
+</head>
+<body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo page-md">
+    @Html.AntiForgeryToken()
+    @Html.Partial("_partial/_patialMenuTop2")
+
+    <script>
+        $.ajaxSetup({
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("st", Anpero.CurentStore);
+            }
+        });
+    </script>
+    <div class="clearfix"></div>
+    <div class="page-container">
+        @*@{
+                Html.RenderAction("GetSideBar", "Home");
+            }*@
+        @Html.Partial("_partial/_patialSidebar")
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                @RenderBody()
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    @System.Web.Optimization.Scripts.Render("~/bundles/global.js")
+    <div class="page-footer">
+        <div class="page-footer-inner">
+            2014 &copy; Anpero.com
+        </div>
+        <div class="scroll-to-top">
+            <i class="icon-arrow-up"></i>
+        </div>
+    </div>    
+    @RenderSection("scripts", required: false)
+    <div class="modal fade" id="showUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div style="position: fixed; left: 45%; top: 50%;top:20%;">
+            <img src="/images/cloud_upload_256.gif" />
+        </div>
+    </div>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NMK5NT4"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+ 
+</body>
+</html>

@@ -1,0 +1,148 @@
+﻿[
+  {
+    "data": "RenderBody",
+    "desc": ""
+  },
+  {
+    "data": "Theme.Option",
+    "desc": ""
+  },
+  {
+    "data": "Theme.Color",
+    "desc": ""
+  },
+  {
+    "data": "Theme.Name",
+    "desc": ""
+  },
+  {
+    "data": "commonInfo.FaceBookLink",
+    "desc": ""
+  },
+  {
+    "data": "commonInfo.Skype",
+    "desc": ""
+  },
+  {
+    "data": "commonInfo.Desc",
+    "desc": ""
+  },
+  {
+    "data": "commonInfo.PageScript",
+    "desc": ""
+  },
+  {
+    "data": "commonInfo.HotLine",
+    "desc": ""
+  },
+  {
+    "data": "commonInfo.Name",
+    "desc": ""
+  },
+  {
+    "data": "item.page",
+    "desc": ""
+  },
+  {
+    "data": "item.Thumb",
+    "desc": ""
+  },
+  {
+    "data": "item.ViewTime",
+    "desc": ""
+  },
+  {
+    "data": "item.Price",
+    "desc": "Giá sản phẩm"
+  },
+  {
+    "data": "item.SalePrice",
+    "desc": "Giá khuyến mãi"
+  },
+  {
+    "data": "item.SalePercent",
+    "desc": "% khuyến mãi"
+  },
+  {
+    "data": "item.ShotDesc",
+    "desc": "Miêu tả ngắn"
+  },
+  {
+    "data": "product.LeftMenu",
+    "desc": "Danh mục sản phẩm"
+  },
+  {
+    "data": "item.Content",
+    "desc": "Nội dung"
+  },
+  {
+    "data": "item.Tag",
+    "desc": ""
+  },
+  {
+    "data": "item.Id",
+    "desc": "Id sản phẩm hoặc tin tức"
+  },
+  {
+    "data": "item.RelatedProduct",
+    "desc": "Sản phẩm liên quan"
+  },
+  {
+    "data": "item.IsSale",
+    "desc": "Sản phẩm liên quan"
+  }
+  ,
+  {
+    "data": "item.SaleEndTime",
+    "desc": "Sản phẩm liên quan"
+  } 
+  ,
+  {
+    "data": "item.RelatedArticle",
+    "desc": "bài viết liên quan"
+   },
+  {
+    "data": "Theme.HomeSlide",
+    "desc": "Slide chính"
+  },
+  {
+    "data": "Modul.NewestProduct",
+    "desc": "Tin mới nhất"
+  },
+  {
+    "data": "Modul.BestSaleProduct",
+    "desc": "Sản phẩm bán chạy"
+  },
+  {
+    "data": "Modul.FeaturedProducts",
+    "desc": "Sản phẩm nổi bật"
+  },
+  {
+    "data": "Modul.FeaturedArticle",
+    "desc": "Tin nổi bật"
+  },
+  {
+    "data": "Modul.Ads1",
+    "desc": "Modul quảng cáo 1"
+  },
+  {
+    "data": "Modul.Ads2",
+    "desc": "Modul quảng cáo 2"
+  },
+  {
+    "data": "Modul.Ads3",
+    "desc": "Modul quảng cáo 3"
+  },
+  {
+    "data": "Modul.Ads4",
+    "desc": "Modul quảng cáo 4"
+  },
+  {
+    "data": "Modul.Ads5",
+    "desc": "Modul quảng cáo 5"
+  },
+  {
+    "data": "foreach (var item in Model){ }",
+    "desc": "Modul quảng cáo 5"
+  }
+]

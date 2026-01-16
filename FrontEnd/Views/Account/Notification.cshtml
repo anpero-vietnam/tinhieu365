@@ -1,0 +1,33 @@
+﻿@using Models.Notify;
+@model List<UserMessenge>
+    @{
+        ViewBag.Title = "Notification";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+<div class="box-blog">
+    <div class="container">
+        <h3 class="title-1">Notification</h3>
+        <div class="box-content">
+            <div class="row header ">
+                <div class="list-notification" style="width:100%;">
+
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="item-notification flex flex-ai-center">
+                                <div class="content">
+                                    <h5>@item.Title </h5>
+                                    <div><i style="font-size:12px;">@item.SenderDate.Value.ToString("dd/MM/yyyy hh:mm tt")</i></div>
+                                    <p>@item.Content</p>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

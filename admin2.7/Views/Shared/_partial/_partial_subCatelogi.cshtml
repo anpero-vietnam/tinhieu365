@@ -1,0 +1,38 @@
+﻿<div id="catelogiList">
+    @Html.Raw(ViewBag.subCatelogiList)
+
+</div>
+
+@if (ViewData["subCatelogi"] != null)
+{
+    System.Data.DataTable table = (System.Data.DataTable)ViewData["subCatelogi"];
+    <div id="content">
+        @for (int i = 0; i < table.Rows.Count; i++)
+        {
+            
+            <div class="post small odd" itemprop="review" itemscope itemtype="http://schema.org/Review">
+                <div class="featuredImg">
+                    <a href="/@Ultil.StringHelper.ToURLgach(table.Rows[i]["loaitinName"].ToString())@Html.Raw("/")@Ultil.StringHelper.ToURLgach(table.Rows[i]["TieuDe"].ToString())@Html.Raw("-Tin")@table.Rows[i]["Id"]">
+                        <img src="@table.Rows[i]["anhdaidien"]" itemprop="image"/>
+                    </a>
+                </div>
+                <div class="newReview">
+                    <h2>
+                        <a href="/@Ultil.StringHelper.ToURLgach(table.Rows[i]["loaitinName"].ToString())@Html.Raw("/")@Ultil.StringHelper.ToURLgach(table.Rows[i]["TieuDe"].ToString())@Html.Raw("-Tin")@table.Rows[i]["Id"]" itemprop="url">
+                            @table.Rows[i]["TieuDe"]
+                        </a>
+                    </h2>
+                    <div class="catelogiName fll">
+                        <time>@table.Rows[i]["NgayDang"]</time>
+                    </div>
+                    <div class="shortNew" itemprop="description">
+                        @Html.Raw(table.Rows[i]["shortDesc"])
+                    </div>
+                    <div class="viewTime fll" itemprop="reviews">@table.Rows[i]["viewtime"] Lượt xem</div>
+                    <div class="commentTag fll" itemprop="comment">0 bình luận</div>,
+                </div>
+            </div>  
+        }
+    </div>
+}
+@Html.Raw(ViewBag.subCatalogiPaged)

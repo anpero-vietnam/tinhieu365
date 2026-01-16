@@ -1,0 +1,356 @@
+﻿@*<label>Thêm loại sản phẩm <a href="javascript:void(0);" data-target="#prType" data-toggle="modal" id="prTypeTonggo">(thêm)</a></label>*@
+@using Models.Modul.Product
+@model  UpdateProductModels
+<div class="row portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-pin font-green"></i>Loại bất động sản
+        </div>
+        <div class="actions">
+            <a class="btn btn-transparent red btn-outline btn-sm active" href="javascript:void(0);" data-target="#updateCategoryModel" data-toggle="modal" id="catTonggo">Thêm mới</a>
+            <a class="btn btn-transparent blue btn-outline btn-sm active" href="/pr/categorymanager" target="_blank">Quản lý</a>
+        </div>
+    </div>
+    <div id="ztree" class="tree-demo"></div>
+</div>
+<div class="row portlet light bordered" id="prioty-ct" style="display:none;">
+    <div class="portlet-title">
+        <div class="caption">Thuộc tính</div>
+        <div class="actions">
+            <a class="btn btn-transparent blue btn-outline btn-sm active" href="/Properties/index" target="_blank">Quản lý thuộc tính</a>
+        </div>
+    </div>
+    <div class=" portlet-body form">
+        <div class="col-md-12 priotyList">
+
+        </div>
+    </div>
+</div>
+
+@if (Model!=null)
+{
+    
+    <div class="row h4" style="margin-top:15px;">
+        <div class="col-md-12 form-group">
+            @if (Model.IsInstock)
+            {
+                <div id="btnInstock" class="note note-info">Hiện tại trang web đang hiển thị tình trạng còn hàng khách hàng có thể đặt hàng online. bạn có thể báo hết hàng (dịch vụ bận) bằng  cách click<br /> <button onclick="Product.IsInStock(0);" class="btn red">Báo hết hàng</button></div>
+                <div id="btnOuttock" style="display:none;" class="note note-info">Hiện tại trang web đang hiển thị tình trạng hết hàng, khách hàng không thể đặt hàng online. bạn có thể báo sẵn hàng bằng cách click<br /> <button onclick="Product.IsInStock(1);" class="btn blue">Báo còn hàng</button></div>
+            }
+            else
+            {
+                <div id="btnInstock" style="display:none;" class="note note-info">Hiện tại trang web đang hiển thị tình trạng còn hàng khách hàng có thể đặt hàng online. bạn có thể báo hết hàng bằng  cách click<br /> <button onclick="Product.IsInStock(0);" class="btn red">Báo hết hàng</button></div>
+                <div id="btnOuttock" class="note note-info">Hiện tại trang web đang hiển thị tình trạng hết hàng, khách hàng không thể đặt hàng online. bạn có thể báo sẵn hàng bằng cách click<br /> <button onclick="Product.IsInStock(1);" class="btn blue">Báo còn hàng</button></div>
+            }
+
+        </div>
+        <div class="col-md-12 form-group">
+            <div class="note note-info">Mục "sản phẩm mới" trên web mặc định sẽ hiển thị top các sản phẩm mới đăng. Tuy nhiên bạn có thể cập nhật các sản phẩm trước đó thành sảnh phẩm mới bằng cách click<br /> <button type="button" class="btn blue" onclick="Product.updatePrTime();"> Cập nhật thành sản phẩm mới về</button></div>
+        </div>
+
+
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#prioty option[value=@Model.Prioty]').attr('selected', 'selected');
+
+        })
+    </script>
+}
+
+<div class="row" style="margin-top:15px;">
+    <div class="col-md-12 form-group">
+        <div class="note note-info">
+            Các tin cố độ ưu tiên cao sẽ được hiển thị ngoài trang chủ, mục nổi bật
+
+        </div>
+        <p>
+            <label class="control-label">Độ ưu tiên</label>
+            <select class="form-control" id="prioty">
+                <option value="0">Ưu tiên thường (1)</option>
+                <option value="1">Ưu tiên cao (2)</option>
+                <option value="2">Nổi bật (3)</option>
+            </select>
+        </p>
+    </div>
+</div>
+<div class="row" style="margin-top:15px;" id="localCt">
+    <div class="col-md-12 form-group">
+        <label class="control-label">Tỉnh/ thành phố</label>
+        <select class="form-control" id="country">
+            <option value="0">Tỉnh/ thành phố</option>
+        </select>
+        <label class="control-label">Quận / huyện</label>
+        <select class="form-control" id="prov">
+            <option value="0">Quận huyện</option>
+        </select>
+
+    </div>
+</div>
+<script src="/Scripts/Modul/ProductPrioty.js"></script>
+<script>
+    $(document).ready(function () {
+
+        ProductProperties.InitProduct();
+        $("#btn-addCategory").click(function () {
+            Category.ParentCategoryID = $("#changeCat").val();
+            Category.AddOrUpdateCat();
+        });
+        $("#catTonggo").click(function () {
+            Category.BindParentCatSelect("#changeCat");
+        });
+
+        $("#addImg").click(function () {
+            fileUpload.Size = "";
+            fileUpload.uploadFile("#file2", "");
+        });
+        $("#thumbLink2").smallFileUpload({
+            Size: "400x400",            
+            allowExtension: ".jpg,.png,.jpeg,.svg,.gif,.ico",
+            success: function (data) {
+                                    
+                $("#prThumb").fadeOut().attr("src", data.uploadedImages[0].Url).fadeIn();
+            }
+        });      
+        setNote();
+        //bindPrTypeSelect();
+        $("#price").change(function () {
+            $("#vprice").val($("#price").val());
+        });
+        $("#catTonggo").click(function () {
+            Category.BindParentCatSelect();
+        });
+        $("#addThumb").change(function () {
+            fileUpload.uploadFile("#addThumb", "#imgCatThum");
+        });
+
+    });
+    function setNote() {
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            data: { op: "bindCatTree", st: Anpero.CurentStore },
+            url: "/handler/product.ashx",
+            success: function (msg) {
+                $("#ztree").html(msg);
+                $('#ztree').jstree({
+                    core: {
+                        multiple: false,
+                        cascade: 'none',
+                        'themes': { 'icons': false }
+                    },
+                    'plugins': ["unique", "checkbox"],
+                    checkbox: {
+                        three_state: false,
+                        cascade: "none"
+                    }
+
+                });
+                $('#ztree').jstree('open_all');
+                if (Product.categoryId > 0) {
+                    $("a[data-id="+Product.categoryId +"]").addClass("jstree-clicked");
+                }
+                $("#ztree a").click(function () {
+                    Product.categoryId = $(this).attr("data-id");                    
+                })
+
+            }
+        });
+
+    }
+    
+    
+</script>
+
+<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="updateCategoryModel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="lb-origin2">Thêm danh mục sản phẩm</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-1"> </label>
+                            <label class="control-label col-md-3">Tên loại sản phẩm: </label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" id="CatName" value="">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-1"> </label>
+                            <label class="control-label col-md-3">Thuộc danh mục cha  </label>
+                            <div class="col-md-7">
+                                <select id="changeCat" class="form-control">
+                                    <option>-- chuyển sang thư mục</option>
+                                </select>
+                                <span id="updatecatNotice"></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-1"> </label>
+                            <label class="control-label col-md-3">Độ ưu tiên: </label>
+                            <div class="col-md-7">
+                                <input type="number" class="form-control" id="catPrioty" value="1">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-1"> </label>
+                            <label class="control-label col-md-3">Miêu tả ngắn ( meta description): </label>
+                            <div class="col-md-7"><textarea class="form-control" id="catShotDesc"></textarea></div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-1"> </label>
+                            <label class="control-label col-md-3">keywords ( meta keywords): </label>
+                            <div class="col-md-7"><textarea class="form-control" id="catkeywords"></textarea></div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-1"> </label>
+                            <label class="control-label col-md-3">Ảnh đại diện: </label>
+                            <div class="col-md-4">
+                                <button type="button" class="btn blue start" id="addThumb">
+                                    <i class="fa fa-upload"></i>
+                                    <span> Chọn file ảnh </span>
+                                </button>
+                            </div>
+                            <div class="col-md-12" id="thumbContent">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4 margin-top-15">
+                                    <img id="imgCatThum" src="/images/noimages.png" style="max-width:100%;" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 right">
+                            <label class="control-label col-md-2"> </label>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-4">
+                                <button id="btn-cancel" class="btn blue" data-dismiss="modal">Hủy thao tác</button>
+                                <button id="btn-addCategory" class="btn red"><i class="glyphicon glyphicon-plus"></i>Cập nhật</button>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="originModed">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="lb-origin2"><a href="/Branch">Thêm thương hiệu / xuất xứ</a></h4>
+                <div>
+                    Nhóm sản phẩm là những sản phẩm đi theo bộ, hoặc cùng một nhà sản xuất, thương hiệu. Nhóm sản phẩm giúp khách hàng tìm kiếm chi tiết hơn trên web của bạn
+                </div>
+            </div>
+            <div class="modal-body form">
+                <div class="form-horizontal">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Tên thương hiệu</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="originTxt">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Miêu tả (4000 ký tự)</label>
+                            <div class="col-md-9">
+                                <textarea class="form-control" rows="5" id="desc"></textarea>
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Thứ tự</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <i class="fa fa-info-circle tooltips" data-original-title="Các item cùng thứ tự sẽ sắp xếp từ a đến z" data-container="body" style="z-index:9999;"></i>
+                                    <input type="text" class="form-control" id="rank" value="1" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Ảnh đại diện</label>
+                            <div class="col-md-9">
+                                <input type="file" id="branchFile" />
+                                <img src="" id="brach-thumb" style="width:100%;display:none;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-4 col-md-8">
+                                <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn red" id="btn-branch-add">Thêm mới</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div id="originTable"></div>*@
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="atributeModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="lb-atribute"></h4>
+                <p>
+                    Giá thành để giá trị là 0 khách hàng chọn thuộc tính này <span class="mt-italic">(ví dụ: màu sắc, mùi vị)</span>  đơn hàng sẽ không đổi giá, mức giá bạn nhập vào sẽ là mức giá chênh so với sản phẩm chính ( ví dụ: chọn size quần áo nhỏ hơn hệ thống sẽ giảm 10,000 so với sản phẩm chính nếu lựa chọn thuộc tính này ).
+                </p>
+                <p>
+                    Khi bỏ lựa chọn còn hàng, khách hàng sẽ không lựa chọn thuộc tính này vào giỏ hàng được
+                </p>
+            </div>
+            <div class="modal-body form">
+                <div class="form-horizontal">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Giá chênh</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control mask-money" id="attrPrice" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Còn hàng</label>
+                            <div class="col-md-9 ">
+                                <input type="checkbox" class="checkbox" id="attrIsInstock" checked>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-4 col-md-8">
+                                <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn red" id="btn-attr-add">Cập nhật</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div id="originTable"></div>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/Scripts/product/Vendor.js"></script>
+<link href="//cdn.anpero.com/cdn/assets/global/plugins/icheck/skins/square/_all.css" rel="stylesheet" />
+<script src="/assets/global/plugins/icheck/icheck.min.js"></script>
+<script>
+    $(document).ready(function () {
+        Vendor.init();
+        Vendor.bindOriginSelect();
+    });
+</script>
+<style>
+    .tooltip {
+        z-index: 99999 !important;
+    }
+</style>

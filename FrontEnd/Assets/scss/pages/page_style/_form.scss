@@ -1,0 +1,39 @@
+.item-form-question {
+    .info-me {
+        padding: 70px 0 100px 0;
+    }
+    .info-project-me {
+        padding: 45px 0;
+    }
+    .form-group {
+        margin-bottom: 30px;
+    }
+    .input-form {
+        line-height: 30px;
+    }
+    .box-file-upload {
+        margin: 100px 0 60px 0;
+    }
+    .button-add {
+        background-color: #e5e5e5;
+        @include border-radius(4px);
+        max-width: 100px;
+        margin-left: 10px;
+        border: 1px solid #e5e5e5;
+        height: 30px;
+        line-height: 30px;
+    }
+    .button-add:focus, .button-add:hover, .button-add:active {
+        background-color: #fff!important;
+    }
+    .check-icon {
+        top: -9px;
+    }
+    .check-text {
+        top: -9px;
+        position: relative;
+    }
+    .item-check {
+        margin-bottom: 10px;
+    }
+}

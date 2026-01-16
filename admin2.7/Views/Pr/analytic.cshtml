@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Thống kê";
+}
+<script src="~/Scripts/order/wareHouse.js"></script>
+<script src="~/Scripts/proructManager.js"></script>
+<script src="~/Scripts/product/addPr.js"></script>
+<div class="row">
+    <div class="col-md-12"><h3 class="page-title">Tổng hợp nhập xuất tồn <small>Tổng hợp tình hình nhập xuất tồn</small></h3><ul class="page-breadcrumb breadcrumb"> <li><i class="fa fa-home"></i><a href="/"></a>Trang chủ<i class="fa fa-angle-right"></i></li><li><a href="/pr">Sản phẩm </a><i class="fa fa-angle-right"></i></li><li><a href="javascript:void(0);">Báo cáo</a></li></ul></div>
+    <div class="table-scrollable">
+        <table class="table table-striped table-bordered table-hover" id="datatable_products" aria-describedby="datatable_products_info">
+            <thead>
+                <tr role="row" class="heading"><th>Từ ngày</th><th>Đến ngày</th><th>Lưu tại kho <a href="javascript:void(0);" data-target="#Prwh" data-toggle="modal">(+)</a></th> <th>Sắp xếp</th>                
+                </tr>
+                <tr role="row" class="filter">                                        
+                    <td>
+                        <div class="input-group">
+                            <input class="form-filter input-sm date-picker" id="fromDate"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input class="form-filter input-sm date-picker" id="toDate" />
+                        </div>
+                    </td>
+                    <td>
+                        <select class="form-control form-filter input-sm" id="wareHouseId2"></select>
+                    </td>
+                    <td><select id="order">
+                        <option value="1">Lượng tồn nhiều</option>
+                        <option value="2">Lượng xuất nhiều nhiều</option>
+                        </select>
+                        <button type="button" class="btn blue" onclick="exportWhAn();"><i class="fa fa-check"></i>Xuất file</button>
+                    </td>
+                           
+                </tr>
+            </thead>
+
+        </table>
+    </div>
+    <div class="col-md-12" id="ancontent">
+       
+    </div>
+</div>
+<script>
+    $(document).ready(function () {        
+        BindWHSelect2();
+        binanalytic(1);
+        $("#fromDate").change(function () {
+            binanalytic();
+        });
+        $("#toDate").change(function () {
+            binanalytic(1);
+        });
+        $("#wareHouseId2").change(function () {
+            binanalytic(1);
+        });
+        //$("#type").change(function () {
+        //    binanalytic(1);
+        //});
+        $("#order").change(function () {
+            binanalytic(1);
+        });
+
+    });
+    function exportWhAn() {
+        var valid = true;
+        var _fromDate = $("#fromDate").val();
+        var _toDate = $("#toDate").val();
+        var _prType = $("#type option:selected").val();
+        var __order = $("#order option:selected").val();
+        var _whId = $("#wareHouseId2 option:selected").val();
+        if (valid) {
+            $.ajax({
+                type: "post",
+                url: "/handler/warehouse.ashx",
+                datatype: "text",
+                data: { op: "exWhanaLytic", fromDate: _fromDate, toDate: _toDate, prType: _prType, whId: _whId, _order: __order },
+                success: function (msg) {
+                    if (msg > 0) {
+                        alert("Đã lưu ra file " + msg + " bản ghi");
+                        window.location.href = "/a/data.txt";
+                    }
+                }
+
+            })
+        };
+
+    }
+    function binanalytic(_page) {
+        var valid = true;
+        var _fromDate =$("#fromDate").val();
+        var _toDate =$("#toDate").val();
+        var _prType = $("#type option:selected").val();
+        var __order = $("#order option:selected").val();
+        var _whId =$("#wareHouseId2 option:selected").val();
+        if (valid) {            
+            $.ajax({
+                type: "post",
+                url: "/handler/warehouse.ashx",
+                datatype: "text",
+                data: { op: "binanalytic", fromDate: _fromDate, toDate: _toDate, prType: _prType, whId: _whId, page: _page,_order:__order },
+                success: function (msg) {
+                    $("#ancontent").html(msg);
+                }
+
+            })
+        };
+    }
+</script>

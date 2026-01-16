@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "Quản lý slide quảng cáo - Anpero";
+}
+
+<div class="col-md-12 ">
+    <!-- BEGIN SAMPLE FORM PORTLET-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-red-sunglo">
+                <i class="icon-settings font-red-sunglo"></i>
+                <span class="caption-subject bold uppercase"> Slide quảng cáo chính</span>
+            </div>
+
+        </div>
+        <div class="portlet-body form">
+            <form role="form">
+                <div class="col-md-6">
+
+                    <div class="form-body">
+                        <div class="form-group form-md-line-input">
+                            <select class="form-control" id="slideType">
+                                <option value="slide" selected="selected">Slide chính trang chủ</option>
+                                <option value="ads1">Quảng cáo số 1</option>
+                                <option value="ads2">Quảng cáo số 2</option>
+                                <option value="ads3">Quảng cáo số 3</option>
+                                <option value="ads4">Quảng cáo số 4</option>
+                                <option value="ads5">Quảng cáo số 5</option>
+                                <option value="ads6">Quảng cáo số 6</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="form_control_1">Link click ảnh</label>
+                            <input type="text" class="form-control" id="txtLinkClick" placeholder="Nhập link khi click ảnh">
+                        </div>
+                        <div class="form-group">
+                            <label for="form_control_1">Miêu tả ngắn cho ảnh</label>
+                            <textarea class="form-control" id="txtDesc" placeholder="Nhập text hoặc HTML" rows="3"></textarea>
+                            <span class="help-block">Tối ưu tìm kiếm ảnh, một số slide đặc biệt có miêu tả ngắn sẽ đẹp hơn</span>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                            <input type="file" class="form-control" id="addThumb" />
+                            <label for="form_control_1">Chọn ảnh từ máy tính</label>
+                            <span class="help-block">Tối ưu tìm kiếm ảnh, một số slide đặc biệt có miêu tả ngắn sẽ đẹp hơn</span>
+                        </div>
+                    </div>
+                    <div class="form-actions noborder">
+                        <button type="button" class="btn blue" id="btnUpdate">Thêm ảnh vào slide</button>
+                    </div>
+                    <div class="col-md-12">
+                        <img src="" style="display:none;width:100%;" id="tempSlide" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-body">
+                        <div class="right form-group " id="thumbContent-slide">
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
+</div>
+@section head{
+    <link href="~/Scripts/Modul/Small-fileUpload/Small-fileUpload.css" rel="stylesheet" />
+    <script src="~/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+    <script src="~/Scripts/Modul/SlideControl.js"></script>
+}
+
+<script>
+
+    $(document).ready(function () {
+        $("#addThumb").smallFileUpload({
+            Size: "full",
+            allowExtension: ".jpg,.png,.jpeg,.svg,.gif,.ico",
+            success: function (data) {                
+                $("#tempSlide").fadeOut().attr("src", data.uploadedImages[0].Url).fadeIn();
+            }
+        })
+
+        slideControl.ThumbTriggerInit();        
+        slideControl.getThumbByContent($("#slideType option:selected").val(),"#thumbContent-slide");
+        slideControl.referenceId = $("#slideType option:selected").val();
+
+        $("#slideType").change(function () {
+            slideControl.referenceId = $("#slideType option:selected").val();
+            slideControl.getThumbByContent($("#slideType option:selected").val(),"#thumbContent-slide");
+        });
+        $("#btnUpdate").click(function () {
+            var imagesUrl = $("#tempSlide").attr("src");
+            if (imagesUrl == null || imagesUrl == "") {
+                showNotice("Thông báo", "Bạn chưa chọn file tải lên")
+            } else {
+                slideControl.addSlide(imagesUrl, $("#txtDesc").val(), $("#txtLinkClick").val(),$("#slideType option:selected").val(),"#thumbContent-slide")
+                $("#tempSlide").attr("src", "").hide();
+                $("#txtLinkClick").val("");
+                $("#txtDesc").val("");
+            }
+        });
+    });
+</script>

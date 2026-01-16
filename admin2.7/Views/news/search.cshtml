@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Tìm kiếm";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@section head{
+    @Html.Raw(ViewBag.key)
+    @Html.Raw(ViewBag.des)
+    <script src="~/Scripts/script.js"></script>
+    <script src="~/Scripts/News.js"></script>
+}
+
+<div class="portlet light">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-horizontal form-row-seperated">
+                <div class="portlet">
+                    <div class="portlet-title">
+                        <div class="caption">Quản lý tin tức</div>    
+                        <div class="actions btn-set">
+                            <div class="md-checkbox" style="float:right;">
+                                <input type="checkbox" checked="checked" id="isPublish" class="md-check" />
+                                <label for="isPublish">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span>Tìm tin đang công khai
+                                </label>
+                            </div>
+                            
+                        </div>                    
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="col-md-9" id="newsSeachContent">
+
+                            
+                        </div>
+                        <div class="col-md-3">
+                            @Html.Raw(ViewBag.data)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        news.search();
+        $("#isPublish").click(function () {
+            news.search(1);
+        });
+        $('input:radio[name="radiocat"]').change(function () {
+            news.search(1);
+        });
+    });
+</script>
+
+
+
+

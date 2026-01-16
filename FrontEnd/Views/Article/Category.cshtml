@@ -1,0 +1,52 @@
+﻿@using Models.Modul.Article;
+@model  List<ArticleItem>
+<div class="box-breadcrumb">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
+                @if (!string.IsNullOrEmpty(ViewBag.CategoryName))
+                {
+                    <li class="breadcrumb-item active" aria-current="page">@ViewBag.CategoryName</li>
+                }
+
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="box-blog">
+    <div class="container">
+        <h3 class="title-1">@ViewBag.CategoryName</h3>
+        <div class="box-content">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="item-blog">
+                            <a href="@Ultil.UrlHelper.GetArticleLink(item.Tittle,item.Id)" class="images"><img src="@item.Thumb" alt="@item.Tittle"></a>
+                            <div class="info">
+                                <h4 class="title-2"><a href="@Ultil.UrlHelper.GetArticleLink(item.Tittle,item.Id)">@item.Tittle</a> </h4>
+                                <div class="flex flex-jc-between info-category">
+                                    <a href="@Ultil.UrlHelper.GetBlogCategoryLink(item.CateGoryName,item.CategoryId)" class="category"><i class="fas fa-anchor"></i> @item.CateGoryName</a>
+                                    <span class="date"><i class="fas fa-calendar-alt"></i> @item.CreateDate.Value.ToString("dd/mm/yyyy")</span>
+                                </div>
+                            </div>
+                            <ul class="box-active flex">
+                                <li><span class="icon-default icon-heart-2"></span> (@item.ViewTime)</li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+            </div>          
+            <nav aria-label="Page navigation" class="box-pagination">
+                @Html.Raw(ViewBag.page)
+            </nav>
+        </div>
+    </div>
+
+</div>
+
+

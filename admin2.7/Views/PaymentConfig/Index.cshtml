@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="col-md-12 ">
+    <!-- BEGIN SAMPLE FORM PORTLET-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-red-sunglo">
+                <i class="icon-settings font-red-sunglo"></i>
+                <span class="caption-subject bold uppercase"> Cấu hình thanh toán giỏ hàng online</span>
+            </div>
+
+        </div>
+        <div class="portlet-body form">
+            <form role="form">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label><a href="https://www.baokim.vn/ho-tro/a/san-pham-dich-vu/bieu-phi-dich-vu/">Vui lòng xem biểu phí thanh toán online tại đây</a></label>
+                        <label><a href="https://www.baokim.vn/ho-tro/a/san-pham-dich-vu/bieu-phi-dich-vu/">. Hướng dẫn đăng ký và lấy thông tin kết nối đang được cập nhật</a></label>
+                        <label><a href="https://www.nganluong.vn/nganluong/homeMerchant/advanced.html">. Tài liệu tích hợp</a></label>
+                    </div>
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label for="form_control_1">Cổng thanh toán</label>
+                            <select class="form-control" id="paymentType">
+                                <option value="NL" selected="selected">Cấu hình cổng thanh toán Ngân Lượng</option>
+                                <option value="VTC">Cấu hình cổng thanh toán VTC Pay</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-md-line-input hide" id="currencyContent">
+                            <select class="form-control" id="currency">
+                                <option value="VND" selected="selected">Thanh toán bằng Việt Nam Đồng</option>
+                                <option value="USD">Thanh toán bằng Đô La Mỹ</option>
+                            </select>
+                        </div>
+                        <div class="form-group MerchantId-ct">
+                            <label for="form_control_1">Nhập Merchant Id</label>
+                            <input type="text" class="form-control" id="MerchantId">
+                            <span class="help-block">Merchant Id</span>
+                        </div>
+
+                        <div class="form-group MerchantPass-ct">
+                            <label for="form_control_1">Merchant Password</label>
+                            <input type="text" class="form-control" id="MerchantPass">
+                        </div>
+                        <div class="form-group email-ct">
+                            <label for="form_control_1">Nhập Email đăng ký</label>
+                            <input type="text" class="form-control" id="email" placeholder="Email đăng ký">
+                            <span class="help-block"> Email đăng ký</span>
+                        </div>
+                        <div class="form-group fee-ct">
+                            <label for="form_control_1">Phí thanh toán online</label>
+                            <input type="text" class="form-control mask-money" id="fee" placeholder="Nhập" value="0">
+                            <span class="help-block"> Phí thanh toán ước tính '1760đ+1.1% giá trị giao dịch cho thanh toán nội địa, 2.4% giá trị giao dịch + 5.000đ với thẻ Visa</span>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                            <input type="checkbox" placeholder="bật thanh toán online" id="isTurnOnPaymentOnline" />
+                            <label for="isTurnOnPaymentOnline">Bật thanh toán online ở giỏ hàng</label>
+                        </div>
+
+
+                    </div>
+                    <div class="form-actions noborder">
+                        <button type="button" class="btn blue" id="btnUpdate">Cập nhật cấu hình thanh toán</button>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+@section scripts{
+    <style>
+        .mask-money{text-align:left!important;}
+    </style>
+    <script src="~/Scripts/webconfig/webconfig.js"></script>
+    <script>
+        $(document).ready(function () {
+            config.InitPaymentConfig();
+        });
+    </script>
+
+}

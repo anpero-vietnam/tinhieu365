@@ -1,0 +1,110 @@
+﻿ <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="addcustomer">
+                                <div class="modal-dialog modal-lg bs-example-modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">Thêm mới khách hàng</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="AddAddress" class="form-horizontal ">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Tên liên hệ</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" name="name" id="names" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Email</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" name="mail" id="mail" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Điện Thoại</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" name="phone" id="phone" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Địa chỉ</label><div class="col-md-9">
+                                                                <textarea rows="4" name="address" id="addr" class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Mã số thuế</label><div class="col-md-9">
+                                                                <input type="text" name="address" id="taxcode" class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3"></label><div class="col-md-9">
+                                                                <button class="btn btn-sm yellow table-group-action-submit" type="button" onclick="submitAdd();">Thêm địa chỉ</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="clear-fix"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+<script>
+    function submitAdd() {
+        var valid = true;        
+        if ($("#phone").val() !== "" && !isVnFone($("#phone").val().trim()) ) {
+            valid = false;
+            showNotify("#phone");
+            showNotice("Lỗi thêm địa chỉ", "Số điện thoại không đúng định dạng");
+        }
+        if ($("#phone").val() !== "" && !isEmail($("#mail").val().trim())) {
+            valid = false;
+            showNotify("#mail");
+            showNotice("Lỗi thêm địa chỉ", "Mail không đúng định dạng");
+        }
+        if ($("#names").val().trim() == "" || $("#names").val().trim() == null) {
+            valid = false;
+            showNotice("Lỗi thêm địa chỉ", "Tên liên hệ không được để trống");
+            showNotify("#names")
+        }
+        if (valid) {
+            $.ajax({
+                dataType: "text",
+                mothod: "post",
+                url: "/handler/address.ashx",
+                data: { op: "adminAddAdress", name: $("#names").val(), phone: $("#phone").val(), mail: $("#mail").val(), address: $("#addr").val(), taxcode: $("#taxcode").val(), st: Anpero.CurentStore },
+                success: function (msg) {
+                    //$('#findContent').html(msg);
+                    //$('#customerName').val(msg);
+                    //$('#addId').val(msg);         
+                    
+                    $('#addcustomer').modal('toggle');
+                    showNotice("Thêm thành công địa chỉ", $("#customerName").val());
+                    //setAddr(msg, $("#names").val());
+                    window.location.reload();
+                    $("#mail").val("");
+                    $("#phone").val("");
+                    $("#names").val("");
+                    $("#addr").val("");
+                    $("#taxcode").val("");
+                }
+            });
+        }
+    }
+
+</script>

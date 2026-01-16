@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "Gửi tin mới";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    <script src="~/assets/ckeditor/ckeditor.js"></script>
+    <script src="~/assets/ckeditor/styles.js"></script>
+    <script src="~/Scripts/News.js"></script>
+    <link href="~/assets/ckeditor/contents.css" rel="stylesheet" />
+    <script src="/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+}
+<div class="row">
+
+    <div class="col-md-8">
+        <div class="portlet light bordered">           
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="fa fa-comment"></i>
+                    <span class="caption-subject bold uppercase"> Gửi tin nhắn | <a href="/Messages/inboxs">Danh sách tin</a></span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tiêu đề </label>
+                        <input class="form-control" id="tittle" placeholder="Tiêu đề tin nhắn">
+                    </div>
+                    <div class="form-group">
+                        <div class="addMedia" style="display:none;">
+                            <ul>
+                                <li>
+                                    <span class="btn green fileinput-button"><input type="file" id="file2" name="file2" /></span>
+                                    <input type="button" id="addImg" value="Tải ảnh" class="btn btn-success" />
+                                </li>
+                            </ul>
+                        </div>
+                        <label>Nội dung tin nhắn</label>
+                            <textarea name="ckeditor" class="ckeditor" id="editor1"></textarea>
+                    </div>                
+                    
+                </div>
+                <div class="form-actions noborder">
+                    <button class="btn blue" onclick="SendMassage();">Gửi tin</button>
+                    <a href="/Massage/inboxs" class="btn default">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-reorder"></i>Tìm kiếm
+                </div>
+                <div class="tools">
+                    <a style="color: white;" onclick="selectAllUser();"><i class="icon-ok-sign"></i></a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nhập tên người gửi</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Tìm theo tên" id="uf">
+                            <span class="input-group-addon"><i class="icon-user"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding-left: 23px;">
+                        <label class="checkbox"><input type="checkbox" id="checkAll" value="0">Chọn tất cả</label>
+                        <div class="checkbox-list" id="user-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#checkAll").click(function () {            
+            $("#user-list input:checkbox").prop("checked",$(this).is(':checked'));
+        });
+        bindUser("0");
+        $("#uf").change(function () {
+            var uid = $("#uf").val();
+            if (uid.length >= 1) {
+                bindUser(uid);
+            }
+        });
+   
+    });
+    function bindUser(userName) {
+        var catId = $("#cat").val();
+        $.ajax({
+            type: "post", url: "/Account/GetUsers",
+            dataType: "text",
+            data: { UserName: userName,st:Anpero.CurentStore },
+            success: function (msg) {
+                $("#user-list").html(msg);
+            }
+        });
+    }
+    function SendMassage() {
+        var valid = true;
+        var tittle = $("#tittle").val();
+        var editor = CKEDITOR.instances.editor1;
+        var content = editor.getData();
+        var user_list = getParameterByName("to") + "|";
+        if (tittle.length < 5) {
+            playSound01();
+            showNotice("Tin nhắn", "Tiêu đề quá ngắn");
+            valid = false;
+        }
+        if (content.length < 5) {
+            playSound01();
+            showNotice("Tin nhắn", "Nội dung quá ngắn");
+            valid = false;
+        }
+        $('#user-list input:checked').each(function () {
+            user_list += $(this).val() + "|";
+        });
+
+        if (user_list == "" || user_list == "|") {
+            playSound01();
+            showNotice("Tin nhắn", "Bạn chưa chọn người gửi");
+            valid = false;
+        }
+        if (valid) {
+            $.ajax({
+                type: "post", url: "/Messages/sendMessage", dataType: "text",
+                data: { tittle: tittle, content: content, senderList: user_list,st:Anpero.CurentStore},
+                success: function (msg) {
+                    playSound02();
+                    $("#tittle").val("");
+                    SetContents("");
+                    showNotice("Tin nhắn", "Bạn đã gửi tin nhắn thành công");
+                }
+            });
+        }
+    }
+</script>

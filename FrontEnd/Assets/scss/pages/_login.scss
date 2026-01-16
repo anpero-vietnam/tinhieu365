@@ -1,0 +1,146 @@
+.modal-login , .modal-sign-up{
+
+    .form-group {
+        .form-control {
+            padding-left: 0;
+        }
+    }
+
+    .form-control {
+        background-color: transparent;
+    }
+
+    .modal-dialog{
+        @media (min-width: 1200px){
+            max-width: 540px;
+        }
+    }
+    .modal-content{
+        background-color: #f2f2f2;
+    }
+    .modal-header{
+        color: #59596d; display: block; border-bottom: 0; position: relative;
+        padding: 0; margin-bottom: 5px;
+        &:before{
+            content: ''; display: block; height: 1px; position: absolute; left: 2px; right: 2px; bottom: 0; background-color: var(--dm-gray-2);
+        }
+        .close{
+            width: 25px; height: 25px; position: absolute; top: 10px; right: -10px; padding: 5px;
+            &:before, &:after{
+                content: ''; display: block; width: 20px; height: 2px; background-color: #000;position: absolute; top: 50%; transform: translateY(-50%);
+            }
+            &:before{
+                transform:rotate(45deg);
+            }
+            &:after{
+                transform: rotate(-45deg);
+            }
+        }
+        .modal-title{
+            font-size: 30px; margin: 0 0 10px 0;
+        }
+        .facebook, .google{
+            height: auto; display: flex; align-items: center; padding: 10px 10px 10px 50px;
+            font-weight: bold; color: #fff;
+        }
+        .facebook{
+            background-color: #4367B0; margin:  0 10px 0 0;
+        }
+        .google{
+            background-color: #4285F4;
+        }
+        .col-sm-6{
+            padding: 0;
+        }
+        .wp-action{
+            justify-content: space-between;
+        }
+    }
+
+
+    .modal-content{
+        padding: 15px 40px;
+        @media (max-width: 768px){
+            padding: 15px 35px;
+        }
+        .form-group{
+            & + .form-group{
+                margin: 25px 0 0 0;
+            }
+        }
+    }
+
+    .modal-body{
+        padding-bottom: 35px; margin-bottom: 5px;
+        padding-left: 0;
+        &:before{
+            content: ''; display: block; height: 1px; position: absolute; left: 2px; right: 2px; bottom: 5px; background-color: var(--dm-gray-2);
+        }
+    }
+    .modal-footer{
+        border-top: 0;
+    }
+
+    .modal-header, .modal-body, .modal-footer{
+        .text{
+            color: var(--black);
+        }
+    }
+}
+
+.modal-sign-up{
+    .modal-footer{
+        justify-content: flex-start;
+        .title{
+            font-size: 18px; color: var(--black);
+            .link{
+                padding: 0; color: var(--dm-blue-1); text-transform: none;
+            }
+        }
+    }
+}
+
+.modal-create{
+    .modal-dialog{
+        background-color: var(--black);
+    }
+    textarea{
+        width: 100%; resize: none; padding: 10px; @include border-radius(5px);
+        &:focus{
+            outline: 0;
+        }
+    }
+    .modal-content{
+        padding: 20px; border-radius: 0;
+        @media (max-width: 480px){
+            padding: 20px 10px 20px 10px;
+        }
+    }
+    .content-post{
+        position: relative;
+    }
+    .wp-action{
+        display: flex; justify-content: flex-end;
+        .button{
+            height: 34px; line-height: 32px; padding: 0 30px;
+            @media (max-width: 480px){
+                height: 32px; line-height: 30px;
+            }
+        }
+    }
+}
+
+.icon-default{
+    &.facebook{
+        &:before{
+            background-image: url("./../images/facebook.png");
+            width: 32px; height: 32px; position: absolute; left: 10px;
+        }
+    }
+    &.google{
+        &:before{
+            background-image: url("./../images/google.png");
+            width: 32px; height: 32px; position: absolute; left: 10px;
+        }
+    }
+}

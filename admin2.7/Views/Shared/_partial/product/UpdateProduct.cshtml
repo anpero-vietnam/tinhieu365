@@ -1,0 +1,169 @@
+﻿@model  Models.Modul.Product.UpdateProductModels
+@if (Model != null)
+{
+
+    <div class="col-md-8">
+        <div class="form-group col-md-12">
+            <label class="control-label col-md-4" id="lb-prName">Tên sản phẩm (*): </label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="prName" value="@Model.Name" />
+            </div>
+        </div>
+        <div class="form-group col-md-12" id="specCt">
+            <label class="control-label col-md-4" id="lb-wr">Thông số kỹ thuật : </label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="Specifications" value="@Model.Specifications" />
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="control-label col-md-4">Tag : </label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="tag" value="@Model.Tag" />
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="control-label col-md-4">Ảnh đại diện: </label>
+            <div class="col-md-8">
+                @*<input type="file" id="thumbLink2" />*@
+                <button type="button" class="btn blue start" id="thumbLink2">
+                    <i class="fa fa-upload"></i>
+                    <span> Chọn file ảnh </span>
+                </button>
+                <img src="@Model.Images" id="prThumb" style="max-width:100%;" />
+            </div>
+        </div>
+        <div class="form-group col-md-12 prNav">
+            <label class="control-label col-md-4" id="lb-prPrice">Giá bán : </label>
+            <div class="col-md-8">
+                <input type="text" class="form-control  mask-money" placeholder="Vnđ" id="price" value="@Convert.ToInt32(Model.Price)" />
+            </div>
+        </div>
+        <div class="form-group col-md-12 prNav" id="salePrice">
+            <label class="control-label col-md-4" id="lb-price">Giá khuyến mại : </label>
+            <div class="col-md-8">
+                <input type="text" class="form-control mask-money" id="vprice" value="@Convert.ToInt32(Model.SalePrice)" />
+            </div>
+        </div>
+        <div class="form-group col-md-12 prNav">
+            <label class="control-label col-md-4">% khuyến mại : </label>
+            <div class="col-md-8">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="sl-pc" value="@Ultil.StringHelper.GetDiscountPersen(Model.Price,Model.SalePrice)">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn green" id="sl-down">
+                            <i class="fa fa-angle-down"></i>
+                        </button>
+                        <button type="button" class="btn green" id="sl-up">
+                            <i class="fa fa-angle-up"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- /.input-group -->
+        </div>
+        <div class="form-group col-md-12 prNav" id="saleDate">
+            <label class="control-label col-md-4">Chạy khuyến mãi tới ngày : </label>
+            <div class="col-md-8">
+                <input type="text" class="form-control date-picker" placeholder="dd/mm/yyyy" id="saleEndTime" value="@Ultil.Times.DateTimeTostring(Model.SaleTimeEnd)" />
+            </div>
+        </div>
+        @if (Model.SaleTimeEnd.HasValue && Model.SaleTimeEnd != null && Model.SaleTimeEnd.Value > DateTime.Now)
+        {
+            <div class="form-group col-md-12">
+                <label class="control-label col-md-4"> </label>
+                <div class="col-md-8">
+                    <button type="button" class="btn blue" onclick="Product.RemoveSale();">Dừng quảng cáo</button>
+                </div>
+            </div>
+        }
+        <div class="form-group col-md-12 prNav">
+            <label class="control-label col-md-4" id="lb-wr">Số tháng bảo hành : </label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="wr" value="@Model.Warranty" />
+            </div>
+        </div>
+
+        <div class="form-group col-md-12 prNav">
+            <label class="control-label col-md-4"><span id="lb-origin">Thương hiệu / xuất xứ</span> : </label>
+            <div class="col-md-8">
+                <div class="input-group">
+                    <select class="form-control" id="origin">
+                        <option selected="selected" value="0">Chọn một nhóm</option>
+                    </select>
+                    <span class="input-group-addon"><a href="javascript:void(0);" data-target="#originModed" data-toggle="modal">Thêm</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="control-label col-md-4">Miêu tả chi tiết : </label>
+            <div class="col-md-6"></div>
+        </div>
+        <div class="col-md-12">
+            <div class="addMedia" style="display:none;">
+                <ul>
+                    <li>
+                        <input type="file" id="file2" name="file2" style="float: left; line-height: 32px;" />
+                        <input type="button" id="addImg" value="Tải ảnh" class="btn btn-success" />
+                        <input type="hidden" name="st" value="@Request.QueryString["st"]" />
+                    </li>
+                </ul>
+            </div>
+            <textarea name="username" class="ckeditor form-control" id="editor1">@Model.Detail</textarea>
+        </div>
+        <div class="form-actions col-md-12 right">
+            <div class="form-group" style="margin:15px;">
+                <div class="md-checkbox">
+                    @if (Model.IsSales == 1)
+                    {
+                        <input type="checkbox" class="group-checkable" checked="checked" id="isPublish" />
+                    }
+                    else
+                    {
+                        <input type="checkbox" class="group-checkable" id="isPublish" />
+                    }
+                    <label for="isPublish">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span> Hiển thị luôn trên trang bán hàng
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions right col-md-12 right">
+            <button type="button" class="btn red" onclick="delPr();"><i class="fa fa-trash-o"></i> Xóa</button>   <button type="button" class="btn blue" onclick="Product.UpdatePr();" id="btnUpdatePr"><i class="fa fa-check"></i>Cập nhật sản phẩm</button>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            Vendor.curentVendor = "@Model.Origin";
+            $("#sl-up").click(function () {
+                var percen = $("#sl-pc").val();
+                if (isNaN(percen) || percen == "") { percen = 0; }
+                $("#sl-pc").val(parseInt(percen) + 1);
+                $("#vprice").val(Product.CalcSalePrice($("#price").val(), $("#sl-pc").val()));
+            });
+            $("#sl-down").click(function () {
+                var percen = $("#sl-pc").val();
+                if (isNaN(percen) || percen == "") { percen = 0; }
+                if (percen > 0) {
+                    percen--;
+                }
+                $("#sl-pc").val(percen);
+                $("#vprice").val(Product.CalcSalePrice($("#price").val(), $("#sl-pc").val()));
+            });
+            $("#sl-pc").change(function () {
+                $("#vprice").val(Product.CalcSalePrice($("#price").val(), $("#sl-pc").val()));
+            });
+            $("#vprice").change(function () {
+                $("#sl-pc").val(100 - parseInt(Product.CalcSalePercen($("#price").val(), $("#vprice").val())));
+            });
+            Product.categoryId = '@Model.CategoryId';
+            var _id = getParameterByName("id");
+            $("#shortDesc").val(htmlDecode("@Model.ShortDesc"));
+            $("#keywords").val(htmlDecode("@Model.Keywords"));
+            $("#scriptCode").val(htmlDecode("@Model.Script"))
+            $('#prioty').val(@Model.Prioty);
+        });
+    </script>
+}

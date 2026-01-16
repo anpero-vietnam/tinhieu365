@@ -1,0 +1,125 @@
+﻿@using Web.Mvc.Controllers
+@{
+    var userProfile = AppSession.CurentProfile;
+
+} 
+<div class="page-header navbar navbar-fixed-top">
+    <div class="page-header-inner ">
+        @if (!Request.Browser.IsMobileDevice)
+        {
+            <div class="page-logo waves-effect">
+                <a href="/">
+                    <img src="/assets/img/logo.png" alt="logo" class="logo-default">
+                </a>
+                <div class="menu-toggler sidebar-toggler">
+
+                </div>
+            </div>
+        }
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-colla1pse"> </a>
+        <div class="page-actions">
+            <div class="btn-group">
+                <button type="button" class="btn red-haze btn-sm dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <i class="ssst fa"></i>
+                    <span class="hidden-sm hidden-xs">Âm báo</span>
+                    <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="javascript:smng(2);"><i class="fa fa-volume-up"></i>Âm thanh lớn 1</a></li>
+                    <li><a href="javascript:smng(3);"><i class="fa fa-volume-up"></i>Âm thanh lớn 2</a></li>
+                    <li><a href="javascript:smng(1);"><i class="fa fa-volume-down"></i>Âm thanh nhỏ</a></li>
+                    <li><a href="javascript:smng(0);"><i class="fa fa-volume-off"></i>Tắt âm thanh</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn red-haze btn-sm dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <span class="hidden-sm hidden-xs" id="branchName">Chi nhánh </span>
+                    <i class="fa fa-angle-down"></i>
+                </button>
+
+            </div>
+        </div>
+        <div class="page-top">
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+
+                    <li class="dropdown dropdown-extended dropdown-notification dropdown-dark">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" title="Thông báo hệ thống">
+                            <i class="fa fa-bell"></i>
+                            <span class="badge  badge-success " id="home-sysWaitingCount"></span>
+                        </a>
+                        <ul class="dropdown-menu extended tasks">
+                            <li class="external">
+                                <h3>
+                                    <span class="bold home-sysWaiting" id="home-sysWaiting"></span>
+                                </h3>
+                                <a href="/SystemHistory">
+                                    Xem thêm
+                                </a>
+                            </li>
+                            <li>
+                                <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283" id="home-newSysMsgCt"></ul>
+                            </li>
+
+                        </ul>
+
+                    </li>
+                    <li class="dropdown dropdown-extended dropdown-notification dropdown-dark">
+                        <a href="/contact" class="dropdown-toggle" title="các liên mới hệ từ web">
+                            <i class="fa fa-envelope"></i> <span class="badge badge-danger" id="contactCount"></span>
+                        </a>
+                    </li>
+                    <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
+                        <a href="/Messages/inboxs" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="false" title="Tin nhắn nội bộ">
+                            <i class="fa fa-comment"></i><span class="badge newMassageCount"></span>
+                        </a>
+                        <ul class="dropdown-menu extended tasks">
+                            <li class="external">
+                                <h3>
+                                    <span class="bold newMassageCount"></span>  tin chưa đọc
+                                </h3>
+                                <a href="/Messages/inboxs">
+                                    Xem tất cả
+                                </a>
+                            </li>
+                            <li>
+                                <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283" id="home-msg-content">
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="dropdown dropdown-user dropdown-dark">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <span class="username" data-uid="@userProfile.UserId">@(userProfile.SureName)</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                            <li><a href="/account/UpdateProfile"><i class="fa fa-file-image-o "></i>Đổi thông tin</a></li>
+                            <li><a href="/Account/Manage"><i class="fa fa-shield"></i>Đổi mật khẩu</a></li>                            
+                            <li class="divider"></li>                            
+                            @if (userProfile.IsAuthenlication)
+                            {
+                                <li>
+                                    <form action="/Account/LogOff" id="logoutForm" method="post">
+                                        <a href="javascript:document.getElementById('logoutForm').submit()" style="padding: 8px 16px;"><i class="fa fa-sign-out"></i>  Thoát</a>
+                                    </form>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    var contactCount = "@ViewBag.contactWaiting";
+    $(document).ready(function () {
+        if (contactCount > 0) {
+            showNotify("#contactCount");
+        }
+    });
+</script>

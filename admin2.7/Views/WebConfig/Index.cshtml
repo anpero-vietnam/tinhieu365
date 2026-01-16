@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title ="Thông tin liên hệ";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    
+}
+@model  Models.Webconfig
+<div class="col-md-12 ">
+    <!-- BEGIN SAMPLE FORM PORTLET-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-red-sunglo">
+                <i class="icon-settings font-red-sunglo"></i>
+                <span class="caption-subject bold uppercase"> Cấu hình chung</span>
+            </div>
+        
+        </div>
+        <div class="portlet-body form">
+            <form role="form">
+                <div class="form-body form-horizontal">
+                    <div class="form-group">
+                        <label for="txtTell" class="col-md-4 control-label">Title</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="txtTitle" placeholder="Tiêu đề trang chủ" value="@Model.Title">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtTell" class="col-md-4 control-label">Mô tả ngắn</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="txtShortDesc" placeholder="Tiêu đề trang chủ" value="@Model.ShortDesc">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">
+                            Logo (.jpg,.png,.gif):
+
+                        </label>
+                        <div class="col-md-8">
+
+                            <button type="button" class="btn blue start" id="uploadFile">
+                                <i class="fa fa-upload"></i>
+                                <span> Chọn file ảnh </span>
+                            </button>
+                            <img src="@Model.Logo" id="thumb" style="max-width:100%;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">
+                            Favicon (.ico)
+
+                        </label>
+                        <div class="col-md-8">
+                            <button type="button" class="btn blue start" id="uploadFileFavicon">
+                                <i class="fa fa-upload"></i>
+                                <span> Chọn file ảnh </span>
+                            </button>
+                            <img src="@Model.Favicon" id="thumbFavicon" style="max-width:100%;">
+                        </div>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="txtTell" class="col-md-4 control-label">Hotline</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="txtTell" placeholder="Nhập số Hotline" value="@Model.HotLine">
+                            <span class="help-block">Hiển thị trên web và khi có đơn hàng đầu tiên trong ngày hệ thống sẽ nhắn tin đến số này</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtContactPhone" class="col-md-4 control-label">Các số liên hệ khác</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="txtContactPhone" placeholder="Nhập các số liên hệ khác" value="@Model.OtherPhone">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="txtEmail" class="col-md-4 control-label">Email nhận thông báo đơn hàng</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="txtEmail" placeholder="Email" value="@Model.Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtAddress" class="col-md-4 control-label">Địa chỉ</label>
+                        <div class="col-md-8">
+                            <textarea rows="5" type="text" class="form-control" id="txtAddress" placeholder="địa chỉ cửa hàng" value="@Model.Address">@Model.Address</textarea>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtSkype" class="col-md-4 control-label">Skype</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="txtSkype" placeholder="Skype" value="@Model.Skype">
+                        </div>
+                    </div>
+                    <div class="form-group  has-success">
+                        <label for="txtFb" class="col-md-4 control-label">Facebook</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="txtFb" placeholder="Link fanpage của bạn" value="@Model.FaceBookLink">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions noborder">
+                    <div class="row">
+                        <div class="col-md-offset-3 col-md-4">
+                            <button type="button" class="btn blue" id="btnConfig">Cập nhật</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+<script src="/Scripts/webconfig/webconfig.js"></script>
+<script>
+    $(document).ready(function () {
+        config.InitPaymentConfig();
+        $("#btnConfig").click(function () {
+            config.update();
+        });
+    });
+</script>

@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "AddUser";
+}
+<link href="~/assets/global/plugins/icheck/skins/square/_all.css" rel="stylesheet" />
+
+<div class="portlet light bordered" style="display:inline-block;width:100%;">
+    <div class="portlet-title">
+        <div class="caption font-green-sharp">
+
+            <span class="caption-subject bold uppercase"> Quản trị người dùng</span>
+            <span class="caption-helper">Thêm hoặc chỉnh sửa quyền truy cập</span>
+        </div>
+        <div class="actions">
+            <a href="javascript:;" class="btn  btn-default" id="reset">
+                <i class="fa fa-trash-o"></i> Hủy
+            </a>
+            <a href="javascript:Store.AddUser();" class="btn red-sunglo" id="btnUpdate" style="display:none;">
+                <i class="fa fa-plus"></i> Cập nhật người dùng này
+            </a>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="form-body">
+            <div class="form-group">
+                <label class="control-label col-md-3">
+                    Nhập tên người dùng trên hệ thống
+                    <span class="required" aria-required="true"> * </span>
+                </label>
+                <div class="col-md-4">
+                    <input name="EmailOrphone" id="EmailOrphone" class="form-control" placeholder="số điện thoại hoặc email">
+                    <span class="help-block" style="color:red;" id="findUserHelp"> </span>
+                </div>
+            </div>
+            <div class="form-group temp">
+                <label class="control-label col-md-3">
+                    Mã kiểm tra
+                    <span class="required" aria-required="true"> * </span>
+                </label>
+                <div class="col-md-4 temp">
+
+                    <div><img src="/captcha" id="captchaImg"></div>
+                    <div><input name="captcha" id="captcha" class="form-control"></div>
+                    <div class="help-block help-block-error"></div>
+                </div>
+            </div>
+         
+
+            <div class="form-actions temp">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-9">
+                        <input type="button" class="btn red button-submit" value="Tìm kiếm">
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 temp2" style="display:none;">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-green-sharp">
+
+                            <span class="caption-subject bold uppercase"> Chức năng</span>
+                            <span class="caption-helper">sản phẩm và nội dung</span>
+                        </div>
+
+                    </div>
+                    <div class="portlet-body RoleList">
+                        <div class="form-group">
+                            <label>Super addmin</label>
+                            <div class="input-group">
+                                <div class="icheck-list">
+                                    <label>
+                                        <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Quản trị người dùng và chi nhánh" value="1">Quản trị toàn diện
+                                    </label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Bán Hàng</label>
+                            <div class="input-group">
+                                <div class="icheck-list">
+                                    <label>
+                                        <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Thêm mới khách hàng" value="24">Thêm mới khách hàng
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Xem danh sách khách hàng" value="26">Xem danh sách khách hàng
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Cấp quyền quản lý sản phẩm</label>
+                            <div class="input-group">
+                                <div class="icheck-list">
+                                    <label>
+                                        <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Tạo sản phẩm" value="9">Tạo sản phẩm
+                                    </label>
+
+                                    <label>
+                                        <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Xóa sản phẩm" value="10">Xóa sản phẩm
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Xem danh sách sản phẩm" value="8">Xem danh sách sản phẩm
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Tạo danh mục sản phẩm" value="16">Tạo danh mục sản phẩm
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                     
+                        <div class="form-group">
+                            <label>Cấp quyền quản trị nội dung</label>
+                            <div class="input-group">
+                                <div class="icheck-list">
+                                    <label>
+                                        <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Thêm và sửa các tin" value="17">Thêm và sửa các tin
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Xóa tin" value="19">Xóa tin
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Công khai tin" value="18">Công khai tin
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Giao diện và menu" value="27">Giao diện và menu
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/global/plugins/icheck/icheck.min.js"></script>
+<script src="~/Scripts/store/StoreHandler.js"></script>
+<script>
+    Store.init();
+</script>

@@ -1,0 +1,223 @@
+﻿@using FrontEnd.Controllers;
+@using Dal;
+@model Models.TransactionModel
+@{
+    ViewBag.Title = "Update company";
+}
+
+<div class="box-page-profile">
+    <div class="container">
+        <div class="main-page-profile row">
+            <div class="col-sm-12 col-md-12 col-lg-12 left-profile">
+                <div class="main-left-profile">
+                    <div class="item-project">
+                        <h4 class="title title-3">Basic information</h4>
+                        <div class="row form-group">
+                            <div class="col-sm-12 mg-bt-30">
+                                <label class="txt-lable txt-lable-1">Title  <span class="color-main">*</span></label>
+                                <input type="text" placeholder="" value="@Model.BusinessName" class="input-form w-100" id="txt-title">
+                                <span class="error" id="lb-title"></span>
+                            </div>
+                            <div class="col-sm-12 mg-bt-30">
+                                <label class="txt-lable txt-lable-1">StockExchange  <span class="color-main">*</span></label>
+                                <input type="text" placeholder="" value="@Model.StockExchange" class="input-form w-100" id="txt-StockExchange">
+                                <span class="error" id="lb-title"></span>
+                            </div>
+
+                            <div class="col-sm-12 mg-bt-30">
+                                <label class="txt-lable txt-lable-1">En Name  <span class="color-main">*</span></label>
+                                <input type="text" placeholder="" value="@Model.EngName" class="input-form w-100" id="txt-EnName">
+                                <span class="error" id="lb-title"></span>
+                            </div>
+                            <div class="col-sm-12 mg-bt-30">
+                                <label class="txt-lable txt-lable-1">Email  <span class="color-main">*</span></label>
+                                <input type="text" placeholder="" value="@Model.Email" class="input-form w-100" id="txt-Email">
+                                <span class="error" id="lb-title"></span>
+                            </div>
+                            <div class="col-sm-12 mg-bt-30">
+                                <label class="txt-lable txt-lable-1">Website  <span class="color-main">*</span></label>
+                                <input type="text" placeholder="" value="@Model.WebSite" class="input-form w-100" id="txt-Website">
+                                <span class="error" id="lb-title"></span>
+                            </div>
+                            <div class="col-sm-12 mg-bt-30">
+                                <label class="txt-lable txt-lable-1">Phone  <span class="color-main">*</span></label>
+                                <input type="text" placeholder="" value="@Model.Phone" class="input-form w-100" id="txt-Phone">
+                                <span class="error" id="lb-title"></span>
+                            </div>
+                            <div class="col-12 mg-bt-30">
+                                <label class="txt-lable txt-lable-1">Địa chỉ <span class="color-main">*</span></label>
+                                <textarea class="input-form w-100" id="txt-Address">@(Model.Address?.Replace("\br", "\n"))</textarea>
+                                <span class="error" id="lb-Address"></span>
+                            </div>
+                            <div class="col-12 mg-bt-30">
+                                <label class="txt-lable txt-lable-1">Miêu tả ngắn</label>
+                                <textarea class="input-form w-100 ckeditor" name="editor1" id="editor1">@(string.IsNullOrEmpty(Model.Description)?"": Model.Description)</textarea>
+                            </div>
+                            <div class="col-12 mg-bt-30">
+                                <label class="txt-lable txt-lable-1">Is System Watch list</label>
+                                <input type="checkbox" id="ck-watchlist" @(Model.IsWatchList ? "checked" : "") />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="item-project">
+                        <h4 class="title title-3">Images / Video</h4>
+                        <div class="row form-group">
+                            <div class="col-sm-12 mg-bt-30">Up to 16 photos, maximum image size of 4mb</div>
+                            <div class="col-sm-6 mg-bt-30">
+                                <img src="~/Assets/images/uploadImages.png" id="imgUpdate" style="cursor:pointer;" />
+                                <div class="error" id="file-upload-notifycation"></div>
+                            </div>
+                            <div class="imgContent">
+                                <img src="@Model.Logo" class="f-link" id="logo">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="button button-type01 text-transform mg-bt-30" id="btn-update">Cập nhật doanh nghiệp</button>
+
+                    </div>
+                </div>
+            </div>          
+        </div>
+    </div>
+</div>
+<style>
+    .radio-label {
+        margin-top: 15px;
+    }
+
+        .radio-label .form-check-text {
+            border-left: 1px solid #dadada;
+            padding-left: 5px;
+            display: inline-block;
+        }
+
+    .datepicker.dropdown-menu {
+        width: auto !important;
+    }
+
+    .imgContent {
+        position: relative;
+    }
+
+        .imgContent img {
+            max-height: 180px;
+            width: auto;
+            margin: 5px;
+        }
+
+        .imgContent a.setDefaultImg {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            margin: 5px;
+            padding: 5px;
+            background-color: #060606b0;
+            color: #f9f6f6;
+        }
+
+        .imgContent a.deleteImg {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            margin: 5px;
+            padding: 5px;
+            background-color: #00ffffb0;
+            color: black;
+        }
+
+    .error {
+        font-style: italic;
+        color: red;
+    }
+
+    input.error {
+        border: 1px solid red;
+    }
+
+    .main-right-profile .title-2 {
+        font-size: 16px;
+    }
+
+    .form-group-flex .form-check, .form-group-flex .form-check + .form-check {
+        margin: 0 0px 11px 11px;
+    }
+
+    .scroll-menu {
+        max-height: 250px;
+        overflow-y: scroll;
+    }
+
+    .mg-bt-30 {
+        margin-bottom: 30px;
+    }
+
+    .tags {
+        list-style: none;
+        margin: 10px 0 0 0;
+        overflow: hidden;
+        padding: 0;
+    }
+
+    .tag {
+        background: #615151;
+        border-radius: 3px 0 0 3px;
+        color: white;
+        display: inline-block;
+        height: 26px;
+        line-height: 26px;
+        padding: 0 20px 0 23px;
+        position: relative;
+        margin: 0 10px 10px 0;
+        text-decoration: none;
+        -webkit-transition: color 0.2s;
+    }
+
+        .tag::before {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+            content: '';
+            height: 6px;
+            left: 10px;
+            position: absolute;
+            width: 6px;
+            top: 10px;
+        }
+
+        .tag::after {
+            background: #fff;
+            border-bottom: 13px solid transparent;
+            border-left: 10px solid #615151;
+            border-top: 13px solid transparent;
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .tag:hover {
+            background-color: crimson;
+            color: white;
+        }
+
+            .tag:hover::after {
+                border-left-color: crimson;
+            }
+
+    .update-avatar {
+        display: none;
+    }
+</style>
+
+@section scripts{
+    <link href="/Assets/js/Modul/Small-fileUpload/Small-fileUpload.css" rel="stylesheet" />
+    <script src="/Assets/js/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+    <script src="/Assets/js/Modul/CreateProject.js"></script>   
+
+}
+
+@Html.Partial("_partial/_ckeditor")

@@ -1,0 +1,30 @@
+.modal-register {
+    .button {
+      min-width: 255px; @include border-radius(2px);
+    }
+  
+    .box-text {
+      color: $color-text; margin-top: 35px; max-width: 460px;
+      .text-1 {
+        font-size: 20px; margin: 0 0 15px 0;
+      }
+      .text-2 {
+        font-size: 14px; margin: 0;
+      }
+    }
+  
+    form {
+      flex: 2;
+    }
+  }
+  
+  .register-other {
+    margin-left: 70px; flex: 1; min-width: 255px;
+    p {
+      margin: 0 0 10px 0; font-size: 18px;
+    }
+    .login-gmail {
+      margin-top: 17px;
+    }
+  }
+  

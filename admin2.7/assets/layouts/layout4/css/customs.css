@@ -1,0 +1,156 @@
+.dashboard-stat.white {
+    background-color: white;
+}
+.dashboard-stat.white .details .number {
+    color: #a7bdcd;
+}
+.dashboard-stat.white .more {
+    color: #3b3f51;
+    background-color: #f3f7f7;
+}
+.dashboard-stat.green .visual>i {
+    color: #a7bdcd;
+    opacity: .1;
+    filter: alpha(opacity=10);
+}
+.table img{max-height:120px;max-width:120px;}
+.img-it{width:120px;}
+.addMedia{
+    margin: 10px 0 10px 0;
+}
+.addMedia ul li{list-style:none;}
+.frmAddOrder{
+        margin: 15px 0 15px 0;
+    background-color: #ffffff;
+    padding: 30px;
+      border-top: 1px #f1f1f1 solid;
+}
+.btnAddOrder{
+    float:right;
+}
+.catContent{font-size:14px !important;}
+.page-header.navbar .page-logo .logo-default{
+        margin: 27px 10px 0;
+    max-height: 48px;
+}
+.scatct{
+    padding: 10px;
+    margin: 10px;
+    background-color: #f3f5f9;
+    box-shadow: 0 2px 3px 2px rgb(210, 217, 230);
+}
+    .scatct .update-od {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+        .scatct .update-od a, .table a i,.table button i {
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+.parentOption {
+    font-weight: bold;
+}
+select.childOption{ -webkit-appearance: none;
+    
+     box-sizing: content-box;
+    padding-left:10px;
+    font-style:italic;
+     text-indent:10px;
+}
+.portlet-body img{max-width:100%;}
+.productContent .atc a{
+    margin:0 5px 5px 5px;
+}
+.lb-nf{font-style:italic;color:#3b3f51;}
+.a-editor {
+    background-color: #555;
+    color: white;
+}
+.imgct {
+    position: relative;    
+}
+.thumb-trigger {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.imgct:hover .image {
+    opacity: 0.3;
+}
+
+.imgct:hover .middle {
+    opacity: 1;
+}
+.text {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+    cursor: pointer;
+}
+#gritter-notice-wrapper {
+    z-index: 999999;
+}
+.pr-artribute {
+    margin: -5px 0 15px 0;
+    font-style: italic;
+    color: #8b99a6;
+}
+/* Youtube top loading bar */
+#loading-bar {
+    background-color: #007bbe;
+    height: 4px;
+    width: 0;
+    position: fixed;
+    z-index: 666000666;
+    -webkit-transition: width 500ms ease-out, height 500ms ease-out;
+    -moz-transition: width 500ms ease-out, height 500ms ease-out;
+    -o-transition: width 500ms ease-out, height 500ms ease-out;
+    transition: width 500ms ease-out, height 500ms ease-out;
+}
+
+    #loading-bar.no-transition {
+        -webkit-transition: none;
+        -moz-transition: none;
+        -o-transition: none;
+        transition: none;
+    }
+
+    #loading-bar.top, #loading-bar.bottom, #loading-bar.left {
+        left: 0;
+    }
+
+    #loading-bar.top, #loading-bar.left, #loading-bar.right {
+        top: 0;
+    }
+
+    #loading-bar.left, #loading-bar.right {
+        width: 5px;
+        height: 0;
+    }
+
+    #loading-bar.bottom {
+        bottom: 0;
+    }
+
+    #loading-bar.right {
+        right: 0;
+    }
+/* end Youtube top loading bar */

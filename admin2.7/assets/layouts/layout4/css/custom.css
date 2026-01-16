@@ -1,0 +1,20 @@
+.dashboard-stat.white {
+    background-color: white;
+}
+.dashboard-stat.white .details .number {
+    color: #a7bdcd;
+}
+.dashboard-stat.white .more {
+    color: #3b3f51;
+    background-color: #f3f7f7;
+}
+.dashboard-stat.green .visual>i {
+    color: #a7bdcd;
+    opacity: .1;
+    filter: alpha(opacity=10);
+}
+.table img{max-height:200px;max-width:200px;}
+.addMedia{
+    margin: 10px 0 10px 0;
+}
+.addMedia ul li{list-style:none;}

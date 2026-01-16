@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "Thêm css cho trang";
+}
+
+<div class="col-md-12 ">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-red-sunglo">
+                <i class="icon-settings font-red-sunglo"></i>
+                <span class="caption-subject bold uppercase"> Thêm Css toàn trang</span>
+            </div>
+            <div class="actions"><button type="button" class="btn blue btnUpdate">Cập nhật css</button></div>
+        </div>
+        <div class="portlet-body form">
+            <form role="form">
+                <div class="col-md-12">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <textarea name="editor1" class=" form-control" id="editor1" rows="100" style="background-color:#555;color:white;"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <div class="form-group form-md-line-input">
+                                <button type="button" class="btn blue btnUpdate">Cập nhật Css</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
+</div>
+@section head{
+    <link href="//cdn.anpero.com/cdn/assets/global/plugins/codemirror/lib/codemirror.css" rel="stylesheet" type="text/css" />
+    <link href="//cdn.anpero.com/cdn/assets/global/plugins/codemirror/theme/neat.css" rel="stylesheet" type="text/css" />
+    <link href="//cdn.anpero.com/cdn/assets/global/plugins/codemirror/theme/ambiance.css" rel="stylesheet" type="text/css" />
+    <link href="//cdn.anpero.com/cdn/assets/global/plugins/codemirror/theme/material.css" rel="stylesheet" type="text/css" />
+    <link href="//cdn.anpero.com/cdn/assets/global/plugins/codemirror/theme/neo.css" rel="stylesheet" type="text/css" />
+
+}
+@section scripts{
+    <script src="//cdn.anpero.com/cdn/assets/global/plugins/codemirror/lib/codemirror.js" type="text/javascript"></script>
+    <script src="//cdn.anpero.com/cdn/assets/global/plugins/codemirror/mode/javascript/javascript.js" type="text/javascript"></script>
+    <script src="//cdn.anpero.com/cdn/assets/global/plugins/codemirror/mode/htmlmixed/htmlmixed.js" type="text/javascript"></script>
+    <script src="//cdn.anpero.com/cdn/assets/global/plugins/codemirror/mode/css/css.js" type="text/javascript"></script>
+
+
+    <script>
+        var ComponentsCodeEditors = function () {
+                var setJavascriptEditor = function () {
+                    var e = document.getElementById("code_editor_demo_1");
+                    CodeMirror.fromTextArea(e, { lineNumbers: !0, matchBrackets: !0, styleActiveLine: !0, theme: "ambiance", mode: "javascript" })
+                },
+                //t = function () {
+                //    var e = document.getElementById("code_editor_demo_2"); CodeMirror.fromTextArea(e, { lineNumbers: !0, matchBrackets: !0, styleActiveLine: !0, theme: "material", mode: "css" })
+                //},
+                //o = function () {
+                //    var e = document.getElementById("code_editor_demo_3");
+                //    CodeMirror.fromTextArea(e, { lineNumbers: !0, matchBrackets: !0, styleActiveLine: !0, theme: "neat", mode: "javascript", readOnly: !0 })
+                //},
+                SetCssEditor = function () {
+                    var e = document.getElementById("editor1");
+                    var editor = CodeMirror.fromTextArea(e, { lineNumbers: true, matchBrackets: true, styleActiveLine: true, theme: "ambiance", mode: "css", readOnly: false })
+                    editor.setSize("100%", 1000)
+                    return editor;
+                }
+            return {
+                init: function () {
+                  return SetCssEditor()
+                }
+            }
+        }();
+
+       
+        var webcontent = {
+            update: function (editor) {
+                
+                //var _content = $("#editor1").val();
+                var _content = editor.getValue();
+                var _type = 7;
+                var valid = true;
+                if (valid) {
+                    $.ajax({
+                        url: "/handler/newHandler.ashx",
+                        type: "post",
+                        data: { op: "UpdatePolicy", Content: _content, Type: _type },
+                        success: function (rs) {
+                            if (rs > 0) {
+                                showNotice("Anpero", "Bạn đã cập nhật thành công.");
+                                Common.PlaySuccessSound();
+                            }
+                        }
+
+                    });
+                } else {
+                    showNotice("Lỗi", "Nội dung đang trống, không thể cập nhật.");
+                }
+            },
+            bindContent: function (e) {
+                var valid = true;
+                if (valid) {
+                    $.ajax({
+                        url: "/handler/newHandler.ashx",
+                        type: "post",
+                        data: { op: "getPolicy",  Type: 7 },
+                        success: function (rs) {
+                            //$("#editor1").val(rs);
+                            e.setValue(rs);
+                        }
+                    });
+                } else {
+                    showNotice("Lỗi", "Nội dung đang trống, không thể cập nhật.");
+                }
+            }
+        }
+         $(document).ready(function () {
+             var editor=  ComponentsCodeEditors.init();
+            $(".btnUpdate").click(function () {
+                webcontent.update(editor);
+            });
+            webcontent.bindContent(editor);
+            
+        });
+    </script>
+}

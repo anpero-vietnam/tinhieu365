@@ -1,0 +1,200 @@
+﻿@{
+    ViewBag.Title = "Gửi tin mới";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    <script src="~/assets/ckeditor/ckeditor.js"></script>
+    <script src="~/assets/ckeditor/styles.js"></script>
+    <script src="~/Scripts/News.js"></script>
+    <link href="~/assets/ckeditor/contents.css" rel="stylesheet" />   
+    <script src="/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+}
+<div class="row">
+    <div class="col-md-8">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-reorder"></i>Gửi tin nhắn
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tiêu đề  thư</label>
+                        <input class="form-control" id="tittle" placeholder="Tiêu đề thư">
+                    </div>
+                    <div class="form-group">
+                        <label>Nội dung tin nhắn</label>
+                        <textarea name="ckeditor" class="ckeditor" id="editor1"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="sendMail">
+                            Đồng thời gửi tới Email Này
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="sendMaketing">
+                            Gửi tới bộ phận Maketing
+                        </label>
+                        <label>
+                            <input type="checkbox" id="sendAccounting">
+                            Gửi tới bộ phận Kế Toán
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="sendMod">
+                            Gửi tới bộ phận Báo giá
+                        </label>
+                        <label>
+                            <input type="checkbox" id="sendAddmin">
+                            Gửi tới bộ phận Quản trị
+                        </label>
+                        <label>
+                            <input type="checkbox" id="sendCustomer">
+                            Gửi tới toàn bộ Khách Hàng
+                        </label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn blue" onclick="SendMassage();">Gửi tin</button>
+                    <button type="button" class="btn default">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-reorder"></i>Người gửi
+                </div>
+                <div class="tools">
+                    <a  onclick="selectAllUser();"><i class="icon-ok-sign"></i> chọn tất cả</a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nhập tên người gửi</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Nhập tên người gửi" id="uf">
+                            <span class="input-group-addon"><i class="icon-user"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding-left:18px;">
+
+                        <div class="checkbox-list" id="user-list">
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#addImg").click(function () {
+            getTokenData("#file2");
+        });
+        bindUser("0");
+        $("#uf").change(function () {
+            var uid = $("#uf").val();
+            if (uid.length >= 1) {
+                bindUser(uid);
+            }
+
+        });
+    });
+    function bindUser(userName) {
+        var catId = $("#cat").val();
+        $.ajax({
+            type: "post",
+            url: "/Account/AdminGetUsers",
+            dataType: "text",
+            data: { op: "getUser", UserName: userName },
+            success: function (msg) {
+                $(".checkbox-list").html(msg);
+                //handlerUniform();
+            }
+        });
+    }
+    function SendMassage() {
+        var valid = true;
+        var tittle = $("#tittle").val();
+        var editor = CKEDITOR.instances.editor1;
+        var content = editor.getData();
+        var user_list = getParameterByName("to") + "|";
+       
+        if (tittle.length < 5) {
+            playSound01();
+            showNotice("Tin nhắn", "Tiêu đề quá ngắn");
+            valid = false;
+        }
+        if (content.length < 5) {
+            playSound01();
+            showNotice("Tin nhắn", "Nội dung quá ngắn");
+            valid = false;
+        }
+        $('#user-list input:checked').each(function () {
+            user_list += $(this).val() + "|";
+        });
+       
+        if (user_list == "" || user_list == "|") {
+            playSound01();
+            showNotice("Tin nhắn", "Bạn chưa chọn người gửi");
+            valid = false;
+
+        }
+        var sendMails = "0";
+        if ($('#sendMail').is(':checked')) {
+            sendMails = "1";
+            valid = true;
+        }
+        var _sendAddmin = "0";
+        if ($('#sendAddmin').is(':checked')) {
+            _sendAddmin = "1";
+            valid = true;
+        }
+        var _sendMod = "0";
+        if ($('#sendMod').is(':checked')) {
+            _sendMod = "1";
+            valid = true;
+        }
+        var _sendMaketing = "0";
+        if ($('#sendMaketing').is(':checked')) {
+            _sendMaketing = "1";
+            valid = true;
+        }
+        var _sendAccounting = "0";
+        if ($('#sendAccounting').is(':checked')) {
+            _sendAccounting = "1";
+            valid = true;
+        }
+        var _sendCustomer = "0";
+        if ($('#sendCustomer').is(':checked')) {
+            _sendCustomer = "1";
+            valid = true;
+        }
+        if (valid) {
+
+            $.ajax({
+                type: "post", url: "/Messages/AdminSendMessage",
+                dataType: "text",
+                data: {  tittle: tittle, content: content, senderList: user_list, sendMail: sendMails, sendMaketing: _sendMaketing, sendMod: _sendMod, sendCustomer: _sendCustomer, sendAccounting: _sendAccounting, sendAddmin: _sendAddmin },
+                success: function (msg) {
+                    playSound02();
+                    $("#tittle").val("");
+                    SetContents("");
+                    showNotice("Tin nhắn", "Bạn đã gửi tin nhắn thành công");
+                }
+            });
+        }
+
+    }
+    function selectAllUser() {
+        $("#user-list input:checkbox").prop("checked", true);
+    }
+</script>

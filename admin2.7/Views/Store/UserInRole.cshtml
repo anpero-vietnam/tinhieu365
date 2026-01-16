@@ -1,0 +1,208 @@
+﻿@model List<Models.UserProfile>
+@{
+    ViewBag.Title = "Quản lý người dùng theo chức năng";
+}
+<link href="//cdn.anpero.com/cdn/assets/global/plugins/icheck/skins/square/_all.css" rel="stylesheet" />
+<link href="//cdn.anpero.com/cdn/assets/pages/css/profile.min.css" rel="stylesheet" />
+
+<div class="col-lg-12">
+    <div class="portlet light portlet-fit">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-layers font-green"></i>
+                <span class="caption-subject font-green bold uppercase">Chọn người dùng </span>
+            </div>
+
+            <div class="actions">
+                <a href="/store/adduser" class="btn btn-transparent red btn-outline btn-sm active">
+                    <i class="fa fa-plus"></i> Thêm người dùng
+                </a>
+            </div>
+        </div>
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                <div class="profile-sidebar">
+                    <div class="portlet light profile-sidebar-portlet bordered">
+                        <div class="profile-userpic">
+                            <img src="@item.Avata" class="img-responsive" alt="">
+                        </div>
+                        <div class="profile-usertitle">
+                            <div class="profile-usertitle-name"> @(string.IsNullOrEmpty(item.SureName) ? "Tên chưa cập nhật" : item.SureName) </div>
+                            <div class="profile-usertitle-job" ap-name="@item.UserName"> @item.UserName </div>
+                        </div>
+                        <div class="profile-userbuttons">
+                            <button type="button" class="btn btn-circle red btn-sm btn-delete" ap-id="@item.UserId" onclick="Store.DelUser(@item.UserId);">Loại bỏ</button>
+                            <button type="button" class="btn btn-circle green btn-sm btn-view" ap-name="@item.UserName" ap-id="@item.UserId" app-name="@item.UserName">Xem quền</button>
+                        </div>
+                        <div class="profile-usermenu">
+                            <ul class="nav">
+                                <li class="active">
+                                    <a href="javascript:void(0);">
+                                        <i class="fa fa-clock-o"></i>@item.LastVisit
+                                    </a>
+                                    <a href="tell:@item.Phone">
+                                        <i class="fa fa-phone"></i>@item.Phone
+                                    </a>
+                                    <a href="javascript:void(0);" title="@item.Address">
+                                        <i class="fa fa-home"></i>@Ultil.StringHelper.SubString(25, item.Address)
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
+</div>
+<div id="user-modal" class="modal fade" tabindex="-1">
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title">Cập nhật </h4>
+
+
+            <div class="actions pull-right">
+                <button type="button" class="btn  btn-update-user red"><i class="fa fa-check"></i>Cập nhật</button>
+                <button type="button" data-dismiss="modal" class="btn green">Đóng</button>
+            </div>
+
+        </div>
+        <div class="modal-body">
+            <p>
+                <div class="col-md-6 temp2">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption font-green-sharp">
+                                <span class="caption-subject bold uppercase"> Chức năng</span>
+                                <span class="caption-helper">sản phẩm và nội dung</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body RoleList">
+                            <div class="form-group">
+                                <label>Quản trị toàn diện</label>
+                                <div class="input-group">
+                                    <div class="icheck-list">
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Quản trị toàn diện" value="1" id="adcx">Quản trị toàn diện
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Bán Hàng</label>
+                                <div class="input-group">
+                                    <div class="icheck-list">
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Bán hàng và xuất các sản phẩm theo đơn" value="20">Bán hàng và xuất các sản phẩm theo đơn
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Thêm mới khách hàng" value="24">Thêm mới khách hàng
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Xem danh sách khách hàng" value="26">Xem danh sách khách hàng
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Cấp quyền quản lý sản phẩm</label>
+                                <div class="input-group">
+                                    <div class="icheck-list">
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Tạo sản phẩm" value="9">Tạo sản phẩm
+                                        </label>
+
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Xóa sản phẩm" value="10">Xóa sản phẩm
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Xem danh sách sản phẩm" value="8">Xem danh sách sản phẩm
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Tạo danh mục sản phẩm" value="16">Tạo danh mục sản phẩm
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                      
+                            <div class="form-group">
+                                <label>Báo cáo và phân tích tài chính</label>
+                                <div class="input-group">
+                                    <div class="icheck-list">
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Xem báo cáo tài chính theo ngày" value="5">Xem báo cáo tài chính theo ngày
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Xem báo cáo tài chính tuần" value="6">Xem báo cáo tài chính tuần
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Xem báo cáo tài chính năm" value="7">Xem báo cáo tài chính năm
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="form-group">
+                                <label>Cấp quyền quản trị nội dung</label>
+                                <div class="input-group">
+                                    <div class="icheck-list">
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Thêm và sửa các tin" value="17">Thêm và sửa các tin
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Xóa tin" value="19">Xóa tin
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Công khai tin" value="18">Công khai tin
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" data-label="Giao diện và menu" value="27">Giao diện và menu
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 temp2">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption font-green-sharp">
+                                <span class="caption-subject bold uppercase">Chi nhánh</span>
+                                <span class="caption-helper"></span>
+                            </div>
+                            <div class="actions">
+                                <a href="/Store/AddBranch" class="btn btn-circle btn-default btn-sm" target="_blank"><i class="fa fa-plus"></i> Thêm</a>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn red">Đóng</button>
+            <button type="button" class="btn green btn-update-user"><i class="fa fa-check"></i>Cập nhật</button>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/global/plugins/icheck/icheck.min.js"></script>
+<script src="~/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+<script src="~/Scripts/store/StoreHandler.js"></script>
+<script>
+    var name = "";
+    $(document).ready(function () {
+        Store.init();
+    });
+</script>
+<style type="text/css">
+    .profile-userpic img {
+        height: 160px;
+    }
+</style>

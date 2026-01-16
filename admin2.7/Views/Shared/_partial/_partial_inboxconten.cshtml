@@ -1,0 +1,56 @@
+﻿<div class="row">
+    <div class="col-xs-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="fa fa-comment"></i>
+                    <span class="caption-subject bold uppercase">Danh sách tin nhắn | <a href="/Messages">Gửi tin mới</a></span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-responsive table-scrollable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Người gửi</th>
+                                <th>Tiêu đề</th>
+                                <th>ngày gửi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewData["msg"] != null)
+                            {
+                                List<Models.Notify.UserMessenge> userMessenge = (List<Models.Notify.UserMessenge>)ViewData["msg"];
+                                foreach (var item in userMessenge)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span>@item.SenderName </span>
+                                        </td>
+                                        <td class="hidden-480">
+                                            @if (!item.IsReader)
+                                            {
+                                                <strong><a href="/messages/inbox?ms=@item.Id">@item.Title</a></strong>
+                                                <span class="label label-success">Chưa đọc</span>
+                                            }
+                                            else
+                                            {
+                                                <a href="/messages/inbox?ms=@item.Id">@item.Title</a>
+                                            }
+                                        </td>
+                                        <td>@(item.SenderDate.HasValue?item.SenderDate.Value.ToString("dd/MM/yyyy hh:mm"):"")</td>
+                                    </tr>
+                                }
+
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        @Html.Raw(ViewBag.page)
+    </div>
+
+</div>

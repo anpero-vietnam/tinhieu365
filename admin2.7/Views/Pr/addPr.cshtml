@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "Thêm mới";
+}
+@section head{
+    
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="page-breadcrumb breadcrumb">
+            <li><a href="/?st=38">Trang chủ</a><i class="fa fa-angle-right"></i></li>
+            <li><a href="/pr/List" id="bcList">Danh sách sản phẩm</a><i class="fa fa-angle-right"></i></li>
+            <li class="font-green">Thêm mới sản phẩm</li>
+        </ul>
+    </div>
+</div>
+<div class="portlet light">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-horizontal form-row-seperated">
+                <div class="portlet">
+                    <div class="portlet-title">
+                        <div class="caption font-red-sunglo caption-subject bold uppercase" id="lb-addPr">THÊM MỚI SẢN PHẨM</div>
+                    </div>
+                    <div class="portlet-body form">
+                        <ul class="nav nav-tabs tabstorepage ">
+                            <li class="active"><a href="#tab_0" data-toggle="tab" id="addPrTab">Thêm mới </a></li>
+                            <li class=""><a href="#tab_3" data-toggle="tab" id="table3">Tối ưu tìm kiếm - Script tiếp thị lại</a></li>
+                        </ul>
+                        <div class="tab-content form-horizontal">
+                            <div class="tab-pane active" id="tab_0">
+                                @Html.Partial("_partial/product/addProduct")
+                                <div class="col-md-4">
+                                    @Html.Partial("_partial/product/partial_PrMenuLeft")
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab_3">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Script: </label>
+                                        <textarea class="form-control" id="scriptCode"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Mô tả ngắn (meta description)</label>
+                                        <textarea id="shortDesc" rows="6" class="form-control"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Từ khóa (meta keywords)</label>
+                                        <textarea id="keywords" rows="6" class="form-control"></textarea>
+                                    </div>
+                                    <div class="form-actions right col-md-12">
+                                        <button type="button" class="btn red reveicemoney" onclick="Product.Create();"><i class="fa fa-check"></i>Thêm mới</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane table-scrollable" id="tab_4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav class="quick-nav">
+    <a class="quick-nav-trigger" href="#0">
+        <span aria-hidden="true"></span>
+    </a>
+    <ul>
+        <li>
+            <a href="/pr/categorymanager" class="active">
+                <span>Danh mục sản phẩm</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/pr/List">
+                <span>Danh sách sản phẩm</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/pr/orderList">
+                <span>Xem đơn hàng</span>
+                <i class="icon-basket"></i>
+            </a>
+        </li>
+    </ul>
+    <span aria-hidden="true" class="quick-nav-bg"></span>
+</nav>
+<div class="quick-nav-overlay"></div>
+<style>
+    .spcontent .headerPr {
+        background-color: #eee !important;
+        float: left;
+        width: 100%;
+        border-bottom: 1px #CCC dashed;
+        margin: 15px 0 15px 0;
+        padding: 5px 0 5px 0;
+    }
+</style>
+@section scripts{
+    @Html.Partial("_partial/_ckeditor")    
+    <script src="/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+    <script src="~/Scripts/order/wareHouse.js"></script>    
+
+    <script src="~/Scripts/product/addPr.js"></script>
+    <script src="~/assets/plugins/jstree/dist/jstree.min.js"></script>
+    <script src="~/Scripts/product/prType.js"></script>
+    <link href="~/assets/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("body").addClass("page-sidebar-closed");
+            $(".page-sidebar-menu").addClass("page-sidebar-closed");
+            $(".page-sidebar-menu").addClass("page-sidebar-menu-closed");
+            Location.Init();
+            Vendor.bindOriginSelect();
+
+        });
+
+        function bindOriginSelect() {
+            $.ajax({
+                type: "post",
+                url: "/handler/product.ashx",
+                datatype: "text",
+                data: { op: "bindSelectOrigin", st: Anpero.CurentStore },
+                success: function (rs) {
+                    $("#origin").html(rs);
+                }
+            });
+        }
+    </script>
+}
+
+

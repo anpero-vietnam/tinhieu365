@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<html lang="vi" class="no-js">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="TRAN TRAN" name="author" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    @System.Web.Optimization.Styles.Render("~/bundles/global.css")
+    @*@System.Web.Optimization.Styles.Render("~/Content/css")*@
+    <link href="/assets/css/themes/blue.css" rel="stylesheet" type="text/css" id="style_color" />
+    @RenderSection("head", false)
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jQuery.print.js"></script>
+</head>
+<body class="page-header-fixed">
+    <div class="clearfix"></div>
+    <div class="page-container">
+        @RenderSection("featured", required: false)
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                <div class="row" style="margin-top: 30px; width: 1120px; margin-left: auto; margin-right: auto; padding: 35px;" id="print">
+                    <div class="right12">
+                    <div class="left6"><img src="http://poma.vn/images/logo.png" />                    </div>
+                    <div class="right6">
+                        <div class="right">
+                            Website : http://poma.vn<br />
+                            Facebook: <i class="fa fa-facebook"></i>/tmtshipping.vn<br />
+                            Điện thoại : 043.996.9997 /0932.565.565
+                        </div>
+
+                    </div>
+                    </div>
+                    @RenderBody()
+                  
+                </div>
+                <div class="col-md-12 col-sm-12" onclick="$.print('#print');"><i class="fa fa-print" style="font-size: 35px;"></i></div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    </div>
+    @Html.Partial("_partial/_partialFooter")
+    
+<style>
+    #bcTarget
+    {
+        margin-top: 16px;
+        float: left;
+    }
+
+    .l9
+    {
+        float: left;
+        width: 800px;
+    }
+
+    .r3
+    {
+        float: right;
+        width: 200px;
+    }
+
+    hr
+    {
+        border-top: 1px solid #0D325E;
+    }
+
+    *
+    {
+        font-size: 20px;
+        line-height: 24px;
+        font-family: 'Times New Roman';
+    }
+
+    table, table tr td, table tr, table thead tr, table thead th, table th
+    {
+        border: 1px solid black !important;
+    }
+
+    .table thead tr th
+    {
+        font-weight: bold;
+    }
+
+    .left11
+    {
+        float: left;
+        width: 988px;
+        padding: 6px;
+    }
+
+    .left6
+    {
+        float: left;
+        width: 500px;
+        padding: 6px;
+    }
+
+    .right6
+    {
+        float: right;
+        width: 500px;
+        padding: 6px;
+    }
+
+    .right12
+    {
+        float: right;
+        width: 1012px;
+        padding: 6px;
+    }
+
+    body
+    {
+        font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+        color: #000;
+        font-size: 12px;
+        line-height: 1.7em;
+    }
+
+    .wrapper
+    {
+        padding: 3rem 2rem 4rem 3rem;
+    }
+
+    .row
+    {
+        max-width: 1200px;
+    }
+
+    ul, li
+    {
+        list-style: none;
+    }
+
+    .fa-print
+    {
+        font-size: 40px;
+    }
+
+    .clearfix
+    {
+        clear: both;
+    }
+
+    table
+    {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    strong
+    {
+        font-weight: bold;
+    }
+
+    .left
+    {
+        float: left;
+    }
+
+    .right
+    {
+        float: right;
+    }
+
+    .info th, .info td
+    {
+        border: 1px solid #ddd;
+    }
+
+    .logo
+    {
+        width: 250px;
+    }
+
+    .tittle, .tittle i, .tittle span
+    {
+        text-align: center;
+        font-weight: bold;
+        font-size: 26px;
+        background-color: none;
+        margin: 25px 0 25px 0;
+    }
+
+    .name
+    {
+        font-size: 24px;
+        color: #444;
+        padding: 10px 0 10px 0;
+    }
+
+    .product td, .product th
+    {
+        border-bottom: 1px solid #d1d1d1;
+        padding: 15px;
+        text-align: left;
+    }
+
+    .product th
+    {
+        font-weight: bold;
+        background: #666;
+        color: #fff;
+    }
+
+    .total
+    {
+        width: 407px;
+        text-align: left;
+    }
+    
+    .sign
+    {
+        position: relative;
+        padding: 10px 100px 60px 100px;
+    }
+
+    footer
+    {
+        float: left;
+        width: 100%;
+        padding: 3rem 0 4rem 0;
+        line-height: .6em;
+    }
+
+        footer .row
+        {
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+
+    @@page
+    {
+        size: A4;
+        margin: 0;
+    }
+
+    @@media print
+    {
+        .page
+        {
+            margin: 0;
+            border: initial;
+            border-radius: initial;
+            width: initial;
+            min-height: initial;
+            box-shadow: initial;
+            background: initial;
+            page-break-after: always;
+        }
+    }
+</style>
+    <!-- Facebook Pixel Code -->
+    <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '171140616830757');
+  fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none"
+             src="https://www.facebook.com/tr?id=171140616830757&ev=PageView&noscript=1" />
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+
+</body>
+</html>

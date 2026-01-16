@@ -1,0 +1,154 @@
+﻿@*@{
+    ViewBag.Title = "Danh sách khách hàng đã giao dịch";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<form method="get" action="/addressbook">
+    <div class="table-scrollable">
+        <table class="table table-striped table-bordered table-hover table-scrollable" id="datatable_products" aria-describedby="datatable_products_info">
+            <thead>
+                <tr role="row" class="heading">
+                    <th width="1%" class="sorting_disabled" role="columnheader" rowspan="1" colspan="1">
+                        <div class="checker"><span><input type="checkbox" class="group-checkable"></span></div>
+                    </th>
+                    <th>Khách hàng</th>                                   
+                    <th>Sắp xếp</th>
+                    <th tabindex="0" rowspan="1" colspan="1">Hành động </th>
+                </tr>
+                <tr role="row" class="filter">
+                    <td rowspan="1" colspan="1"></td>
+                    <td rowspan="1" colspan="1">
+                        <div class="input-group margin-bottom-5">
+                            <input type="text" id="addId" name="uid" class="form-control form-filter input-sm" data-target="#findAddr" data-toggle="modal">
+                            <input type="hidden" id="st" name="st"/>
+                        </div>
+                        <div class="input-group"><span class="btn btn-sm yellow" data-target="#addcustomer" data-toggle="modal"><i class="fa icon-user"></i>Thêm KH</span></div>
+                    </td>                  
+                    <td rowspan="1" colspan="1">
+                        <select name="orderStatus" id="orderStatus" class="form-control form-filter input-sm">
+                            <option value="0">Giao dịch nhiều trước</option>
+                            <option value="1">Giao dịch ít trước</option>
+                            <option value="2">Số lần giao dịch</option>
+                            <option value="3">Cửa hàng nhiều trước</option>
+                            <option value="5">Nợ cửa hàng nhiều trước</option>
+                            <option value="4">Chỉ hiển thị công nợ</option>
+                        </select>
+                    </td>
+                    <td rowspan="1" colspan="1">
+                        <div class="margin-bottom-5">
+                            <button class="btn btn-sm yellow filter-submit margin-bottom"><i class="fa fa-filter"></i>Tìm</button>
+                        </div>
+                        <button class="btn btn-sm red filter-cancel"><i class="fa fa-times"></i>Làm mới</button>
+                    </td>
+                </tr>
+            </thead>
+            <tbody role="alert" aria-live="polite" aria-relevant="all"></tbody>
+        </table>
+    </div>
+</form>
+<div id="findaddress" class="form-horizontal ">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-grourop"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 table-scrollable">
+            @if (ViewData["tableRs"] != null)
+            {
+                System.Data.DataTable table = (System.Data.DataTable)ViewData["tableRs"];
+                if (table.Rows.Count > 0)
+                {
+                    <table class="table table-striped table-bordered table-hover">
+                        <tr class="heading"><th>Mã KH</th><th>Tên KH</th><th>Phone</th><th>Số lần GD</th><th>Tổng giao dịch</th><th>Shop nợ (1)</th><th>Nợ Shop(2)</th><th>Đối trừ(1)-(2)</th><th>Sửa</th></tr>
+                        @for (int i = 0; i < table.Rows.Count; i++)
+                        {
+                            Dal.Profile.AddressBook ad = new Dal.Profile.AddressBook();
+                            ad.GetAddressById(0, Convert.ToInt32(table.Rows[i]["customerId"]),Convert.ToInt32(HttpContext.Current.Request.QueryString["st"]));
+                            <tr>
+                                <td><a href="/addressbook/update?id=@ad.Id&returlurl=/addressbook"><span>KH</span>@ad.Id </a></td>
+                                <td>
+                                    @if (string.IsNullOrEmpty(ad.Name))
+                                    {
+                                        <i class="glyphicon glyphicon-stats"></i> <span>Nội bộ hoặc khách lẻ</span>
+                                    }
+                                    else
+                                    {
+                                        <span title="@ad.Address">@ad.Name</span>
+                                    }
+
+                                </td>
+
+                                <td>@ad.Phone</td>
+                                <td>@table.Rows[i]["buyTime"]</td>
+                                <td>@Ultil.StringHelper.ConVertToMoneyFormat(table.Rows[i]["amount"].ToString())</td>
+                                <td>@Ultil.StringHelper.ConVertToMoneyFormat(table.Rows[i]["ShopOwe"].ToString())</td>
+                                <td>@Ultil.StringHelper.ConVertToMoneyFormat(table.Rows[i]["owe"].ToString())</td>
+                                <td>@Ultil.StringHelper.ConVertToMoneyFormat(table.Rows[i]["curentOwe"].ToString())</td>
+
+                                <td><a href="/cashbook?cash_id=&productId=&cash_created_from=&cash_created_to=&staffName=&customerName=@ad.Id&departMents=0&subsection=0&cashType=1&keyw=&bankId=bank_0&ischecked=%25&returlurl=/addressbook"><i class="icon-action-redo"></i> Giao dịch</a> | <a href="/addressbook/update?id=@ad.Id&returlurl=/addressbook">Cập nhật </a></td>
+                            </tr>
+                        }
+                    </table>
+                }
+            }
+            @Html.Raw(ViewBag.paged)
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#st").val(Anpero.CurentStore);
+        $("#product_quantity_to").val(getParameterByName("product_quantity_to"));
+        $("#product_quantity_from").val(getParameterByName("product_quantity_from"));           
+        $('#orderStatus option[value=' + getParameterByName("orderStatus") + ']').attr('selected', 'selected');
+    });
+
+    function seachAddress() {
+        var valid = true;
+        if ($("#add").val() == "") {
+            showNotify("#add");
+            var valid = false;
+        }
+        if (valid) {
+            $.ajax({
+                dataType: "text",
+                mothod: "post",
+                url: "/handler/address.ashx",
+                data: { op: "seachAddressBook", detail: $("#add").val(),st:Anpero.CurentStore },
+                success: function (msg) {
+                    $('#findContent').html(msg);
+                    $(".setaddresshng").click(function () {
+                        var id = $(this).data("id");
+                        var cName = $(this).data("name");
+                        setAddr(id, cName);
+
+                    });
+
+
+                }
+            });
+        }
+    }
+    function delAddr(_adid) {
+        $.ajax({
+            dataType: "text",
+            mothod: "post",
+            url: "/handler/address.ashx",
+            data: { op: "delAddress", adid: _adid },
+            success: function (msg) {
+                showNotice("Xóa địa chỉ", msg);
+
+            }
+        });
+
+    }
+
+    function setAddr(addid) {
+        $("#addId").val('KH' + addid);
+        $("#customerName").val('KH' + addid);
+        $('#findAddr').modal('toggle');
+    }
+</script>
+@Html.Partial("_partial/addAddress")
+@Html.Partial("_partial/searchAddress")*@

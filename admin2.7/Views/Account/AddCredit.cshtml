@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "AddCredit";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<link href="~/assets/global/plugins/icheck/skins/square/_all.css" rel="stylesheet" />
+
+<div class="portlet light bordered" style="display:inline-block;width:100%;">
+    <div class="portlet-title">
+        <div class="caption font-green-sharp">
+            <span class="caption-subject bold uppercase"> Quản trị người dùng</span>
+            <span class="caption-helper">Thêm hoặc chỉnh sửa quyền truy cập</span>
+        </div>       
+    </div>
+    <div class="form-horizontal">
+        <div class="form-body">
+            <div class="form-group">
+                <label class="control-label col-md-3">
+                    Nhập tên người dùng trên hệ thống
+                    <span class="required" aria-required="true"> * </span>
+                </label>
+                <div class="col-md-4">
+                    <input name="EmailOrphone" id="EmailOrphone" class="form-control" placeholder="số điện thoại hoặc email">
+                    <span class="help-block" style="color:red;" id="findUserHelp"> </span>
+
+                </div>
+            </div>
+            <div class="form-group temp">
+                <label class="control-label col-md-3">
+                    Mã kiểm tra
+                    <span class="required" aria-required="true"> * </span>
+                </label>
+                <div class="col-md-4 temp">
+
+                    <div><img src="/captcha" id="captchaImg"></div>
+                    <div><input name="captcha" id="captcha" class="form-control"></div>
+                    <div class="help-block help-block-error"></div>
+                </div>
+            </div>
+
+
+            <div class="form-actions temp">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-9">
+                        <input type="button" class="btn red button-submit" id="searchUser" value="Tìm kiếm">
+                    </div>
+                </div>
+            </div>
+
+            <div class="temp2" style="display:none;">
+                <div class="form-group">
+                    <label class="control-label col-md-3">
+                        Nhập số tiền cộng cho tài khoản này
+                        <span class="required" aria-required="true"> * </span>
+                    </label>
+                    <div class="col-md-4">
+                        <input name="cash" id="cash" class="form-control" placeholder="nhập số tiền">
+                    </div>
+
+                    <div class="col-md-offset-3 col-md-9 mt-5" style="margin-top:25px;">
+                        <input type="button" id="btn-addcash" class="btn red" value="Nạp tiền">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/store/StoreHandler.js"></script>
+<script>
+    $(".button-submit").click(function () {
+        Store.CheckUser();
+    });
+    $("#btn-addcash").click(function () {
+        Store.addcash();
+    });
+    
+</script>
+
+

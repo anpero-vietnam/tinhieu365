@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="col-md-12 ">
+
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-red-sunglo">
+                <i class="icon-settings font-red-sunglo"></i>
+                <span class="caption-subject bold uppercase"> Các chính sách</span>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form role="form">
+                <div class="col-md-12">
+                    <div class="form-body">
+                        <div class="form-group form-md-line-input">
+                            <select class="form-control" id="slideType">
+                                <option value="0" selected="selected">Chọn nội dung muốn cập nhật</option>
+                                <option value="@AEnum.WebContent.About.GetHashCode()">Giới thiệu cửa hàng ( về chúng tôi )</option>
+                                <option value="@AEnum.WebContent.ShippingPolicy.GetHashCode()">Chính sách vận chuyển</option>
+                                <option value="@AEnum.WebContent.WarrantyPolicy.GetHashCode()">Chính sách bảo hành</option>
+                                <option value="@AEnum.WebContent.ProductReturnPolicy.GetHashCode()">Chính sách đổi trả</option>
+                                <option value="@AEnum.WebContent.PrivacyPolicy.GetHashCode()">Chính sách bảo mật</option>
+                                <option value="@AEnum.WebContent.Payment.GetHashCode()">Thông tin thanh toán</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="addMedia" style="display:none;">
+                                <ul>
+                                    <li>
+                                        <span class="btn green fileinput-button"><input type="file" id="file2" name="file2" /></span>
+                                        <input type="button" id="addImg" value="Tải ảnh" class="btn btn-success" />
+                                    </li>
+                                </ul>
+                            </div>
+                            <textarea name="editor1" class="ckeditor form-control" id="editor1"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <div class="form-group form-md-line-input">
+                                <button type="button" class="btn blue" id="btnUpdate">Cập nhật nội dung</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Html.Partial("_partial/_ckeditor")
+    <script src="/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+    <script>
+        $(document).ready(function () {
+             CKEDITOR.on('instanceReady', function (ev) {
+                ev.editor.pasteFilter.disabled = true;
+             });
+            $("#btnUpdate").click(function () {
+                webcontent.update();
+            });
+            $("#slideType").change(function () {
+                webcontent.bindContent();
+            });
+        });
+        var webcontent = {
+            update: function () {
+                var editor = CKEDITOR.instances.editor1;
+                var _content = editor.getData();
+                var _type = $("#slideType option:selected").val();
+                var valid = true;
+                if (valid) {
+                    $.ajax({
+                        url: "/handler/newHandler.ashx",
+                        type: "post",
+                        data: { op: "UpdatePolicy", st: Anpero.CurentStore, Content: _content, Type: _type },
+                        success: function (rs) {
+                            if (rs > 0) {
+                                showNotice("Anpero", "Bạn đã cập nhật thành công.");
+                            }
+                        }
+
+                    });
+                } else {
+                    showNotice("Lỗi", "Nội dung đang trống, không thể cập nhật.");
+                }
+            },
+            bindContent: function () {
+                var editor = CKEDITOR.instances.editor1;
+                var _content = editor.getData();
+                var _type = $("#slideType option:selected").val();
+                var valid = true;
+                if (valid) {
+                    $.ajax({
+                        url: "/handler/newHandler.ashx",
+                        type: "post",
+                        data: { op: "getPolicy", st: Anpero.CurentStore, Type: _type },
+                        success: function (rs) {
+                            editor.setData(rs)
+                        }
+                    });
+                } else {
+                    showNotice("Lỗi", "Nội dung đang trống, không thể cập nhật.");
+                }
+
+            }
+        }
+    </script>
+}

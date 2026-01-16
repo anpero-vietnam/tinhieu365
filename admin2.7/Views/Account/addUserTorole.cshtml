@@ -1,0 +1,188 @@
+﻿@using Models
+
+@using System.Web.Mvc.Html;
+@{
+    ViewBag.Title = "addUserTorole";
+    Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
+}
+@model UserInStore
+@Html.Partial("_partial/userPartial/_partial_usersmenu")
+@if (!String.IsNullOrEmpty(ViewBag.resoult) && ViewBag.resoult == "1")
+{
+    <div id="message-success" class="message message-success">        
+        <div class="text">
+            <h6>Hệ thống</h6>
+            <span>Bạn đã cập nhật thành công.</span>
+        </div>
+        <div class="dismiss">
+            <a href="#message-success"></a>
+        </div>
+    </div>
+}
+@using (Html.BeginForm("adduserToroles", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            <div style="float: left" id="lb1" class="col-md-2">
+                <a href="@Model.Avatar"><img src="@Model.Avatar" style="height:50px;" /></a>
+            </div>
+            <div class="input col-md-10">
+                <input type="text" name="username" value="@Model.UserName" class="form-control valid">
+                <input type="hidden" name="uid" value="@Model.UserId">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Nguồn truy cập</label>
+            <div class="col-md-10">
+                @if (ViewData["provideList"] != null)
+                {
+                    Dal.oauthProvider[] provide = (Dal.oauthProvider[])ViewData["provideList"];
+                    for (int i = 0; i < provide.Length; i++)
+                    {
+                        if (provide[i].ProviderName.Equals("facebook"))
+                        {
+                            <a href="https://www.facebook.com/@provide[i].ProvoderUserId">
+                                <img src="/images/facebookicon.png" />
+                            </a>
+                        }
+                        else if (provide[i].ProviderName.Equals("google"))
+                        {
+                            <img src="/images/googleicon.png" />
+                        }
+                        else
+                        {
+                            if (String.IsNullOrEmpty(provide[i].ProviderName))
+                            {
+                                <span>Đăng ký trực tiếp</span>
+                            }
+                            else
+                            {
+                                <span>@provide[i].ProviderName</span>
+                            }
+                        }
+
+                    }
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">nhóm quền</label>
+            <div class="input col-md-10">
+                <select name="role" class="form-control">
+
+                    @if (ViewBag.role == "addmin")
+                    {
+                        <option value="addmin" selected="selected">addmin ( full quyền )</option>
+                    }
+                    else
+                    {
+                        <option value="addmin">addmin ( full quyền )</option>
+                    }
+                    @if (ViewBag.role == "mod")
+                    {
+                        <option value="mod" selected="selected">mod ( chỉ duyệt bài )</option>
+                    }
+                    else
+                    {
+                        <option value="mod">mod ( chỉ duyệt bài )</option>
+                    }
+                    @if (ViewBag.role == "accounting")
+                    {
+                        <option value="accounting" selected="selected">Thủ quỹ, kế toán</option>
+                    }
+                    else
+                    {
+                        <option value="accounting">Thủ quỹ, kế toán</option>
+                    }
+                    @if (ViewBag.role == "maketing")
+                    {
+                        <option value="maketing" selected="selected">Maketing</option>
+                    }
+                    else
+                    {
+                        <option value="maketing">Maketing</option>
+                    }
+                    @if (ViewBag.role == "userVip")
+                    {
+                        <option value="userVip" selected="selected">Khách hàng Vip</option>
+                    }
+                    else
+                    {
+                        <option value="userVip">Khách hàng VIP</option>
+                    }
+                    @if (ViewBag.role == "0")
+                    {
+                        <option value="0" selected="selected">Người dùng cuối</option>
+                    }
+                    else
+                    {
+                        <option value="0">Người dùng cuối</option>
+                    }
+
+                    @if (ViewBag.role == "store")
+                    {
+                        <option value="store" selected="selected">Thủ kho</option>
+                    }
+                    else
+                    {
+                        <option value="store">Thủ kho</option>
+                    }
+                    @if (ViewBag.role == "tech")
+                    {
+                        <option value="tech" selected="selected">Bảo hành, kỹ thuật</option>
+                    }
+                    else
+                    {
+                        <option value="tech">Bảo hành, kỹ thuật</option>
+                    }
+
+
+
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Ban nick</label>
+            <div class="input col-md-10">
+                <select name="block" class="form-control">
+                    <option value="0">Cho hoạt động</option>
+                    <option value="1">Chặn tới khi mở</option>
+                    <option value="2">Chặn 1 ngày</option>
+                    <option value="3">Chặn 1 tuần</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Điện thoại :</label>
+            <div class="input col-md-10">
+                <input type="text" name="phone" value="@Model.Phone" class="form-control valid">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Web : </label>
+
+            <div class="input col-md-10">
+                <input type="text" name="web" value="@Model.Web" class="form-control valid">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Địa chỉ : </label>
+
+            <div class="input col-md-10">
+                <input type="text" name="add" value="@Model.Address" class="form-control valid">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Tên thật : </label>
+
+            <div class="input col-md-10">
+                <input type="text" name="sureName" value="@Model.SureName" class="form-control valid">
+            </div>
+        </div>
+
+        <input type="submit" value="Cập nhật người dùng" class="btn btn-primary" />
+
+    </div>
+}

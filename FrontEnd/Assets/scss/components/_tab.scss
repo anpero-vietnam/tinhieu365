@@ -1,0 +1,27 @@
+.nav-tabs {
+	border-bottom: 4px solid $color-main;
+	li {
+		border: 1px solid #c9c9c9; border-bottom: none; @include border-radius(3px 3px 0 0);
+		+ li {
+			margin-left: 13px;
+		}
+		a {
+			display: block; font-weight: 500; text-transform: uppercase; color: $color-text-1; padding: 11px 20px;
+			position: relative; min-width: 160px;
+			&:before {
+				content: ''; position: absolute; left: 50%; top: 100%; width: 0; height: 0; margin-top: 4px;
+				border: 8px solid transparent; border-top-color: $color-main; opacity: 0;
+			}
+			&:hover, &.active {
+				text-decoration: none;
+				&:before {
+					opacity: 1;
+				}
+			}
+		}
+	}
+}
+
+.tab-content {
+	margin-top: 45px;
+}

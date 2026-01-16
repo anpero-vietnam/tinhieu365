@@ -1,0 +1,326 @@
+﻿@using FrontEnd.Controllers;
+@model Models.Modul.Product.ProductItem
+@{
+    var isAdmin = Dal.UserProfileControl.IsUserInRole(AppSession.CurentProfile.UserId, AEnum.UserRole.Admin);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.Title;
+    Dal.UserProfileControl profileControl = new Dal.UserProfileControl();
+    var curentUrl = HttpContext.Current.Request.Url.PathAndQuery;
+}
+
+
+<div class="main-page" style="min-height: 188px;">
+    <div class="container">
+
+        <div class="box-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="@Ultil.UrlHelper.GetCategoryLink(Model.ParentCatName, Model.ParentCatId.Value)">@Model.ParentCatName</a></li>
+                <li class="breadcrumb-item"><a href="@Ultil.UrlHelper.GetCategoryLink(Model.CategoryName, Model.CategoryId.Value)">@Model.CategoryName</a></li>
+                <li class="breadcrumb-item" aria-current="page">@Model.ProvinceName</li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.DistrictName</li>
+            </ol>
+        </div>
+        <!--box-breadcrumb-->
+        <div class="box-checklist">
+            <h3 class="title title-main">@Model.Title</h3>
+            <div class="main-checklist row">
+                <div class="col-lg-8 left-checklist">                    
+                  
+                    <div class="text-justify">
+                        @Html.Raw(Model.Detail)
+                    </div>
+                    @if (Model.Longitude.HasValue && Model.Latitude.HasValue)
+                    {
+                        var myLocation = AppSession.CurentProfile.Address ?? string.Empty;
+                        <p>
+                            <h4>Map <a href="@("https://www.google.com/maps/dir/"+myLocation+"/"+Model.Latitude+","+Model.Longitude+"/@@"+Model.Latitude+","+@Model.Longitude+",14z?hl=en")" target="_blank" class="btn btn-info">directions</a></h4>
+                            <div id="map-canvas" style="width:100%;"></div>
+                        </p>
+                    }
+
+                </div>
+                <div class="col-lg-4 right-checklist">
+                    <div class="item-info-project">
+                        @if (isAdmin)
+                        {
+                            <div class="mb-3">
+                                <a href="javascript:deleteProject();" class="button-type01 button w-100 button-icon-left">
+                                    <i class="fa fa-trash"></i> Xóa dự án
+                                </a>
+                            </div>
+                        }
+                        <a class="button-type01 button w-100 button-icon-left"><i class="fa fa-heart"></i>Lưu dự án</a>
+                        <div class="flex info-2 box-share box-share-border">
+                            <span class="text"><i class="fas fa-share-alt"></i> Share:</span>
+                            <ul class="box-active flex">
+                                <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=@curentUrl" class="color-facebook" target="_blank"><i class="fab fa-facebook-square"></i></a> </li>
+                                <li class="pinterest"><a href="https://www.pinterest.com/pin/create/link/?url=@curentUrl" class="color-pinterest" target="_blank"><i class="fab fa-pinterest-square"></i></a> </li>
+                                <li class="twitter"><a href="https://twitter.com/intent/tweet?url=@curentUrl&text=@Model.Title" class="color-twitter" target="_blank"><i class="fab fa-twitter"></i></a> </li>
+                                <li class="linkedin"><a href="https://www.linkedin.com/sharing/share-offsite/?url=@curentUrl" class="color-linkedin"><i class="fab fa-linkedin-in" target="_blank"></i></a> </li>
+                            </ul>
+                        </div>
+                        <div class="content">
+                            <h4 class="title">@Model.Title </h4>
+                            <p class="text color-blue">@Model.ProjectName</p>
+                            <ul class="list-info">
+                                <li class="item-list d-flex flex-jc-between">
+                                    <div class="text-justify">
+                                        <strong>Location</strong>: @Model.ProvinceName, @Model.DistrictName
+                                    </div>
+
+                                </li>
+                                <li class="item-list d-flex flex-jc-between">
+                                    <div class="text-justify">
+                                        <strong>Project</strong>: @Model.ProjectName
+                                    </div>
+                                </li>
+
+                                <li class="item-list d-flex flex-jc-between">
+                                    <div class="text-left">
+                                        <strong>Area</strong>: @Model.Area m²
+                                    </div>
+                                </li>
+                                @if (Model.Orientation.HasValue)
+                                {
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Orientation</strong>: @Ultil.StringHelper.GetOrientationName(Model.Orientation)
+                                        </div>
+                                    </li>
+                                }
+                                @if (Model.BalconyOrientation.HasValue)
+                                {
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Balcony orientation</strong>: @Ultil.StringHelper.GetOrientationName(Model.BalconyOrientation)
+                                        </div>
+                                    </li>
+                                }
+                                @if (Model.BathRoom.HasValue)
+                                {
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Bath room</strong>: @Model.BathRoom
+                                        </div>
+                                    </li>
+                                }
+                                @if (Model.BedRoom.HasValue)
+                                {
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Bed room</strong>: @Model.BedRoom
+                                        </div>
+                                    </li>
+                                }
+                                @if (Model.Floors.HasValue)
+                                {
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Floors</strong>: @Model.Floors
+                                        </div>
+                                    </li>
+                                }
+                                @if (Model.FacadeLength.HasValue)
+                                {
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Facade length</strong>: @Model.FacadeLength m
+                                        </div>
+                                    </li>
+                                }
+                                @if (Model.LaneWidth.HasValue)
+                                {
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Lane width</strong>: @Model.LaneWidth m
+                                        </div>
+                                    </li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.Address))
+                                {
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Address</strong>:
+                                            @if (AppSession.CurentProfile.IsAuthenlication)
+                                            {
+                                                <span> @Model.Address</span>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" data-toggle="modal" data-target="#loginModal">Pease login to see address</a>
+                                            }
+                                        </div>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!--item-info-project-->
+
+                    <div class="item-info-project">
+                        <div class="content-info">
+                            <h4 class="title-2 color-main text-transform">Short description</h4>
+                            <div class="des">
+                                <p>@Model.ShortDesc</p>
+                            </div>
+                        </div>
+                        <div class="list-service">
+                            @if (Model.Atribute != null && Model.Atribute.Count > 0)
+                            {
+                                <h4 class="title title-2 d-flex flex-ai-center">
+                                    <span class="icon"><img src="/Assets/images/icon/icon-bar.png" alt="" width="23" class="float-left"></span>
+                                    <span class="text">Advantage/Amenities:</span>
+                                </h4>
+                            }
+                            <ul class="list-info">
+                                @foreach (var item in Model.Atribute)
+                                {
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-justify">
+                                            <p><strong>@item.Name</strong></p>
+                                            @foreach (var attrValue in item.Values)
+                                            {
+                                                <div><i class="fa fa-angle-down text-success"></i> @attrValue.Values</div>
+                                            }
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <!--item-info-project-->
+                    <div class="item-info-project">
+                        <div class="content-info">
+                            <h4 class="title-2 color-main text-transform">Contact info</h4>
+                            <div class="des">
+
+                                @{
+                                    var userProfile = profileControl.GetUserProfileById(Model.CreateBy);
+                                    <p>@userProfile.BusinessName</p>
+                                    <p>@userProfile.SureName</p>
+                                    <ul class="list-info">
+                                        <li class="item-list d-flex flex-jc-between">
+                                            <div class="text-justify">
+                                                <strong>Phone</strong>: <a href="tel:@userProfile.Phone" title="@userProfile.Phone">@userProfile.Phone</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="list-service">
+                            @if (Model.Atribute != null && Model.Atribute.Count > 0)
+                            {
+                                <h4 class="title title-2 d-flex flex-ai-center">
+                                    <span class="icon"><img src="/Assets/images/icon/icon-bar.png" alt="" width="23" class="float-left"></span>
+                                    <span class="text">Advantage/Amenities:</span>
+                                </h4>
+                            }
+                            <ul class="list-info">
+                                @foreach (var item in Model.Atribute)
+                                {
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-justify">
+                                            <p><strong>@item.Name</strong></p>
+                                            @foreach (var attrValue in item.Values)
+                                            {
+                                                <div><i class="fa fa-angle-down text-success"></i> @attrValue.Values</div>
+                                            }
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="box-view-most">
+                        <h3 class="title">
+                            Outstanding project
+                        </h3>
+                        <div class="list-view-most">
+                            @if (ViewData["ReleateProject"] != null)
+                            {
+                                Models.Modul.Product.SearchResult searchResult = (Models.Modul.Product.SearchResult)ViewData["ReleateProject"];
+                                if (searchResult.ItemCount > 0)
+                                {
+                                    foreach (var item in searchResult.Item)
+                                    {
+                                        <div class="item-view-most flex">
+                                            <a href="@Ultil.UrlHelper.GetProductLink(item.Title,item.Id)" class="images">
+                                                <img src="@item.Images" alt="@item.Title">
+                                            </a>
+                                            <div class="content">
+                                                <h4 class="title-2">
+                                                    <a href="@Ultil.UrlHelper.GetProductLink(item.Title,item.Id)">
+                                                        @item.Title
+                                                    </a>
+                                                </h4>
+                                                <div class="flex flex-ai-center active-default">
+                                                    <a href="@Ultil.UrlHelper.GetCategoryLink(item.CategoryName,item.CategoryId.Value)" class="category">@item.CategoryName</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                            }
+                        </div>
+                    </div>
+                    <!--box-view-most-->
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+@section head{
+    <!-- Twitter Card data -->
+    <meta name="twitter:description" content="@Model.ShortDesc">
+    <meta name="twitter:image" content="@Model.Images">
+    <!-- Open Graph data -->
+    <meta name="image" property="og:image" content="@Model.Images" />
+    <meta name="description" property="og:description" content="@Model.ShortDesc" />
+    <meta name="thumbnail" content="@Model.Images" />
+}
+@section scripts{
+  
+
+
+    <script>
+        function resizeVideo() { var contentW = $('.videoContainer').width(); var iframe = $('.videoContainer iframe'); var iframeW = iframe.css('width', contentW); iframe.css('width', iframeW); var iframeH = contentW / 16 * 9; iframe.css('height', iframeH); }
+
+        $(document).ready(function () {
+            resizeVideo();
+
+        });
+    </script>
+
+    <style type="text/css">
+        .owl-prev, .owl-next {
+            width: 15px;
+            height: 100px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: block !important;
+            border: 0px solid black;
+        }
+
+        .owl-prev {
+            left: -20px;
+        }
+
+        .owl-next {
+            right: -20px;
+        }
+
+            .owl-prev i, .owl-next i {
+                transform: scale(2,5);
+                color: #ccc;
+            }
+    </style>
+}

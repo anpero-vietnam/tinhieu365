@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "addNews";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+
+}
+@section head{
+    <script src="~/Scripts/News.js"></script>
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="page-breadcrumb breadcrumb">
+            <li><i class="fa fa-home"></i><a href="/"></a>Trang chủ<i class="fa fa-angle-right"></i></li>
+            <li><a href="/news/search">Danh sách tin </a><i class="fa fa-angle-right"></i></li>
+            <li><a href="javascript:void(0);">Thêm tin tức</a></li>
+        </ul>
+    </div>
+    <div class="col-md-8">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-reorder"></i>Thêm tin
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label>Tiêu đề tin</label>
+                        <input type="text" class="form-control valid" placeholder="Tối đa 300 ký tự" id="tittle">
+                    </div>
+                    <div class="form-group">
+                        <label>Miêu tả ngắn :</label>
+                        <input type="text" class="form-control valid" placeholder="Tối đa 300 ký tự" id="shotdesc">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="addMedia" style="display:none;">
+                                <ul>
+                                    <li>
+                                        <input type="file" id="file2" name="file2" style="float: left; line-height: 32px;" />
+                                        <input type="button" id="addImg" value="Tải ảnh" class="btn btn-success" />
+
+                                    </li>
+                                </ul>
+                            </div>
+                            <textarea name="username" class="ckeditor form-control" id="editor1"></textarea>
+
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tag (kiêm từ khóa):</label>
+                        <input type="text" class="form-control" placeholder="nhiều tag cách nhau bởi dấu , tag rất tốt cho seo" id="tag">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <input type="button" value="Thêm tin mới" class="btn btn-primary" onclick="news.addNew();">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-4">
+        @Html.Partial("_partial/newsContent/_leftcontent")
+
+    </div>
+</div>
+@Html.Partial("_partial/_ckeditor")

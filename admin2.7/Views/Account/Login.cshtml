@@ -1,0 +1,74 @@
+﻿@model adminv2._4.Models.LoginModel
+@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<div class="logo">
+    <a href="/">
+        <img src="/logo.png" alt="" />
+    </a>
+</div>*@
+<!-- END LOGO -->
+<!-- BEGIN LOGIN -->
+<div class="content">
+    <!-- BEGIN LOGIN FORM -->
+    
+        <form action="/Account/Login?ReturnUrl=@ViewBag.ReturnUrl" class="login-form" method="post">
+            @*@Html.AntiForgeryToken()*@
+
+            <h3 class="form-title font-green">Đăng nhập</h3>
+            <div>
+
+                <span id="help-block"> @Html.ValidationSummary(true)</span>
+                <input type="hidden" id="captcha" name="captcha" />
+            </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">Username</label>
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Gõ tên đăng nhập của bạn vào đây" })
+                @Html.ValidationMessageFor(m => m.UserName)
+            </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">Password</label>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Gõ tên mật khẩu của bạn vào đây" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+            <div class="form-group">
+                <div id="g-recaptcha"></div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn red uppercase" onclick="return checkForm();">Đăng nhập</button>                
+                <a href="/account/forgetPassword" id="forget-password" class="forget-password">Quên mật khẩu?</a>
+            </div>
+            <div class="create-account">
+                <p>
+                    <a href="/account/register" id="register-btn" class="uppercase">Tạo tài khoản mới</a>
+                </p>
+            </div>
+            </form>
+    </div>
+
+<script>
+   
+    $(document).ready(function () {  
+        
+        $("#register-back-btn").click(function () {
+            window.location.href = "/"
+        });
+        if (window.location.protocol != "https:") {
+            window.location.protocol = "https:";
+        }
+    })
+    function checkForm() {        
+        var captchaResponse = grecaptcha.getResponse(googleCatcha);
+        if (captchaResponse == "" || captchaResponse == null) {
+            grecaptcha.reset();
+            showNotice("Lỗi", "Vui lòng nhập click vào ô kiểm tra")
+            $("#help-block").html("Vui lòng nhập click vào ô kiểm tra");
+            return false;
+        } else {
+            $("#captcha").val(captchaResponse);
+            return true;
+        }
+    }
+</script>
+

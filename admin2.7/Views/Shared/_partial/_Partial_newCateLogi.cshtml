@@ -1,0 +1,32 @@
+﻿<div id="catelogiList">
+    @Html.Raw(ViewBag.subCatelogi)
+</div>
+
+@if (ViewData["newCatelogi"] != null)
+{
+    System.Data.DataTable table = (System.Data.DataTable)ViewData["newCatelogi"];
+    <div id="content" itemprop="review" itemscope itemtype="http://schema.org/Review">
+        @for (int i = 0; i < table.Rows.Count; i++)
+        {    
+            <div class="post small odd">
+                <div class="inside">
+                    <div class="newImg featuredImg">
+                        <img src="@table.Rows[i]["anhdaidien"]" itemprop="image"/>
+                    </div>
+                    <div class="newReview">
+                        <h2><a href="/@Ultil.StringHelper.ToURLgach(table.Rows[i]["loaitinName"].ToString())@Html.Raw("/")@Ultil.StringHelper.ToURLgach(table.Rows[i]["TieuDe"].ToString())@Html.Raw("-Tin")@table.Rows[i]["Id"]" itemprop="url">@table.Rows[i]["TieuDe"]</a></h2>
+                        <div class="catelogiName fll">
+                            <time>@table.Rows[i]["NgayDang"]</time>
+                        </div>
+                        <div class="shortNew" itemprop="description">
+                            @Html.Raw(table.Rows[i]["mieutangan"])
+                        </div>
+                        <div class="viewTime fll" itemprop="reviews">@table.Rows[i]["viewtime"] Lượt xem</div>
+                        <div class="commentTag fll" itemprop="comment">@Dal.Util.GetAllCommetInnew(table.Rows[i]["facebookcomment"].ToString()) bình luận</div>
+                    </div>   
+                </div> 
+            </div>
+        }
+    </div>    
+}
+@Html.Raw(ViewBag.paged)

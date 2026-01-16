@@ -1,0 +1,55 @@
+﻿<div class="table-scrollable">
+    <table class="table table-striped table-bordered table-hover " id="datatable_products" aria-describedby="datatable_products_info">
+        <thead>
+            <tr role="row" class="heading">
+                <th width="6%" class="sorting_disabled" role="columnheader" rowspan="1" colspan="1">Mã
+                </th>
+                <th width="15%" class="sorting_asc" role="columnheader" tabindex="0" aria-controls="datatable_products" rowspan="1" colspan="1" aria-label="Đơn hàng # : activate to sort column ascending">Tên SP
+                </th>               
+                <th width="15%" class="sorting" tabindex="0" rowspan="1" colspan="1">Lưu tại kho <a href="javascript:void(0);" data-target="#Prwh" data-toggle="modal">(+)</a></th>
+              
+                <th width="15%" class="sorting" tabindex="0" rowspan="1" colspan="1">Trạng thái</th>
+
+            </tr>
+            <tr>
+                <td><span>
+                    <input type="text" class="form-control form-filter input-sm" name="product_id" id="product_id">
+                </span></td>
+                <td rowspan="1" colspan="1">
+                    <input type="text" class="form-control form-filter input-sm" name="product_name" id="product_name">
+                </td>
+
+               
+                <td>
+                    <select class="form-control form-filter input-sm" id="wareHouseId2">
+                    </select>
+                </td>
+                
+                <td>
+                    <select name="prStatus" id="prStatus" class="form-control form-filter input-sm margin-bottom-5">
+                        <option value="0">Lựa chọn..</option>
+                        <option value="1">Sản phẩm mới</option>
+                        <option value="2">Sản phẩm mất</option>
+                        <option value="3">Sản phẩm cũ nhập lại</option>
+                        <option value="4">Mượn nhà cung cấp</option>
+                        <option value="5">Cho nhà cung cấp mượn</option>
+                        <option value="6">Đang trên đường vận chuyển</option>
+                    </select>
+                </td>
+            </tr>
+        </thead>
+
+    </table>
+    <div class="dotted"></div>
+    <div class="spcontent">
+        <div class="headerPr">
+            <span class="col-md-3">Mã SP</span>
+            <span class="col-md-2">Chưa/ đã ĐS</span>
+            <span class="col-md-5">Tên Sp</span>           
+            <span class="col-md-2">Tác vụ</span>
+        </div>
+        <div>
+            <div class="productContent"></div>
+        </div>
+    </div>
+    </div>

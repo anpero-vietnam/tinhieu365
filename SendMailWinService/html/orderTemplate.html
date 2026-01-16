@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Thông tin đơn hàng</title>
+    <meta content='text/html; charset=utf-16' http-equiv='Content-Type' />
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            line-height: 25px;
+        }
+
+        .table-responsive {
+            min-height: .01%;
+            overflow-x: auto;
+        }
+
+        .table-bordered {
+            border: 1px solid #ddd;
+            border-spacing: 0px;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+            border-spacing: 0px;
+        }
+
+        table {
+            background-color: transparent;
+        }
+
+        .cart_summary > thead, .cart_summary > tfoot {
+            background: #f7f7f7;
+            font-size: 16px;
+        }
+
+        .cart_summary .table > tbody > tr > td, .table > tbody > tr > th, .cart_summary .table > tfoot > tr > td, .table > tfoot > tr > th, .cart_summary .table > thead > tr > td, .table > thead > tr > th {
+            padding: 5px;
+        }
+
+        .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+            border-bottom-width: 0px;
+        }
+
+        .table > thead > tr > th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .checkout-page .box-border {
+            margin-bottom: 15px;
+        }
+
+        .box-border {            
+            overflow: inherit;
+        }
+
+        .page-content {
+            margin-top: 30px;
+        }
+
+        .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+            border: 1px solid #ddd;
+        }
+
+        .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: 1px solid #ddd;
+        }
+
+        .cart_summary td {
+            vertical-align: middle !important;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-content">
+        {mailbody}
+    </div>
+</body>
+</html>

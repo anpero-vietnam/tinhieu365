@@ -1,0 +1,178 @@
+.number-cost {
+    border: 1px solid #7f7f7f; height: 28px; display: flex; width: 135px; white-space: nowrap;
+    justify-content: space-between;
+    * {
+      height: 26px; line-height: 26px; text-align: center;  width: 44px;
+    }
+    input {
+      border-left: 1px solid #7f7f7f; border-right: 1px solid #7f7f7f; border-top: none;
+      border-bottom: none;
+      &:focus {
+        outline: none;
+      }
+    }
+    span {
+      font-size: 12px; cursor: pointer;
+      &:hover {
+        color: $color-main;
+      }
+    }
+  }
+  
+  .box-cart-fast {
+    width: 108px; height: 108px; @include border-radius(12px); border: 1px solid #fff; color: #fff;
+    background-color: $color-main; padding-top: 13px; cursor: pointer; margin-top: 15px; position: fixed;
+    z-index: 9999; bottom: 10px; right: 90px; transition: right .5s;
+    @media all and (max-width: 1024px){
+      width: 70px; height: 70px; padding-top: 5px; right: 10px;
+      .icon-cart {
+        width: 35px; display: inline-block;
+      }
+    }
+    .number {
+      margin: 0 0 5px 0; font-size: 16px;
+    }
+  }
+  
+  .box-popup-cart {
+    position: fixed; top: 0; z-index: 9998; transition: right .5s; right: -430px;
+    @media all and (max-width: 480px){
+      right: auto; left: 100%;
+    }
+    .main-content-popup {
+      width: 430px; background-color: #fff; position: relative; height: 100vh;
+      @media all and (max-width: 480px){
+        width: 100%;
+      }
+    }
+  
+    .top-popup {
+      height: 74px; border-bottom: 1px solid #e5e5e5;
+      @media all and (max-width: 767px){
+        height: 60px;
+      }
+      .title-popup {
+        font-size: 25px; margin: 0; padding-left: 30px;
+        @media all and (max-width: 767px){
+          font-size: 22px; padding-left: 15px;
+        }
+      }
+      .close-popup {
+        width: 74px; height: 74px; background-color: #b5b5b5; cursor: pointer;
+        @media all and (max-width: 767px){
+          height: 60px; width: 60px;
+        }
+        &:hover {
+          background-color: $color-main;
+        }
+      }
+    }
+  
+    .bottom-popup {
+      border-top: 1px solid #e5e5e5; padding: 0 30px 40px 30px;
+      @media all and (max-width: 767px){
+        padding: 0 15px 15px 15px;
+      }
+      .button {
+        margin: 10px 0 0 0; height: 46px; line-height: 42px; font-size: 20px; font-weight: 700;
+        @media all and (max-width: 767px){
+          height: 38px; font-size: 18px; line-height: 38px;
+        }
+      }
+    }
+  
+    .total {
+      height: 60px; text-transform: uppercase; font-size: 20px; color: $color-text; font-weight: 700;
+        @media all and (max-width: 767px){
+        height: 40px; font-size: 18px;
+      }
+    }
+  
+    .item-cart-popup {
+      border-bottom: 1px solid #e5e5e5; padding: 20px 30px; color: $color-text;
+      @media all and (max-width: 767px){
+        padding: 15px;
+      }
+      .images {
+        width: 130px; min-width: 130px; margin-right: 20px;
+        @media all and (max-width: 767px){
+          width: 100px; min-width: 100px; margin-right: 15px;
+        }
+      }
+  
+      .name-product {
+        color: $color-text; font-size: 16px; font-weight: 700; margin: 0 0 5px 0;
+        a {
+          color: $color-text;
+          &:hover {
+            color: $color-main; text-decoration: none;
+          }
+        }
+      }
+  
+      .content {
+        flex: 1;
+      }
+  
+      .cost {
+        font-size: 16px; color: $color-text; margin: 0 0 15px 0;
+      }
+  
+      .button-delete {
+        color: #adadad; margin-left: 10px; margin-top: 50px; cursor: pointer;
+        &:hover {
+          color: $color-main;
+        }
+      }
+    }
+  
+    .content-popup {
+      overflow: auto; @include calc('height','100vh - 74px - 213px');
+      @media all and (max-width: 767px){
+        @include calc('height','100vh - 60px - 152px');
+      }
+    }
+  }
+  
+  .show-popup-cart {
+    position: relative;
+    &:before {
+      content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,.5);
+      z-index: 9997;
+    }
+    .box-cart-fast {
+      right: 520px; box-shadow: 0 1px 4px 0;
+      @media all and (max-width: 1024px){
+        right: 455px;
+      }
+      @media all and (max-width: 480px){
+        right: 100%;
+      }
+    }
+  
+    .box-popup-cart {
+      right: 0; opacity: 1;
+      @media all and (max-width: 480px){
+        right: 0; left: 0;
+      }
+    }
+  }
+  
+  .main-view-cart {
+    margin-bottom: 100px;
+    .title-1 {
+      margin-bottom: 25px;
+    }
+  }
+  
+  .box-order {
+    margin-top: 30px;
+    .button-order {
+      font-weight: 700; text-transform: uppercase; min-width: 255px; margin-left: 55px; @include border-radius(3px);
+    }
+  }
+  
+  .box-view-cart {
+    padding-top: 45px;
+  }
+  

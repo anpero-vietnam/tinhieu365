@@ -1,0 +1,40 @@
+﻿@using FrontEnd.Controllers;
+<div class="main-right-profile text-center">
+    <h3 class="title-2">@AppSession.CurentProfile.SureName</h3>
+
+    <div class="item-avatar">
+        <div class="box-avatar">
+            <div class="images img-rounded">
+                <img src="@AppSession.CurentProfile.Avata" alt="No images" id="user-thumb">
+                <div class="update-avatar text-center">
+                    <input type="file" id="upload-avata">
+                    <i class="fas fa-camera-alt"></i>
+                    <span class="text">Update</span>
+                </div>
+            </div>
+            <span class="status online"></span>
+        </div>
+
+    </div>
+    <!--item-avatar-->
+    <div>
+        <div class="box-qcode" id="qrc">
+        </div>
+    </div>
+    <ul class="list-info-user" id="profileMenu">
+        <li><a href="/account/myprofile" class="button button-type05 button-rounded">Thông tin cơ bản</a> </li>
+        <li><a href="/Account/ChangePassword" class="button button-type05 button-rounded">Đổi mật khẩu</a> </li>                
+        <li><a href="/project/saved" class="button button-type05 button-rounded">Watch list của tôi</a> </li>
+        <li><a href="/account/notification" class="button button-type05 button-rounded">Các thông báo</a> </li>
+    </ul>
+    <!--list-info-user-->
+</div>
+<script>
+    if (document.querySelectorAll("#profileMenu a").length>0) {
+        document.querySelectorAll("#profileMenu a").forEach(function (e) {            
+            if (e.href.toLowerCase() == window.location.href.toLowerCase()) {
+                e.classList.add("active");
+            }
+        });
+    }
+</script>

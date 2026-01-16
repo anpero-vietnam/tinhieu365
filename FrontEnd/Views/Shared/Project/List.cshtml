@@ -1,0 +1,132 @@
+﻿@using Models
+@model  List<TransactionModel>
+@{
+    ViewBag.Title = "Top 50 có khối lượng giao dịch lớn ngày " + DateTime.Now.ToString("dd/MM/yyyy");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    <style>
+        a.upvalueLabel, span.upvalueLabel {
+            color: rgb(11, 223, 57);
+            font-weight: bold;
+        }
+
+        a.downvalueLabel, span.downvalueLabel {
+            color: rgb(255, 0, 23);
+            font-weight: bold;
+        }
+
+        .color-yellow {
+            color: rgb(11, 223, 57);
+        }
+
+        span.maxValue {
+            color: rgb(17 156 220);
+        }
+    </style>
+}
+<div class="box-gellery">
+    <div class="container">
+        <h3 class="title color-main flex flex-jc-center flex-ai-center mb-5">
+            <span>@ViewBag.SearhcTitle</span>
+        </h3>
+
+        @if (Model != null && Model.Count > 0)
+        {
+            <div class="row scroll-mb">
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">stt</th>
+                                <th scope="col">Mã CK</th>
+                                <th scope="col">KLTB 20 ngày</th>
+                                <th scope="col">KL </th>
+                                <th scope="col">Hành động </th>
+                                <th scope="col">Xu hướng<br />trung hạn</th>
+                                <th scope="col">Sức mạnh<br />xu hướng</th>
+                                <th scope="col">Đáy <br />52 tuần</th>
+                                <th scope="col">Đỉnh <br />52 tuần</th>
+                                <th scope="col">Thấp</th>
+                                <th scope="col">Cao </th>
+                                
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count > 0)
+                            {
+                                int count = 1;
+
+                                foreach (var item in Model)
+                                {
+                                    string actionText = "--";
+                                    if (item.RSI <= 27 && item.ADX > 23 && item.MFI <= 24)
+                                    {
+                                        actionText = "Xem xét mua";
+                                    }
+                                    if (item.RSI >= 68 && item.ADX > 23 && item.MFI >= 78)
+                                    {
+                                        actionText = "Xem xét bán";
+                                    }
+                                    bool isUpvalue = item.Close >= item.Open;
+                                    count += 1;
+                                    string adxText = "Yếu";
+                                    if (item.ADX >= 30 && item.ADX < 50)
+                                    {
+                                        adxText = "mạnh";
+                                    }
+                                    if (item.ADX >= 50 && item.ADX <= 75)
+                                    {
+                                        adxText = "sắp đảo chiều";
+                                    }
+                                    if (item.ADX > 75)
+                                    {
+                                        adxText = "có thể đảo chiều bất cứ lúc nào";
+                                    }
+                                    int valuePersent = (int)((((decimal)item.Volume - item.AVGValue20) / item.AVGValue20) * 100);
+                                    string valuePersentText = "<span class=\"" + (valuePersent >= 0 ? "upvalueLabel font-weight-bold" : "downvalueLabel font-weight-bold") + "\">(" + valuePersent + "%)</span>";
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>
+                                            <a href="/symbols/@(string.IsNullOrEmpty(item.StockExchange)?"":item.StockExchange+"-")@item.Ticker" title="@item.StockExchange - @item.BusinessName" class="@(isUpvalue?"upvalueLabel":"downvalueLabel") font-weight-bold">
+                                                @item.Ticker
+                                                @if (item.IsWatchList)
+                                                {
+                                                    <i class="fas fa-star color-yellow"></i>
+                                                }
+                                            </a>
+                                        </td>
+                                        <td>@Ultil.StringHelper.ConVertToMoneyFormatInt(item.AVGValue20.ToString())</td>
+                                        <td>@Ultil.StringHelper.ConVertToMoneyFormat((decimal)item.Volume) @Html.Raw(valuePersentText)</td>
+                                        <td>@actionText</td>
+                                        <td>@(item.SMA>item.SMA50? "đang tăng" : "đang giảm")</td>
+                                        <td>@adxText</td>
+                                        <td><span class="downvalueLabel">@item.MinValue52Week</span></td>
+                                        <td><span class="maxValue">@item.MaxValue52Week</span></td>
+                                        <td>@item.Low</td>
+                                        <td>@item.High</td>                                        
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+        }
+        else
+        {
+
+            <div class="row scroll-mb">
+                <div class="col-12">
+                    Không tìm thấy kết quả nào
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>

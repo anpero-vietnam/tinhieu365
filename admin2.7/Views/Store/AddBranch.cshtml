@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "AddBranch";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+ 
+
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="portlet light bordered">
+
+            <div class="portlet-title">
+                <div class="caption font-green-sharp">
+                    <span class="caption-subject bold uppercase">Chi nhánh</span>
+                    <span class="caption-helper"></span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                      <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                Tên chi nhánh mới
+                                <span class="required" aria-required="true"> * </span>
+                            </label>
+                            <div class="col-md-8">
+                                <input name="BranchName" id="BranchName" class="form-control" />
+                                <span class="help-block"> Tối đa 50 ký tự </span>
+                            </div>
+                        </div>
+                          <div class="clearfix"></div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <input type="button" class="btn red button-submit" id="addBranch" value="Thêm chi nhánh"/>
+                            </div>
+                        </div>
+                    </div>
+                
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="portlet light bordered">
+
+            <div class="portlet-title">
+                <div class="caption font-green-sharp">
+                    <span class="caption-subject bold uppercase">Các chi nhánh</span>
+                    <span class="caption-helper">Chi nhánh có giao dịch không thể xóa</span>
+                </div>
+            </div>
+            <div class="portlet-body">               
+                <div class="actions">      
+                  
+                    @if (ViewData["AllBranch"] != null)
+                    {
+                        List<Models.Branch> storeList = (List<Models.Branch>)ViewData["AllBranch"];
+                        if (storeList.Count > 0)
+                        {
+                            for (int i = 0; i < storeList.Count; i++)
+                            {
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" value="@storeList[i].Name" id="branch_@storeList[i].Id"/>
+                                        <div class="input-group-btn">
+                                            <input type="button" class="btn green" value="Sửa" onclick="Branch.UpdateBranch(@storeList[i].Id);" />
+                                            <input type="button" class="btn red" value="Xóa" onclick="Branch.DelBranch(@storeList[i].Id);"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/store/branchHandler.js"></script>
+<script>
+    $(document).ready(function () {
+        Branch.init();
+    });
+</script>

@@ -1,0 +1,188 @@
+﻿@model Models.Modul.Article.ArticleItem
+@{
+
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@section head{
+    <script src="~/Scripts/News.js"></script>
+}
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="page-breadcrumb breadcrumb">
+                <li><i class="fa fa-home"></i><a href="/"></a>Trang chủ<i class="fa fa-angle-right"></i></li>
+                <li><a href="/news/search">Danh sách tin </a><i class="fa fa-angle-right"></i></li>
+                <li><a href="javascript:void(0);">@Model.CateGoryName</a></li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <div class="portlet box blue">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-reorder"></i>Cập nhật tin </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label>Tiêu đề tin</label>
+                            <input type="text" class="form-control valid" placeholder="Tối đa 300 ký tự" id="tittle" value="@Model.Tittle">
+                        </div>
+                        <div class="form-group">
+                            <label>Miêu tả ngắn</label>
+                            <input type="text" class="form-control valid" placeholder="Tối đa 300 ký tự" id="shortDesc" value="@Model.ShortDesc">
+                        </div>
+                        <div>
+                            <div class="addMedia" style="display:none;">
+
+                                <ul>
+                                    <li>
+                                        <input type="file" id="file2" name="file2" style="float: left; line-height: 32px;" />
+                                        <input type="button" id="addImg" value="Tải ảnh" class="btn btn-success" />
+
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <textarea name="username" class="ckeditor" id="editor1">@Html.Raw(Model.NewsDesc)</textarea>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-md-3 control-label">Tag :</label>
+                            <input type="text" class="form-control valid" placeholder="nhiều tag cách nhau bởi dấu , tag rất tốt cho seo" id="tag" value="@Model.Tag">
+                        </div>
+                        <div class="form-actions">
+                            <input type="button" value="Cập nhật tin" class="btn btn-primary" onclick="news.UpdateNew();">
+                            <input type="button" value="Xóa tin" class="btn btn-primary" id="btnDelNews">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="portlet box blue">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-reorder"></i>Thông tin thêm
+                    </div>
+
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <span class="caption-subject font-green sbold uppercase">Chọn chủ đề cho tin</span>
+                            </div>
+                        </div>
+                        <div class="catContent">@Html.Raw(ViewBag.data)</div>
+
+                        <div class="form-group">
+                            <label>Ảnh đại diện :</label>
+                            <div class="input input-file">
+                                @if (!string.IsNullOrEmpty(Model.Thumb))
+                                {
+                                    <img id="prThumb" src="@Model.Thumb" style="width:100%;" />
+                                }
+                                else
+                                {
+                                    <img id="prThumb" style="width:100%;display:none;" src="" />
+                                }
+                                <button type="button" class="btn blue start" id="thumbLink2">
+                                    <i class="fa fa-upload"></i>
+                                    <span> Chọn file ảnh </span>
+                                </button>
+                                @*<a class="ui-input-file">
+                                        <input type="file" id="thumbLink2" name="thumbLink2">
+                                    </a>*@
+                            </div>
+                        </div>
+                        <div class="form-group" style="display:none;">
+                            <label>
+                                <span class="checked">
+                                    <input type="radio" name="isvideo" id="isvideo">
+                                </span>
+                                Hiển thị nút PlayVideo
+                            </label>
+
+                        </div>
+                        <div class="form-group">
+                            <select id="prioty" class="form-control input-lg">
+                                <option value="1">Ưu tiên bình thường</option>
+                                <option value="2">Ưu tiên cao</option>
+                                <option value="3">Ưu tiên cao nhất</option>
+                            </select>
+
+                        </div>
+                        <div class="form-group">
+                            <select id="publish" class="form-control input-lg">
+                                <option value="1">Đăng lên luôn</option>
+                                <option value="0">Đăng lên sau</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Lượt xem</label>
+                            <div class="input-icon right">
+                                <i class="icon-eye-open"></i>
+                                <input type="text" value="@Model.ViewTime" id="view" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    @section scripts{
+        <script src="/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+        <script>
+        news.cat = "@Model.CategoryId";
+        news.id=@Model.Id;
+            $(document).ready(function () {
+            $('#prioty option[value=@Model.CategoryId]').attr('selected','selected');
+            $("#btnDelNews").click(function(){
+               news.delNews(id);
+            });
+            $('input:radio[name="radiocat"]').change(function () {
+                news.cat = $(this).val();
+            });
+            $("input[name=radiocat][value='@Model.CategoryId']").attr("checked","checked")
+            $("#thumbLink2").smallFileUpload({
+                Size: "400x400",
+                allowExtension: ".jpg,.png,.jpeg,.svg,.gif,.ico",
+                success: function (data) {                    
+                    $("#prThumb").fadeOut().attr("src", data.uploadedImages[0].Url).fadeIn();
+                }
+            })
+        });
+        function setCat(catId) {
+            news.cat = catId;
+        }
+        </script>
+    }
+}
+
+
+@Html.Partial("_partial/_ckeditor")
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+
+    .content-page .primary .mothuong table tr th {
+        color: red;
+        font-weight: bold;
+        font-size: 18px;
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+    }
+
+    .content-page .primary .mothuong table tr td {
+        color: #333;
+        font-weight: bold;
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+        font-size: 16px;
+    }
+</style>

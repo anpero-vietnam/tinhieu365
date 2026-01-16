@@ -1,0 +1,199 @@
+﻿@model Models.Modul.Product.OrderModel
+@{
+    ViewBag.Title = "In đơn hàng";
+    if (true)
+    {
+        Layout = "~/Views/Shared/_ShopPrintLayout.cshtml";
+    }
+}
+
+@section head{
+
+    <script src="~/Scripts/jquery-barcode.min.js"></script>
+    <script src="~/Scripts/jquery.qrcode-0.11.0.min.js"></script>
+    <script>var mains = {};</script>
+}
+
+@if (Model != null)
+{
+    AModul.Product.ProductOrderControl po = new AModul.Product.ProductOrderControl();
+    System.Data.DataTable table = po.GetprodByOrder(Model.Id,Model.StoreId);
+    Dal.Profile.AddressBook ad = new Dal.Profile.AddressBook();
+    //var contact =  ad.GetAddressById(Model.CustomId, Model.StoreId);
+    <div class="right12"><div class="tittle l9">PHIẾU XUẤT KHO KIÊM BẢO HÀNH <div class="idc">Số phiếu: <label>OD</label>@Model.Id</div></div><div class="r3"><span id="bcTarget"></span></div></div>
+    <div class="right12">
+        <div class=" box">
+            <div style="color: black !important;"><strong>Thông tin khách hàng </strong></div>
+            <div style="width:50%;float:left;"><strong>Họ tên:</strong> @Model.CustomName </div><div style="width:50%;float:right;padding-left:10px;"><strong>Điện thoại: </strong>@Model.CusTomPhone </div>
+            <div><strong>Địa chỉ:</strong>  @Model.CustomAddres</div>
+
+        </div>
+    </div>
+    <div class="right12">
+        <div class="left11">
+            <div class="portlet gren">
+                <div class="portlet-body">
+                    <table class="table table-scrollable">
+                        <thead>
+                            <tr style="background-color: rgb(206, 213, 225);">
+                                <th>Mã SP</th>
+                                <th style="width:260px;">Tên sản phẩm</th>
+                                <th>Serial</th>
+                                <th>Bảo hành</th>
+                                <th>Số lượng</th>
+                                <th>Đơn giá</th>
+                                <th>Thành Tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (table != null && table.Rows.Count > 0)
+                            {
+
+                                for (int i = 0; i < table.Rows.Count; i++)
+                                {
+                                    <tr>
+                                        <td>SP @table.Rows[i]["PRID"] </td>
+                                        <td>@table.Rows[i]["PRName"]</td>
+                                        <td>@table.Rows[i]["seria"]</td>
+                                        <td>@table.Rows[i]["wr"]</td>
+                                        <td>@table.Rows[i]["quantyti"]</td>
+                                        <td>@Ultil.StringHelper.ConVertToMoneyFormat(table.Rows[i]["price"].ToString())</td>
+                                        <td>@Ultil.StringHelper.ConVertToMoneyFormat((Convert.ToDecimal(table.Rows[i]["quantyti"]) * Convert.ToDecimal(table.Rows[i]["price"])).ToString())</td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+
+
+                    </table>
+
+                    <ul class="total right">
+
+                        @*<li><strong>Tổng giá trị:</strong> @Ultil.StringHelper.ConVertToMoneyFormat(Model.TottalPrice.ToString()) đ</li>
+                            <li><strong>Thuế VAT:</strong> @Ultil.StringHelper.ConVertToMoneyFormat(Model.TottalVat.ToString()) đ</li>*@
+
+                        <li><strong>Phí và Ship: </strong>@Ultil.StringHelper.ConVertToMoneyFormat((Model.ShippingFee).ToString()) đ
+                        <li><strong>Thành tiền: </strong>@Ultil.StringHelper.ConVertToMoneyFormat((Model.TotalPrice + Model.TotalVat).ToString()) đ
+                        <li>
+                            @Ultil.StringHelper.ToStringVN(Model.TotalPrice + Model.TotalVat)
+                        </li>
+                        @*<li>
+                                <strong>Đã trả: </strong>@Ultil.StringHelper.ConVertToMoneyFormatInt(Model.Paided.ToString())
+                            </li>
+                            <li>
+                               <strong>Còn nợ: </strong>@Ultil.StringHelper.ConVertToMoneyFormatInt(Model.Owe.ToString())
+                            </li>
+                            <li>Nộp tại: @Model.BankName </li>*@
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="right12">
+            @*<div class="col-md-12">
+                    <strong>Chính sách bán hàng</strong>
+                    <br />
+                    - Bảo hành: Theo đúng chính sách bảo hành của nhà sản xuất.  Sản phẩm không còn tem bảo hành, bị rơi, va chạm, ma sát với vật cứng làm trầy xước, móp méo, sản phẩm bị vào nước ... theo qui định từ chối bảo hành của nhà sản xuất chúng tôi Không áp dụng đổi trả, khách hàng chịu chi phí sửa chữa.
+                                 <br />
+                    - Chúng tôi giảm giá cho quý khách vào những lần mua hàng tiếp theo, xin vui lòng cung cấp thông tin lần mua hàng trước để được ưu đãi giảm giá.
+
+                </div>*@
+
+            <div class="left5">
+
+                <br />
+                <center><strong>Nhân viên bán hàng</strong></center>
+                <center style="font-size: 16px;font-style: italic;">(Ký và ghi rõ họ tên)</center>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <div>
+                   
+                </div>
+            </div>
+            <div class="left5">
+
+                <br />
+                <center><strong>Thủ kho</strong></center>
+                <center style="font-size: 16px;font-style: italic;">(Ký và ghi rõ họ tên)</center>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+
+            </div>
+            <div class="left5">
+                <center>Ngày lập: @Ultil.Times.ConvertStringToTimeForMatVN(Model.DateCreate)</center>
+                <center><strong>Khách hàng </strong></center>
+
+                <center style="font-size: 16px;font-style: italic;">(Ký và ghi rõ họ tên)</center>
+
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <div>
+
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <script>
+
+            $(document).ready(function () {
+                var code = "@Model.Id";
+                $("#bcTarget").barcode(code, "code128", { barWidth: 2, barHeight: 28 });
+
+                @*   $('#qrc').qrcode(
+            {
+                // render method: 'canvas', 'image' or 'div'
+                render: 'image',
+
+                // version range somewhere in 1 .. 40
+                minVersion: 1,
+                maxVersion: 40,
+                // error correction level: 'L', 'M', 'Q' or 'H'
+                ecLevel: 'L',
+                // offset in pixel if drawn onto existing canvas
+                left: 0,
+                top: 0,
+                // size in pixel
+                size: 140,
+                // code color or image element
+                fill: '#000',
+
+                // background color or image element, null for transparent background
+                background: null,
+
+                // content
+                text: '@backEnd' + "/order/detail?id=" + "@Model.Id" + "&token=" + "@or.Token",
+
+                // corner radius relative to module width: 0.0 .. 0.5
+                radius: 0,
+
+                // quiet zone in modules
+                quiet: 0,
+                // modes
+                // 0: normal
+                // 1: label strip
+                // 2: label box
+                // 3: image strip
+                // 4: image box
+                mode: 2,
+                mSize: 0.1,
+                mPosX: 0.5,
+                mPosY: 0.5,
+                label: 'TMT',
+                fontname: 'sans',
+                fontcolor: '#000',
+                image: '@backEnd' + '/favicon.ico'
+            });*@
+            });
+        </script>
+    </div>
+}

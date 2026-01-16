@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "CreateAccount";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="col-md-12">
+					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+					<h3 class="page-title">
+					Tạo người dùng mới <small>Quản lý danh sách khách hàng</small> 
+					</h3>
+					
+					<!-- END PAGE TITLE & BREADCRUMB-->
+				</div>
+<div class="form">
+  
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            <label class="col-md-2 control-label">Email :</label>
+            <div class="input col-md-10">
+                <input type="text" name="UserName" class="form-control valid" id="UserName" placeholder="Email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Pass :</label>
+            <div class="input col-md-10">
+                @Html.Password("PassWord", null, new { @class = "form-control valid" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Confirm Pass :</label>
+            <div class="input col-md-10">
+                @Html.Password("PassWord2", null, new { @class = "form-control valid" })
+            </div>
+        </div>
+         <div class="form-group">              
+               <label  class="col-md-2 control-label">nhóm quền</label>               
+               <div class="input col-md-10">
+                    <select name="role" class="form-control">                       
+                            <option value="addmin">addmin ( full quyền )</option>                     
+                            <option value="mod">mod ( chỉ duyệt bài )</option>        
+                            <option value="maketing">maketing</option>
+                            <option value="accounting">Kế toán</option>
+                            <option value="store">Thủ kho</option>
+                            <option value="tech">Kỹ thuật, bảo hành</option>
+                            <option value="0">Người dùng cuối (Lock in admin)</option>
+                    </select>
+                </div>
+            </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label"></label>
+            <div class="input col-md-10">
+                <input type="submit" value="Add User">
+            </div>
+        </div>
+   
+    
+    }
+    Hoặc click vào <a href="/Account/Login">ĐÂY</a> đăng nhập bằng tài khoản <a href="/Account/Login">
+        <img src="/images/goo.png" /></a>
+    @section Scripts {
+        @System.Web.Optimization.Scripts.Render("~/bundles/global.js")
+    }
+</div>

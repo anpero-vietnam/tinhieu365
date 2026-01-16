@@ -1,0 +1,68 @@
+﻿@using Models.Modul.Common
+@model List<ContactItem>
+@{
+    ViewBag.Title = "Liên hệ từ web";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<div class="row">
+    <div class="col-xs-12">
+
+        <div class="portlet-body">
+            <div class="table-responsive table-scrollable">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Người gửi</th>
+                            <th>Email</th>
+                            <th>Địa chỉ</th>
+                            <th>IP</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Count > 0)
+                        {
+
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (!Convert.ToBoolean(item.Reader))
+                                        {
+                                            <strong>@item.Name</strong>
+                                        }
+                                        else
+                                        {
+                                            <text>@item.Name</text>
+                                        }
+                                    </td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Address</td>
+                                    <td>@(item.ClienceIp)</td>
+                                    <td>
+                                        @if (item.Reader)
+                                        {
+                                            <strong><a href="/contact/detail?id=@item.Id">Chi tiết</a></strong>
+                                            <span class="label label-success">Chưa đọc</span>}
+                                        else
+                                        {
+                                            <a href="/contact/detail?id=@item.Id">Chi tiết</a>
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+
+
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        @Html.Raw(ViewBag.page)
+    </div>
+
+</div>

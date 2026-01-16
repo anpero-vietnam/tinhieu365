@@ -1,0 +1,532 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+
+namespace Dal
+{
+    /// <summary>
+    /// chuỗi kết nối cho database thứ 1 "db2"
+    /// </summary>
+    public class DatabaseAccess:IDisposable
+    {
+        private SqlConnection conn;
+        private SqlDataAdapter adapter;
+         /// <summary>
+         /// chuỗi kết nối cho phần dữ liệu web
+         /// </summary>
+        public DatabaseAccess()
+        {
+            conn = null;
+            adapter = null;           
+            
+        }
+        /// <summary>
+        /// create new connection
+        /// </summary>
+        /// <returns></returns>
+        public SqlConnection OpenConnection()
+        {
+            conn = new SqlConnection("Data Source=localhost;Initial Catalog=storedata;Persist Security Info=True;User ID=storedata;Password=donaskme!@$3");    
+            try
+            {
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    CloseConnection();
+                    conn.Open();
+                }
+                else
+                {
+
+                    conn.Open();
+                }
+
+            }
+            catch
+            {
+                return null;
+            }
+            return conn;
+        }
+        /// <summary>
+        /// close a connection
+        /// </summary>
+        /// <param name="sqlCn"></param>
+        public void CloseConnection()
+        {
+          
+
+                if (conn.State == ConnectionState.Open) { 
+                conn.Close();
+                conn.Dispose();
+                
+                
+            }
+        }
+
+        /// <summary>
+        /// Execute all store procedure without parammeter
+        /// </summary>
+        /// <param name="spName">Sql store procedure name</param>
+        /// <returns>Sql data in a DataTable</returns>
+        public DataTable executeSelect(string spName)
+        {
+            try
+            {
+                DataSet dataSet = new DataSet();
+                //Open connection
+                conn = OpenConnection();
+
+                adapter = new SqlDataAdapter(spName, conn);
+                adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                adapter.Fill(dataSet);
+
+                //Close connection
+                CloseConnection();
+                return dataSet.Tables[0];
+            }
+            catch (Exception)
+            {
+                return null;
+                throw;
+            }
+        }
+        /// <summary>
+        /// Execute all store procedure has parammeter
+        /// </summary>
+        /// <param name="spName">Sql store procedure name</param>
+        /// <param name="paramList">Parameters of the store procedure</param>
+        /// <returns>Sql data in a DataTable</returns>
+        public DataTable executeSelect(string spName, SqlParameter[] paramList)
+        {
+            DataSet dataSet = new DataSet();
+            //Open connection
+            conn = OpenConnection();
+            adapter = new SqlDataAdapter(spName, conn);
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand.Parameters.AddRange(paramList);
+            adapter.Fill(dataSet);
+            //Close connection
+            CloseConnection();
+            if (dataSet.Tables[0] != null)
+            {
+                return dataSet.Tables[0];
+            }
+            else {
+                return null;
+            }
+           
+        }
+        public DataTable executeCommandSelect(String CommandText)
+        {
+            DataSet dataSet = new DataSet();
+            //Open connection
+            conn = OpenConnection();
+            SqlCommand command = new SqlCommand(CommandText);
+            command.CommandType = CommandType.Text;
+            command.Connection = conn;
+            adapter = new SqlDataAdapter(command);        
+            adapter.Fill(dataSet);
+            //Close connection
+            CloseConnection();
+            return dataSet.Tables[0];
+        }
+        /// <summary>
+        /// dùng để chạy các proc với các mệnh đề là thêm, sửa và xóa
+        /// </summary>
+        /// <param name="spName">Sql store procedure name</param>
+        /// <param name="paramList">Parameters of the store procedure</param>
+        /// <returns>Sql data in a DataTable</returns>
+        public int executeUpdate(string spName, SqlParameter[] paramList)
+        {
+            int result = 0;
+            //Open connection
+            conn = OpenConnection();
+            SqlCommand command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddRange(paramList);
+            try
+            {
+                result = command.ExecuteNonQuery();
+
+            }
+            catch (SqlException)
+            {
+                //relationship error
+                throw;
+                //result = 0;
+            }
+            //Close connection
+            CloseConnection();
+
+            return result;
+        }
+        public int executeUpdate(string spName)
+        {
+            int result = 0;
+            //Open connection
+            conn = OpenConnection();
+
+            SqlCommand command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                result = command.ExecuteNonQuery();
+
+            }
+            catch (SqlException)
+            {
+                //relationship error
+                result = 0;
+            }
+            //Close connection
+            CloseConnection();
+
+            return result;
+        }
+        /// <summary>
+        /// Execute store procedure get result executed.
+        /// </summary>
+        /// <param name="spName"></param>
+        /// <param name="paramList"></param>
+        /// <returns></returns>
+        public int executeScalary(string spName, SqlParameter[] paramList)
+        {
+            int result = 0;
+            try
+            {
+                //Open connection
+                conn = OpenConnection();
+                SqlCommand command = new SqlCommand(spName, conn);
+             
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddRange(paramList);
+                result = int.Parse(command.ExecuteScalar().ToString());
+                //Close connection
+                CloseConnection();
+                return result;
+            }
+            catch (Exception)
+            {
+                return result;
+            }
+
+        }
+        public String executeScalaryString(string spName, SqlParameter[] paramList)
+        { 
+            String result = "0";
+            try
+            {
+                //Open connection
+                conn = OpenConnection();
+                SqlCommand command = new SqlCommand(spName, conn);
+                SqlCommand commands = new SqlCommand();
+                
+                command.CommandType = CommandType.StoredProcedure;
+                
+                command.Parameters.AddRange(paramList);
+                result = command.ExecuteScalar().ToString();
+                //Close connection
+                CloseConnection();
+                return result;
+            }
+            catch (Exception)
+            {
+                return result;
+            }
+
+        }
+        public int executeScalary(string spName)
+        {
+            int result = 0;
+            try
+            {
+                //Open connection
+                conn = OpenConnection();
+                SqlCommand command = new SqlCommand(spName, conn);
+                command.CommandType = CommandType.StoredProcedure;
+                result = int.Parse(command.ExecuteScalar().ToString());
+                //Close connection
+                CloseConnection();
+                return result;
+            }
+            catch (Exception)
+            {
+                return result;
+
+            }
+        }
+
+        public void Dispose()
+        {
+            if (conn != null)
+                conn.Close();
+
+              conn = null;
+              adapter = null;
+        }
+    }
+    /// <summary>
+    /// Chuỗi kết nối cho dataBase thứ 2 DefaultConnection data này chứa thông tin người dùng
+    /// </summary>
+    public class DatabaseAccess2 : IDisposable
+    {
+        private SqlConnection conn;
+        private SqlDataAdapter adapter;
+
+        public DatabaseAccess2()
+        {
+            conn = null;
+            adapter = null;
+
+            //
+            // TODO: Add constructor logic here
+            //
+            //conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+            //conn.Open();
+        }
+        public DataTable executeCommandSelect(String CommandText)
+        {
+            //checkValid c = new checkValid();
+            //CommandText = StringManager.checkHackSql(CommandText);
+            DataSet dataSet = new DataSet();
+            //Open connection
+            conn = OpenConnection();
+            SqlCommand command = new SqlCommand(CommandText);
+            command.CommandType = CommandType.Text;
+            command.Connection = conn;
+            adapter = new SqlDataAdapter(command);
+            adapter.Fill(dataSet);
+            //Close connection
+            CloseConnection();
+            return dataSet.Tables[0];
+        }
+        /// <summary>
+        /// create new connection
+        /// </summary>
+        /// <returns></returns>
+        public SqlConnection OpenConnection()
+        {
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+          
+            try
+            {
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    CloseConnection();
+                    conn.Open();
+                }
+                else
+                {
+
+                    conn.Open();
+                }
+
+            }
+            catch
+            {
+                return null;
+            }
+            return conn;
+        }
+        /// <summary>
+        /// close a connection
+        /// </summary>
+        /// <param name="sqlCn"></param>
+        public void CloseConnection()
+        {
+
+
+            if (conn.State == ConnectionState.Open)
+            {
+                conn.Close();
+                conn.Dispose();
+
+
+            }
+        }
+
+        /// <summary>
+        /// Execute all store procedure without parammeter
+        /// </summary>
+        /// <param name="spName">Sql store procedure name</param>
+        /// <returns>Sql data in a DataTable</returns>
+        public DataTable executeSelect(string spName)
+        {
+            try
+            {
+                DataSet dataSet = new DataSet();              
+                conn = OpenConnection();
+                adapter = new SqlDataAdapter(spName, conn);
+                adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+                adapter.Fill(dataSet);                
+                CloseConnection();
+                return dataSet.Tables[0];
+            }
+            catch (Exception)
+            {
+                return null;
+                throw;
+            }
+        }
+        /// <summary>
+        /// Execute all store procedure has parammeter
+        /// </summary>
+        /// <param name="spName">Sql store procedure name</param>
+        /// <param name="paramList">Parameters of the store procedure</param>
+        /// <returns>Sql data in a DataTable</returns>
+        public DataTable executeSelect(string spName, SqlParameter[] paramList)
+        {
+            DataSet dataSet = new DataSet();
+            //Open connection
+            conn = OpenConnection();
+            adapter = new SqlDataAdapter(spName, conn);
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand.Parameters.AddRange(paramList);
+            adapter.Fill(dataSet);
+            //Close connection
+            CloseConnection();
+            return dataSet.Tables[0];
+        }
+
+        /// <summary>
+        /// dùng để chạy các proc với các mệnh đề là thêm, sửa và xóa
+        /// </summary>
+        /// <param name="spName">Sql store procedure name</param>
+        /// <param name="paramList">Parameters of the store procedure</param>
+        /// <returns>Sql data in a DataTable</returns>
+        public int executeUpdate(string spName, SqlParameter[] paramList)
+        {
+            int result = 0;
+            //Open connection
+            conn = OpenConnection();
+            SqlCommand command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddRange(paramList);
+            try
+            {
+                result = command.ExecuteNonQuery();
+
+            }
+            catch (SqlException)
+            {
+                //relationship error
+                throw;
+                //result = 0;
+            }
+            //Close connection
+            CloseConnection();
+
+            return result;
+        }
+        public int executeUpdate(string spName)
+        {
+            int result = 0;
+            //Open connection
+            conn = OpenConnection();
+
+            SqlCommand command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                result = command.ExecuteNonQuery();
+
+            }
+            catch (SqlException)
+            {
+                //relationship error
+                result = 0;
+            }
+            //Close connection
+            CloseConnection();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Execute store procedure get result executed.
+        /// </summary>
+        /// <param name="spName"></param>
+        /// <param name="paramList"></param>
+        /// <returns></returns>
+        public int executeScalary(string spName, SqlParameter[] paramList)
+        {
+            int result = 0;
+            try
+            {
+                //Open connection
+                conn = OpenConnection();
+                SqlCommand command = new SqlCommand(spName, conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddRange(paramList);
+                result = int.Parse(command.ExecuteScalar().ToString());
+                //Close connection
+                CloseConnection();
+                return result;
+            }
+            catch (Exception)
+            {
+                return result;
+            }
+
+        }
+        public String executeScalaryString(string spName, SqlParameter[] paramList)
+        {
+            String result = "0";
+            try
+            {
+                //Open connection
+                conn = OpenConnection();
+                SqlCommand command = new SqlCommand(spName, conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddRange(paramList);
+                result = command.ExecuteScalar().ToString();
+                //Close connection
+                CloseConnection();
+                return result;
+            }
+            catch (Exception)
+            {
+                return result;
+            }
+
+        }
+        public int executeScalary(string spName)
+        {
+            int result = 0;
+            try
+            {
+                //Open connection
+                conn = OpenConnection();
+                SqlCommand command = new SqlCommand(spName, conn);
+                command.CommandType = CommandType.StoredProcedure;
+                result = int.Parse(command.ExecuteScalar().ToString());
+                //Close connection
+                CloseConnection();
+                return result;
+            }
+            catch (Exception)
+            {
+                return result;
+
+            }
+        }
+
+        public void Dispose()
+        {
+            if (conn != null)
+                conn.Close();
+
+            conn = null;
+            adapter = null;
+        }
+    }  
+}

@@ -1,0 +1,196 @@
+
+%position-center-box{
+    position:absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+  }
+  
+  @mixin position($position,$left,$top,$right,$bottom){
+   position: $position;
+   left: $left;
+   top: $top;
+   bottom: $bottom;
+   right: $right;
+  }
+  
+  @mixin position-right-bottom($right, $bottom) {
+   position: absolute;
+   right: $right;
+   bottom: $bottom;
+  }
+  
+  @mixin position-left-bottom($left, $bottom) {
+   position: absolute;
+   left: $left;
+   bottom: $bottom;
+  }
+  
+  @mixin position-top-left($top, $left) {
+   position: absolute;
+   left: $left;
+   top: $top;
+  }
+  
+  @mixin position-top-right($top, $right) {
+   position: absolute;
+   right: $right;
+   top: $top;
+  }
+  
+  @mixin position-center($w, $h){
+   position:absolute;
+   top: 50%;
+   left:50%;
+   width:$w;
+   height:$h;
+   margin:-$h/2 0 0 -$w/2;
+  }
+
+   @mixin col-form-labels($width) {
+       .col-form-label {
+         flex:  0 0 $width;
+       }
+   }
+
+   /**
+   * Customize scrollbar (webkit)
+   */
+  
+  @mixin scrollbar($size, $color-scrollbar, $secondary: lighten($color-scrollbar, 40%), $border-radius: $size / 2) {
+    &::-webkit-scrollbar {
+      width:  $size;
+      height: $size;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $color-scrollbar;
+    }
+    &::-webkit-scrollbar-track {
+      background: $secondary;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: $border-radius;
+    }
+    &::-webkit-scrollbar-track {
+      border-radius: $border-radius;
+    }
+  }
+
+   /*
+   * Multiple text rows limit (place '...' at the end)
+   */
+  
+   @mixin multi-line-ellipsis($line-height, $lines-to-show, $height: false){
+    display: block; display: -webkit-box; -webkit-line-clamp: $lines-to-show; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; max-height: $lines-to-show * $line-height;
+    @if ($height){
+      height: $lines-to-show * $line-height;
+    }
+  }
+
+  @mixin one-line-ellipsis($width: auto, $max-width: 100%){
+    display: block; width: $width; max-width: $max-width; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+    // Border radius
+    @mixin border-radius($val: 4px) {
+      -webkit-border-radius: $val; -moz-border-radius: $val; -ms-border-radius: $val; border-radius: $val;
+    }
+    
+    // Transition
+    @mixin transition($val: $transition) {
+      transition: $val; -ms-transition: $val; -webkit-transition: $val; -moz-transition: $val;
+    }
+
+    @mixin calc($property, $expression) {
+      #{$property}: -moz-calc(#{$expression});
+      #{$property}: -webkit-calc(#{$expression});
+      #{$property}: calc(#{$expression});
+    }
+  
+    @mixin transform($transforms) {
+      transition: $transforms;
+    }
+  
+    @mixin translate($x, $y) {
+      @include transform(translate($x, $y));
+    }
+  
+    @mixin translateX($x) {
+      @include transform(translate($x));
+    }
+  
+    @mixin translateY($y) {
+      @include transform(translate($y));
+    }
+
+    @mixin dropdown-size() {
+      @each $name, $value in $dropdown-size {
+        &.#{$name} {
+           .dropdown-custom-menu, .dropdown-menu {
+            min-width: $value;
+           }
+        }    
+      }
+    }
+
+    @mixin text-ellipsis-multiline($line) {     
+      @if ($line == 1) {
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis; 
+      }
+      @else {
+        display: -webkit-box;
+        -webkit-line-clamp: $line;
+        box-orient: vertical;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-word;
+      }
+    }
+  //
+  //// border-radius
+  //.border-top-radius($radius: 2px) {
+  //  border-top-right-radius: $radius;
+  //  border-top-left-radius: $radius;
+  //}
+  //
+  //.border-right-radius($radius: 2px) {
+  //  border-bottom-right-radius: $radius;
+  //  border-top-right-radius: $radius;
+  //}
+  //
+  //.border-bottom-radius($radius: 2px) {
+  //  border-bottom-right-radius: $radius;
+  //  border-bottom-left-radius: $radius;
+  //}
+  //
+  //.border-left-radius($radius: 2px) {
+  //  border-bottom-left-radius: $radius;
+  //  border-top-left-radius: $radius;
+  //}
+  //
+  //._flex() {
+  //  -ms-box-orient: horizontal;
+  //  display: -webkit-box;
+  //  display: -moz-box;
+  //  display: -ms-flexbox;
+  //  display: -moz-flex;
+  //  display: -webkit-flex;
+  //  display: flex;
+  //}
+  //
+  //.full-height() {
+  //._flex;
+  //  flex-direction: column;
+  //  flex: 1;
+  //}
+  //
+  //.item-center() {
+  //._flex;
+  //  align-items: center;
+  //  justify-content: center;
+  //}
+  

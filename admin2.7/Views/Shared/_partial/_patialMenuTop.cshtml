@@ -1,0 +1,82 @@
+﻿<div id="header">
+    <div id="logo">
+        <h1><a href="/account/changeavatar" title="Smooth Admin">
+            <img src="@ViewBag.thumb" class="thumb" title="Đổi hình đại diện" alt="Tải hình đại diện"/>
+        </a></h1>
+    </div>    
+    <ul id="user">
+
+        @if (Security.Store.IsInRole(AEnum.UserRole.Admin))
+        { 
+
+            <li class="first">
+                <form action="/Account/LogOff" id="logoutForm" method="post">
+                    @Html.AntiForgeryToken()
+                    <a href="javascript:document.getElementById('logoutForm').submit()">Thoát</a>
+                </form>
+            </li>      
+        }
+
+      
+        <li class="last highlight"><a href="">View Site</a></li>
+    </ul>
+    <div id="header-inner">
+        <div id="home">
+            <a href="/"></a>
+        </div>        
+        <ul id="quick">
+            <li>
+                <a href="#" title="Products"><span class="normal">Examples</span></a>
+                <ul>
+                    <li><a href="index.html">Full, Column</a></li>
+                    <li><a href="index-no-column.html">Full, No Column</a></li>
+                    <li><a href="index-fixed.html">Fixed, Column</a></li>
+                    <li class="last"><a href="index-fixed-no-column.html">Fixed, No Column</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" title="Products"><span class="icon">
+                    <img src="/images/icons/application_double.png" alt="Products" /></span><span>Products</span></a>
+                <ul>
+                    <li><a href="#">Manage Products</a></li>
+                    <li><a href="#">Add Product</a></li>
+                    <li>
+                        <a href="#" class="childs">Sales</a>
+                        <ul>
+                            <li><a href="">Today</a></li>
+                            <li class="last"><a href="">Yesterday</a></li>
+                        </ul>
+                    </li>
+                    <li class="last">
+                        <a href="#" class="childs">Offers</a>
+                        <ul>
+                            <li><a href="">Coupon Codes</a></li>
+                            <li class="last"><a href="">Rebates</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="" title="Events"><span class="icon">
+                    <img src="/images/icons/calendar.png" alt="Events" /></span><span>Events</span></a>
+                <ul>
+                    <li><a href="#">Manage Events</a></li>
+                    <li class="last"><a href="#">New Event</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="" title="Links"><span class="icon">
+                    <img src="/images/icons/world_link.png" alt="Links" /></span><span>Links</span></a>
+                <ul>
+                    <li><a href="#">Manage Links</a></li>
+                    <li class="last"><a href="#">Add Link</a></li>
+                </ul>
+            </li>
+          
+        </ul>
+        <!-- end quick -->
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "InBox";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<div class="row">
+    <div class="col-md-4">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-reorder"></i>Thư mới
+                </div>
+                <div class="tools">
+                    <a style="color: white;" onclick="selectAllUser();"><i class="icon-ok-sign"></i></a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tìm kiếm thư</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm thư" id="uf">
+                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="checkbox-list" id="user-list">
+                                @if (ViewData["msgWaiting"] != null)
+                                {
+                                    List<Models.Notify.UserMessenge> tableMsg = (List<Models.Notify.UserMessenge>)ViewData["msgWaiting"];
+                                    foreach (var item in tableMsg)
+                                    {
+                                        <label><a href="/massage/inbox?ms=@item.Id"><i class="fa fa-bell"></i>@item.Title</a></label>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        @if (ViewData["msg"] != null)
+        {
+            Models.Notify.UserMessenge msg = (Models.Notify.UserMessenge)ViewData["msg"];
+            
+          
+
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-user"></i>Người gửi- @msg.SenderName
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"><strong>@msg.Title</strong> - @msg.SenderDate.Value.ToString("dd/MM/yyyy hh:mm")</label>
+                        </div>
+                        <div class="form-group">
+                            <label>Nội dung tin nhắn</label>
+                            <div class="col-md-12">
+                                @msg.Content
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <a class="btn blue"  href="/massage?to=@msg.From">Trả lời</a>
+                        <a class="btn default" onclick="delMsg();">Xóa thư</a>
+                    </div>
+                </div>
+            </div>
+           
+        }
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+
+
+
+        $("#uf").change(function () {
+            var uid = $("#uf").val();
+            if (uid.length >= 1) {
+                bindUser(uid);
+            }
+
+        });
+        $("#uf").keydown(function () {
+            var uid = $("#uf").val();
+            if (uid.length >= 1) {
+                bindUser(uid);
+            }
+
+        });
+
+    });
+    function bindUser(userName) {
+        var uid = $("#uf").val();
+        $.ajax({
+            type: "post", url: "/Handler/massage.ashx", dataType: "text",
+            data: { op: "findMs", tittle: uid },
+            success: function (msg) {
+                $(".checkbox-list").html(msg);
+                //   handlerUniform();
+            }
+        });
+    }
+    function delMsg() {
+        var msgId = getParameterByName("ms");
+        $.ajax({
+            type: "post", url: "/Handler/massage.ashx", dataType: "text",
+            data: { op: "delMsg", id: msgId },
+            success: function (msg) {
+                if (msg == "1") {
+                    playSound02();
+                    showNotice("Tin nhắn", "Xóa tin nhắn thành công");
+                    setTimeout(function () { window.location = "/massage/inboxs"; }, 300);
+                }
+
+            }
+        });
+    }
+
+
+
+</script>

@@ -1,0 +1,73 @@
+﻿@using Models.Modul.Bill
+@model List<BillModel>
+@{
+    ViewBag.Title = "Transaction";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<div class="col-md-12 ">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-red-sunglo">
+                <i class="icon-settings font-red-sunglo"></i>
+                <span class="caption-subject bold uppercase"> Quản lý danh mục</span>
+            </div>
+            <div class="actions">
+                <div class="table-group-actions pull-right">
+                    <select class="table-group-action-input form-control input-inline input-large input-sm" id="parentCat">                        
+                        <option value="7" data-link="//Agent-Finder-c7">Những giao dịch thành công</option>
+                        <option value="5" data-link="//Buy-c5">Giao dịch đang chờ xử lý</option>                        
+                    </select>
+                    <button class="btn btn-sm red table-group-action-submit blue" id="addCatBtn">
+                        <i class="glyphicon glyphicon-plus"></i> Tạo giao dịch
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <label id="updateCatNotice"></label>
+            <div id="catTableContent">
+                <table class="table table-striped table-bordered table-hover table-scrollable">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <th>Referid  </th>
+                            <th>Merchant</th>
+                            <th>IsSuccess</th>
+                            <th>Ngày tạo</th>
+                            <th>Tạo bởi</th>
+                            <th>Tạo cho</th>
+                            <th>Thu tiền</th>
+                            <th>Detail</th>
+                            <th>Amount</th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                    <tr>
+                        <td>
+                            @item.Id
+                        </td>
+                        <td>
+                            @item.OrderId
+                        </td>
+                        <td>@item.Merchant</td>
+                        <td>
+                            @item.IsSuccess
+                        </td>
+                        <td>@item.CreateDate</td>
+                        <td>@item.CreateByName</td>
+                        <td>@item.CreateForName</td>
+                        <td>@item.IsCredit</td>
+                        <td>@item.Detail</td>
+                        <td>@Ultil.StringHelper.ConVertToMoneyFormat(item.Amount)</td>
+                    </tr>
+
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

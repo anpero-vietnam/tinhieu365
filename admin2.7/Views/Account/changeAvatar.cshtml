@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "changeAvatar";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-user"></i>Thay đổi thông tin cá nhân
+        </div>
+    </div>
+    <div class="form-horizontal form-bordered">
+      
+        
+        @using (Html.BeginForm("changeAvatar", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+            <div class="form-group">
+                <label class="col-md-3 control-label">Link ảnh đại diện :</label>
+                <div class="col-md-9">
+                    <img src="@ViewBag.avatar" id="thumb" style="max-height:200px;" />
+                    <input type="file" id="thumbLink2" name="thumbLink2" />
+                    <input id="thumbLink" name="thumbLink" type="text" class="form-control valid" value="@ViewBag.avatar" style="display:none;">
+                </div>
+            </div>
+
+            @*<label class="col-md-11 control-label">Chú ý : Dùng hình ảnh liên quan đến lãnh đạo đảng, hình ảnh không phù hợp thuần phong mỹ tục sẽ bị khóa nick vĩnh viễn</label>*@
+
+            <div class="form-group">
+                <label class="col-md-3 control-label">Điện thoại :</label>
+                <div class="col-md-9">@Html.TextBox("phone", (string)ViewBag.phone)</div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">Mail dự phòng :</label>
+                <div class="col-md-9">@Html.TextBox("web", (string)ViewBag.web)</div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">Địa chỉ :</label>
+                <div class="col-md-9">@Html.TextBox("add", (string)ViewBag.add)</div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">Tên liên hệ :</label>
+                <div class="col-md-9">@Html.TextBox("sureName", (string)ViewBag.sureName)</div>
+            </div>
+            <div class="col-sm-offset-1 col-sm-10" style="margin-top: 25px;">
+                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+            </div>
+    }
+        <span class="line"></span>        
+        <a href="/Account/Manage">
+            Đổi mật khẩu
+        </a>
+
+    </div>
+</div>
+<script src="/Scripts/News.js"></script>
+
+@section scripts{
+    <script src="~/Scripts/security/uploadFile.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#thumbLink2").change(function () {
+                fileUpload.Size = "400x400";
+                fileUpload.uploadFile("#thumbLink2", "#thumb");
+                $("#thumbLink").val($("#thumb").attr("src"));
+            });
+        });
+
+      
+    </script>
+}
+
+
+

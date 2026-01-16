@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "Đăng ký tài khoản Anpero";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="logo">
+    <a href="/">
+        <img src="/logo.png" alt="" />
+    </a>
+</div>
+<div class="content">
+    <!-- BEGIN REGISTRATION FORM -->
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()        
+        <h3 class="font-green">Đăng ký</h3>
+        <p class="hint"> Đăng ký bằng Email hoặc số điện thoại: </p>
+        <div class="form-group">            
+            <label class="control-label visible-ie8 visible-ie9">Email hoặc số điện thoại</label>            
+            <input class="form-control placeholder-no-fix" type="text" placeholder="nhập e-mail hoặc số điện thoại" name="UserName" id="UserName" />
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Mật khẩu</label>
+            <input type="hidden" id="captcha" name="captcha" />
+            <input class="form-control placeholder-no-fix"  type="password" autocomplete="off" id="Password" placeholder="Mật khẩu" name="Password"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Nhập lại mật khẩu</label>
+            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Nhập lại mật khẩu" name="ConfirmPassword" id="ConfirmPassword"/>
+        </div>
+        <div class="form-group margin-top-20 margin-bottom-20">
+            <label class="mt-checkbox mt-checkbox-outline">
+                <input type="checkbox" name="tnc" checked="checked" /> Tôi đồng ý
+                <a href="javascript:;">Điều khoản dịch vụ </a> &
+                <a href="javascript:;">Chính sách bảo mật </a>
+                <span></span>
+            </label>
+            <div id="register_tnc_error">@Html.ValidationSummary() </div>
+        </div>
+        <div class="form-group">
+            <div id="g-recaptcha"></div>
+        </div>
+        <div class="form-actions">
+            <button type="button" id="register-back-btn" class="btn green btn-outline">Back</button>
+            <button type="submit" class="btn green uppercase pull-right" onclick="return checkForm();">Đăng ký</button>
+            
+        </div>
+    }
+        @*<div class="login-options">
+            <h4>Hoặc đăng nhập bằng</h4>
+            @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+        </div>*@
+        <div class="create-account">
+            <p>
+                <a href="http://anpero.com" id="register-btn" class="uppercase">Trang chủ</a>
+            </p>
+        </div>
+  
+</div>
+<script src="~/Scripts/webScipt.js"></script>
+<script>
+    var googleCatcha;
+    $(document).ready(function () {
+        $("#register-back-btn").click(function () {
+            window.location.href = "/"
+        });
+
+        googleCatcha = grecaptcha.render('g-recaptcha', {
+            'sitekey': '@System.Configuration.ConfigurationManager.AppSettings["googleCapchaSitekey"]',
+            'theme': 'light',
+            'hl': 'vi'
+        });
+    
+
+    })
+    function checkForm() {
+        var valid = true;
+        var captchaResponse = grecaptcha.getResponse(googleCatcha);
+        $("#captcha").val(captchaResponse);
+  
+        if ($("#Password").val() != $("#ConfirmPassword").val()) {
+            $("#register_tnc_error").html("Mật khẩu không trùng khớp.");
+            showNotice("Lỗi", "Mật khẩu không trùng khớp.")
+            $("#Password").val("");
+            $("#ConfirmPassword").val("");
+            valid = false;
+        }
+        if (isEmail($("#Password").val())) {
+            showNotice("Lỗi", "Email không đúng định dạng.")
+            $("#register_tnc_error").html("Email không đúng định dạng.");
+            valid = false;
+        }
+        
+        if (captchaResponse == "" || captchaResponse == null) {
+            grecaptcha.reset();
+            showNotice("Lỗi", "Vui lòng nhập click vào ô kiểm tra")
+            $("#help-block").html("Vui lòng click vào ô kiểm tra");
+            valid = false;
+           
+        } 
+        return true;
+    }
+</script>
+
+<!-- END REGISTRATION FORM -->
+@*<div class="form">
+   
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        <fieldset>
+            <legend>Đăng ký nhanh</legend>
+            <ol>
+                <li>
+                    @Html.LabelFor(m => m.UserName)<br />
+                    @Html.TextBoxFor(m => m.UserName)
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.Password)<br />
+                    @Html.PasswordFor(m => m.Password)
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.ConfirmPassword)<br />
+                    @Html.PasswordFor(m => m.ConfirmPassword)
+                </li>
+            </ol>
+
+        </fieldset>
+
+    }*@
+   
+    @section Scripts {
+        @System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
+    }
+

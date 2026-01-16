@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@if (ViewData["asllNotify"] != null)
+{
+    List<Models.Notify.SysNotify> table = (List<Models.Notify.SysNotify>)ViewData["asllNotify"];
+    if (table.Count > 0)
+    {
+
+        <div class="row ">
+            <div class="col-md-12">
+                <div class="portlet  light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Lịch sử hệ thống
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <table class="table table-hover  table-striped">
+                            <tr>
+                                <th>Time</th>
+                                <th>Tiêu đề</th>
+                                <th>Đã tiếp cận</th>
+                                <th>chi tiết</th>
+                            </tr>
+                            @foreach (var item in table)
+                            {
+                                <tr>
+                                    <td>@item.NotifyTime</td>
+                                    <td>@Html.Raw(item.Title)</td>
+                                    <td>
+                                        <span>@item.UserLockName</span>
+                                    </td>
+                                    <td><a href="/systemHistory/detail?id=@item.Id"><i class="icon-action-redo"></i> Chi tiết</a></td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

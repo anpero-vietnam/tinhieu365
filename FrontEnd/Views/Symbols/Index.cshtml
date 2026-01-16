@@ -1,0 +1,502 @@
+﻿@using FrontEnd.Controllers;
+@model Models.TransactionModel
+@{
+    var isAdmin = Dal.UserProfileControl.IsUserInRole(AppSession.CurentProfile.UserId, AEnum.UserRole.Admin);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.Ticker + " " + Model.StockExchange + " " + Model.BusinessName;
+    Dal.UserProfileControl profileControl = new Dal.UserProfileControl();
+    var curentUrl = HttpContext.Current.Request.Url.PathAndQuery;
+    int valuePersent = 0;
+    if (Model != null && Model.Volume > 0 && Model.AVGValue20 > 0)
+    {
+        valuePersent = (int)((((decimal)Model.Volume - Model.AVGValue20) / Model.AVGValue20) * 100);
+    }
+    string valuePersentText = "<span class=\"" + (valuePersent >= 0 ? "upvalueLabel" : "downvalueLabel") + "\">(" + valuePersent + "%)</span>";
+}
+<div class="main-page" style="min-height: 188px;">
+    <div class="container">
+
+        @if (Model != null)
+        {
+            <div class="box-checklist">
+                <h3 class="title title-main">@Model.Ticker - @Model.BusinessName</h3>
+                <div class="main-checklist row">
+                    <div class="col-lg-8 left-checklist">
+                        <div class="row">
+                            <div class="col-12">
+                                @Html.Partial("AutoAds")
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.Description))
+                        {
+                            <div class="text-justify mb-5">
+                                @Html.Raw(Model.Description)
+                            </div>
+                        }
+                        else
+                        {
+                            
+                            <h3 class="title color-main flex flex-jc-center flex-ai-center mb-5">
+                                <span>Toàn cảnh thị trường</span>
+                            </h3>
+                            <div style="height:650px;">
+                                <!-- TradingView Widget BEGIN -->
+                                <div class="tradingview-widget-container">
+                                    <div class="tradingview-widget-container__widget"></div>
+                                    <div class="tradingview-widget-copyright"><a href="https://vn.tradingview.com/markets/" rel="noopener" target="_blank"><span class="blue-text">Các Thị trường Tài chính</span></a> bởi TradingView</div>
+                                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                                        {
+                                            "colorTheme": "light",
+                                                "dateRange": "12M",
+                                                    "showChart": true,
+                                                        "locale": "vi_VN",
+                                                            "width": "100%",
+                                                                "height": "100%",
+                                                                    "largeChartUrl": "",
+                                                                        "isTransparent": false,
+                                                                            "showSymbolLogo": true,
+                                                                                "showFloatingTooltip": false,
+                                                                                    "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
+                                                                                        "plotLineColorFalling": "rgba(41, 98, 255, 1)",
+                                                                                            "gridLineColor": "rgba(240, 243, 250, 0)",
+                                                                                                "scaleFontColor": "rgba(120, 123, 134, 1)",
+                                                                                                    "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+                                                                                                        "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
+                                                                                                            "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+                                                                                                                "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
+                                                                                                                    "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
+                                                                                                                        "tabs": [
+                                                                                                                            {
+                                                                                                                                "title": "Các chỉ số",
+                                                                                                                                "symbols": [
+                                                                                                                                    {
+                                                                                                                                        "s": "FOREXCOM:SPXUSD",
+                                                                                                                                        "d": "S&P 500"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "FOREXCOM:NSXUSD",
+                                                                                                                                        "d": "Nasdaq 100"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "FOREXCOM:DJI",
+                                                                                                                                        "d": "Dow 30"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "INDEX:NKY",
+                                                                                                                                        "d": "Nikkei 225"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "INDEX:DEU30",
+                                                                                                                                        "d": "DAX Index"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "FOREXCOM:UKXGBP",
+                                                                                                                                        "d": "UK 100"
+                                                                                                                                    }
+                                                                                                                                ],
+                                                                                                                                "originalTitle": "Indices"
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "title": "Hàng hóa",
+                                                                                                                                "symbols": [
+                                                                                                                                    {
+                                                                                                                                        "s": "CME_MINI:ES1!",
+                                                                                                                                        "d": "S&P 500"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "CME:6E1!",
+                                                                                                                                        "d": "Euro"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "COMEX:GC1!",
+                                                                                                                                        "d": "Gold"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "NYMEX:CL1!",
+                                                                                                                                        "d": "Crude Oil"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "NYMEX:NG1!",
+                                                                                                                                        "d": "Natural Gas"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "CBOT:ZC1!",
+                                                                                                                                        "d": "Corn"
+                                                                                                                                    }
+                                                                                                                                ],
+                                                                                                                                "originalTitle": "Commodities"
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "title": "Trái phiếu",
+                                                                                                                                "symbols": [
+                                                                                                                                    {
+                                                                                                                                        "s": "CME:GE1!",
+                                                                                                                                        "d": "Eurodollar"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "CBOT:ZB1!",
+                                                                                                                                        "d": "T-Bond"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "CBOT:UB1!",
+                                                                                                                                        "d": "Ultra T-Bond"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "EUREX:FGBL1!",
+                                                                                                                                        "d": "Euro Bund"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "EUREX:FBTP1!",
+                                                                                                                                        "d": "Euro BTP"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "EUREX:FGBM1!",
+                                                                                                                                        "d": "Euro BOBL"
+                                                                                                                                    }
+                                                                                                                                ],
+                                                                                                                                "originalTitle": "Bonds"
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "title": "Ngoại hối",
+                                                                                                                                "symbols": [
+                                                                                                                                    {
+                                                                                                                                        "s": "FX:EURUSD"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "FX:GBPUSD"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "FX:USDJPY"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "FX:USDCHF"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "FX:AUDUSD"
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "s": "FX:USDCAD"
+                                                                                                                                    }
+                                                                                                                                ],
+                                                                                                                                "originalTitle": "Forex"
+                                                                                                                            }
+                                                                                                                        ]
+                                        }
+                                    </script>
+                                </div>
+                                <!-- TradingView Widget END -->
+                            </div>
+                        }
+
+                        <div class="box-comment" id="facebookComment"></div>
+                    </div>
+                    <div class="col-lg-4 right-checklist">
+                        <div class="item-info-project">
+                            @if (isAdmin)
+                            {
+                                <div class="mb-3">
+                                    <a href="/project/createnew?Ticker=@Model.Ticker" class="button-type01 button w-100 button-icon-left">
+                                        <i class="fa fa-edit"></i> Admin Cập nhật
+                                    </a>
+                                </div>
+                            }
+                            @*<a class="button-type01 button w-100 button-icon-left"><i class="fa fa-heart"></i>Thêm vào Watch list</a>*@
+                            <div class="flex info-2 box-share box-share-border">
+                                <span class="text"><i class="fas fa-share-alt"></i> Share:</span>
+                                <ul class="box-active flex">
+                                    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=@curentUrl" class="color-facebook" target="_blank"><i class="fab fa-facebook-square"></i></a> </li>
+                                    <li class="pinterest"><a href="https://www.pinterest.com/pin/create/link/?url=@curentUrl" class="color-pinterest" target="_blank"><i class="fab fa-pinterest-square"></i></a> </li>
+                                    <li class="twitter"><a href="https://twitter.com/intent/tweet?url=@curentUrl&text=@Model.Ticker - @Model.BusinessName" class="color-twitter" target="_blank"><i class="fab fa-twitter"></i></a> </li>
+                                    <li class="linkedin"><a href="https://www.linkedin.com/sharing/share-offsite/?url=@curentUrl" class="color-linkedin"><i class="fab fa-linkedin-in" target="_blank"></i></a> </li>
+                                </ul>
+                            </div>
+                            <div class="content">
+                                <div class="align-items-center text-center">
+                                    <img src="@(string.IsNullOrEmpty(Model.Logo)?"https://cdn-anpero.cdn.vccloud.vn/images/70/42021/logo22021042117402952.png":Model.Logo)" style="max-width:100%;" class="mb-2" />
+                                </div>
+
+                                <h4 class="title">@Model.Ticker - @Model.StockExchange </h4>
+                                <span class="text color-blue">
+                                    <i>
+                                        @Model.BusinessName @if (Model.IsWatchList)
+                                        {
+                                            <i class="fas fa-star color-yellow"></i>
+                                        }
+                                    </i>
+                                </span>
+                                <div class="text color-blue">Ngày cập nhật:<i> @(Model.LastUpdate.ToString("dd/MM/yyyy"))</i></div>
+
+                                <ul class="list-info">
+                                    @if (!string.IsNullOrEmpty(Model.WebSite))
+                                    {
+                                        <li class="item-list d-flex flex-jc-between">
+                                            <div class="text-left">
+                                                <strong>WebSite:</strong> <a href="@Model.WebSite">@Model.WebSite</a>
+                                            </div>
+                                        </li>
+                                    }
+                                    @if (!string.IsNullOrEmpty(Model.Email))
+                                    {
+                                        <li class="item-list d-flex flex-jc-between">
+                                            <div class="text-left">
+                                                <strong>Email:</strong> <a href="mailto:@Model.Email">@Model.Email</a>
+                                            </div>
+                                        </li>
+                                    }
+                                    @if (!string.IsNullOrEmpty(Model.Phone))
+                                    {
+                                        <li class="item-list d-flex flex-jc-between">
+                                            <div class="text-left">
+                                                <strong>Điện thoại:</strong> <a href="tel:@Model.Phone">@Model.Phone</a>
+                                            </div>
+                                        </li>
+                                    }
+                                    @if (!string.IsNullOrEmpty(Model.Address))
+                                    {
+                                        <li class="item-list d-flex flex-jc-between">
+                                            <div class="text-left">
+                                                <strong>Địa chỉ:</strong> @Model.Address
+                                            </div>
+                                        </li>
+                                    }
+
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <a target="_blank" href="https://finance.vietstock.vn/@Model.Ticker.ToUpper()/ho-so-doanh-nghiep.htm" rel="nofollow">Xem thêm trên vietstock.vn</a>
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <a target="_blank" href="https://s.cafef.vn/hastc/@Model.Ticker.ToUpper()-tinhieu365.chn" rel="nofollow">Xem thêm trên cafef.vn</a>
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <a target="_blank" href="https://vn.tradingview.com/symbols/@Model.StockExchange.ToUpper().Replace("HSX","HOSE")-@Model.Ticker.ToUpper()" rel="nofollow">Xem thêm trên vn.tradingview.com</a>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <!--item-info-project-->
+                        <div class="item-info-project">
+                            <div class="content-info">
+                                <h4 class="title-2 color-main text-transform">Thông tin kỹ thuật</h4>
+                                <span class="text color-blue"><i>@Model.BusinessName</i></span>
+                                @if (!string.IsNullOrEmpty(Model.StockExchange) && !string.IsNullOrEmpty(Model.Ticker) && !Model.Ticker.Equals("VNAll-INDEX", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    <div style="width:100%;height:450px;">
+                                        <!-- TradingView Widget BEGIN -->
+                                        <div class="tradingview-widget-container">
+                                            <div class="tradingview-widget-container__widget"></div>
+
+                                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                                  {
+                                  "interval": "1M",
+                                  "width": "100%",
+                                  "isTransparent": false,
+                                  "height": "100%",
+                                  "symbol":"@Model.StockExchange.ToUpper().Replace("HSX","HOSE"):@Model.Ticker",
+                                  "showIntervalTabs": true,
+                                  "locale": "vi_VN",
+                                  "colorTheme": "light"
+                                }
+                                            </script>
+                                        </div>
+                                        <!-- TradingView Widget END -->
+                                    </div>
+                                }
+
+
+                                <ul class="list-info">
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Giao dịch ngày:</strong> @Model.CreateDate.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>KLTB 20 ngày:</strong> @Ultil.StringHelper.ConVertToMoneyFormatInt(Model.AVGValue20.ToString())
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Khối lượng:</strong> @Ultil.StringHelper.ConVertToMoneyFormat((decimal)Model.Volume) @Html.Raw(valuePersentText)
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Đáy 52 tuần:</strong> @Model.MinValue52Week nghìn đồng
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Đỉnh 52 tuần:</strong> @Model.MaxValue52Week nghìn đồng
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+
+                                            <strong>Cao:</strong> @Ultil.StringHelper.ConVertToMoneyFormatInt(Model.High.ToString()) nghìn đồng
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Thấp:</strong> @Ultil.StringHelper.ConVertToMoneyFormatInt(Model.Low.ToString()) nghìn đồng
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>SMA20:</strong> @Model.SMA
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>SMA50:</strong> @Model.SMA50
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>RSI 14:</strong> @Model.RSI
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>MFI 14:</strong> @Model.MFI
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>ADX:</strong> @Model.ADX
+                                        </div>
+                                    </li>
+
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Ngắn hạn:</strong> @(Model.Low> Model.SMA? "đang tăng" : "giảm")
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>Trung hạn:</strong> @(Model.SMA> Model.SMA50? "đang tăng" : "giảm")
+                                        </div>
+                                    </li>
+                                    <li class="item-list d-flex flex-jc-between">
+                                        <div class="text-left">
+                                            <strong>hành động:</strong> @ViewBag.Action
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        }
+        else
+        {
+            <div>Thông tin đang được cập nhật</div>
+       
+        }
+        <!--box-breadcrumb-->
+
+
+
+    </div>
+</div>
+@section head{
+    <!-- Twitter Card data -->
+    <meta name="twitter:description" content="@Model.Ticker - @Model.StockExchange - @Model.BusinessName">
+    <meta name="twitter:image" content="@Model.Logo">
+    <!-- Open Graph data -->
+    <meta name="image" property="og:image" content="@Model.Logo" />
+    <meta name="description" property="og:description" content="@Model.Ticker - @Model.StockExchange - @Model.BusinessName" />
+    <meta name="thumbnail" content="@Model.Logo" />
+    <meta property="og:image" content="@(string.IsNullOrEmpty(Model.Logo)?"https://cdn-anpero.cdn.vccloud.vn/images/70/42021/logo22021042117402952.png":Model.Logo)" />
+    <style>
+        a.upvalueLabel, span.upvalueLabel {
+            color: rgb(11, 223, 57);
+            font-weight: bold;
+        }
+
+        a.downvalueLabel, span.downvalueLabel {
+            color: rgb(255, 0, 23);
+            font-weight: bold;
+        }
+    </style>
+}
+@section scripts{
+    <link href="//cdn.anpero.com/cdn/plugins/fancybox-3/src/css/core.css" rel="stylesheet" />
+    <link href="//cdn.anpero.com/cdn/plugins/fancybox-3/src/css/fullscreen.css" rel="stylesheet" />
+    <script src="//cdn.anpero.com/cdn/plugins/fancybox-3/dist/jquery.fancybox.min.js"></script>
+
+
+    <script>
+        function resizeVideo() { var contentW = $('.videoContainer').width(); var iframe = $('.videoContainer iframe'); var iframeW = iframe.css('width', contentW); iframe.css('width', iframeW); var iframeH = contentW / 16 * 9; iframe.css('height', iframeH); }
+
+        $(document).ready(function () {
+            resizeVideo();
+            $(".container .lazy").fancybox({
+                openEffect: 'none',
+                closeEffect: 'none'
+            });
+        });
+    </script>
+
+    <style type="text/css">
+        .owl-prev, .owl-next {
+            width: 15px;
+            height: 100px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: block !important;
+            border: 0px solid black;
+        }
+
+        .owl-prev {
+            left: -20px;
+        }
+
+        .owl-next {
+            right: -20px;
+        }
+
+            .owl-prev i, .owl-next i {
+                transform: scale(2,5);
+                color: #ccc;
+            }
+    </style>
+    <script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "Organization",
+  "url": "@("https://tinhieu365.com"+@curentUrl)",
+  "sameAs": "@Model.WebSite",
+   "image": "@Model.Logo",
+  "logo": "@Model.Logo",
+  "address": {
+    "@@type": "PostalAddress",
+    "addressLocality": "Viet Nam",
+    "streetAddress": "@Model.Address"
+  },
+  "email": "@Model.Email",
+  "faxNumber": "@Model.Phone",
+  "member": [
+    {
+      "@@type": "Organization"
+    },
+    {
+      "@@type": "Organization"
+    }
+  ],
+  "name": "@Model.BusinessName",
+  "alternateName": "@Model.EngName",
+  "telephone": "@Model.Phone"
+}
+    </script>
+}
+

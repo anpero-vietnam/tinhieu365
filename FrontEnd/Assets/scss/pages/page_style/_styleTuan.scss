@@ -1,0 +1,682 @@
+// ======================= PAGE STYLE ========================= 
+
+// Button next , prev slide 
+.owl-carousel{
+    .owl-nav{
+        .owl-prev, .owl-next{
+            span{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: inline-block;
+            }
+        }
+
+        .owl-next{
+            span{
+                transform: translate(-25%, -50%);
+            }
+        }
+    }
+}
+
+// Carousel fix bug
+.owl-carousel-1{
+    .owl-nav{
+        margin-top: 0;
+        .owl-next, .owl-prev{
+            span{
+                position: inherit!important;
+            }
+        }
+        .owl-next{
+            span{
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+}
+
+.box-info-project-0{
+    .box-slide-swiper{
+        height: 850px;
+        .box-gellery-top{
+            height: 740px;
+        }
+        .box-gellery-thumbs{
+            height: 110px;
+        }
+    }
+}
+.box-info-project-1{
+    .box-slide-swiper{
+        height: 650px;
+        .box-gellery-top{
+            height: 535px;
+        }
+        .box-gellery-thumbs{
+            height: 115px;
+        }
+    }
+}
+
+// ==== Top popup 
+.popup-view-details{
+    .container{
+        max-width: 1900px;
+        min-height: 200px;
+        width: 100%;
+    }
+}
+.wp-popup{
+  display: none;
+  position: relative;
+  bottom: -100%;
+  animation: 2s;
+  &.show-popup{
+      display: block;
+      bottom: 0;
+  }
+}
+
+.popup-details{
+    position: relative;
+    .container{
+        max-width: 1900px;
+        width: 100%;
+    }
+    .wp-popup-details{
+        background-color: #f7f7ff;
+        .container{           
+                padding: 0 24px 0 80px;            
+        }
+    }
+    .top-popup{
+        padding-top: 6px;
+        padding-bottom: 6px;
+        .container{
+            padding: 0px 24px 0px 80px;                     
+        .row{
+            position: relative;
+        }
+        }   
+
+        .carousel{
+            @media (min-width: 1900px){
+                max-width: 1338px;
+            }
+            width: 100%;
+        }
+        
+        .carousel-item{
+            height: 62px;
+            // max-width: 1466px;
+            width: 100%;
+            position: relative;
+                .post-new:nth-child(1){
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+                .post-new:nth-child(2){
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                }
+        }
+        .post-new{
+            display: inline-block;
+            position: relative;
+            width: 245px;
+            &:hover{
+                text-decoration: none;
+            }
+           img{
+            max-width: 63px;
+            height: 62px;
+            position: absolute;
+            top: 0;
+            left: 0;
+           }
+    
+           .section-content{
+               padding: 0 0 0 80px;
+            
+           }
+    
+           .title-post, .des-post{
+               font-size: 18px;
+               color: #333;
+               font-weight: initial;
+               text-overflow: ellipsis;
+               overflow: hidden;
+               white-space: nowrap;
+           }
+        }
+    
+        .carousel-control-prev, .carousel-control-next{
+            opacity: 1;
+            background-image: none;
+            width: 30px;
+        }
+    
+        .carousel-control-prev{
+            left: -38px;
+            &:before{
+                background-image: url("../../images/icon/icon-left-2.png");
+            }
+        }
+    
+        .carousel-control-next{
+            right: -38px;
+            &:before{
+                background-image: url("../../images/icon/icon-right-2.png");
+            }
+        }
+    }
+
+    .main-popup{
+        &.row{
+            justify-content: space-between;
+        }
+        .carousel-control-next, .carousel-control-prev{
+            opacity: 1;
+            background: none;
+            
+            &:before{
+                position: absolute;
+                width: 24px;
+                height: 39px;
+                top: 430px;
+            }
+        }
+        .carousel-item{
+            height: 900px;
+
+            @media (min-width: 1025px) and (max-width: 1600px){
+                height: 750px;
+            }
+            img{
+                height: 100%;
+            }
+        }
+        .carousel-control-next{
+            &:before{
+                @extend %icon-right;
+                right: -55px;
+            }
+        }
+        .carousel-control-prev{
+            &:before{
+                @extend %icon-left;
+                left: -55px;
+            }
+        }
+        .wp-content-details{
+            background-color: #fff;
+        }
+        @media (min-width: 1900px){
+            .col-lg-9{
+                max-width: 1338px;
+            }
+            .col-lg-3{
+                max-width: 442px;
+            }            
+        }
+        
+    }
+}
+// END POPUP CHITIET DE XUAT
+
+// owl carousel 9
+.owl-carousel-9{
+    @media (max-width: 1440px){
+        .item-menu{
+            // height: 220px;
+        }
+    }
+    
+    @media (min-width:481px) and (max-width:1024px){
+        .item-menu{
+            height: 165px;
+            padding: 25px 0 25px 0;
+            .images{
+                height: 60px;
+                margin-bottom: 10px;
+            }
+            .text{
+
+            }            
+        }
+        .owl-dots{
+            bottom: 10px;
+        }
+    }
+    @media (max-width: 480px){
+        .item-menu{
+            height: 125px;
+            .icon-default:before{
+                width: 44px;
+                height: 40px;
+            }
+            .images{
+                height: 50px;
+                margin-bottom: 5px;
+            }
+            .text{
+                font-size: 16px;
+            }
+        }
+        .owl-dots{
+            .owl-dot{
+                span{
+                    width: 10px;
+                    height: 10px;
+                }
+            }
+        }
+    }
+
+}
+
+// Blog Danh sách blog nhà cửa
+.category.icon-default:before{
+    transform: translateY(-3px);
+}
+
+// Color PSD
+
+$color-red-1: #CF0A1B;
+
+// border color
+$color-gray: #E5E5E5;
+
+
+// ====== Text Style ========
+.wp-content-details{
+    border: 1px solid $color-gray;
+    padding: 27px 30px 0px 30px;
+
+    .des-post{
+        padding-bottom: 26px;
+    }
+
+    .title-detail{
+        font-weight: bold;
+        border-bottom: 1px solid #cccccc;
+       padding-bottom: 17px;
+       margin-bottom: 14px;
+    }
+
+    .title-post{
+        color: $color-red-1;
+        margin-bottom: 4px;
+    }
+    .text{
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .box-comment{
+        padding-top: 26px;
+        .main-comment{
+            margin-top: 42px;
+        }
+        .box-limit{
+            margin: 55px 0;
+        }
+    }
+}
+
+// ==============MIXIN
+@mixin _layOutResponsive($flex,$max-width) {
+    flex: 0 0 $flex;
+    max-width: $max-width;
+} 
+//===========Button popup
+.button-close{
+    width: 73px;
+    height: 74px;
+    @media (min-width: 481px) and (max-width: 990px){
+        width: 50px;
+        height: 50px;
+        top: -50px;
+    }
+    background-color: #B5B5B5;
+    position: absolute;
+    top: -6px;
+    right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .wp-line{
+        width: 30px;
+        height: 30px;
+    }
+}
+
+// LAYOUT RESPONSIVE 
+
+// blog chi tiet - blog danh gia chi tiet
+.main-blog-detail{
+    @media (max-width:1024px){
+        .box-content-blog{
+            flex: 0 0 70%;
+            max-width: 70%;
+        }
+        .box-right-blog{
+            flex: 0 0 30%;
+            max-width: 30%;
+        }
+        .box-propose{
+            // margin-bottom: 60px;
+        }
+    }
+    @media (max-width: 812px){
+        .box-content-blog{
+            @include _layOutResponsive(65%,65%);
+        }
+        .box-right-blog{
+            @include _layOutResponsive(35%,35%);
+        }
+        .item-view-most{
+           .images{
+            min-width: 90px;
+            margin-right: 10px;
+           }
+        }
+        .box-share{
+            padding: 5px 0 0 0;
+            .box-active{
+                li + li{
+                    margin-left: 10px;
+                }
+            }
+        }
+        .item-blog{
+            .box-active{
+                li + li {
+                    margin-left: 14px;
+                }
+            }
+        }
+    }
+    @media (max-width: 768px){
+        .item-view-most{            
+            .title-2{
+                margin: 0;
+            }        
+        }
+        .blog-top{
+            .box-active{
+                margin-left: 10px;
+            }
+        }
+        .box-share{
+            .box-active{
+                margin-left: 8px;
+            }
+        }
+    }
+    @media (max-width: 736px){
+        .box-content-blog{
+            @include _layOutResponsive(60%, 60%);
+        }
+        .box-right-blog{
+            @include _layOutResponsive(40%, 40%);
+        }
+        .info-category{
+            flex-direction: column;
+            .info-1, .info-2{
+                width: 100%;
+            }
+            .info-2{
+                padding-top: 10px;
+            }
+        }
+        .item-view-most{
+            .images{
+                min-width: 85px;
+            }
+        }
+    }
+    @media (max-width: 480px){
+        .box-content-blog{
+        @include _layOutResponsive(100%, 100%);
+        }
+        .box-right-blog{
+        @include _layOutResponsive(100%, 100%);
+            .title{
+                font-size: 22px;
+                margin-bottom: 20px;
+            }
+            .box-propose{
+                margin-bottom: 30px;            
+            }
+            .box-view-most,.box-tag{
+                padding-top: 20px;
+                margin-bottom: 25px;
+            }
+            .item-propose{
+                .title-2{
+                    font-size: 18px;
+                }
+                .content{
+                    margin-top: 10px;                
+                }
+                 & + .item-propose{
+                     margin-top: 25px;
+                 }
+            }
+
+            .item-view-most + .item-view-most{
+                margin-top: 15px;
+            }
+        }
+
+        .info-category{
+            .info-2{
+                .text , .box-active{
+                    float: left;
+                }
+                .text{
+                    margin-left: 0;
+                }
+            }
+        }
+        .box-comment{            
+            .main-comment{
+                padding:30px 18px 30px 18px;
+            }
+        }
+        .box-comment, .blog-other{
+            margin-bottom: 25px;
+        }
+        .blog-top{
+            .text-content{
+                br{
+                    display: none;
+                }
+                p{
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+}
+
+// Checklist tab Responsive
+.box-checklist{
+    .left-checklist{
+        .nav-tabs{
+            li{
+                @media (max-width:1200px){
+                   
+                }
+
+                @media (max-width: 768px){
+
+                }
+            }
+        }
+    }
+
+    .right-checklist{
+        @media (max-width: 1440px){
+            .item-info-project{
+                .text-left{
+                    min-width: 124px;
+                    .icon{
+                        width: 24px;
+                    }
+                }
+            }
+        }
+        @media (max-width:1366px){
+            .item-info-project{
+                padding: 25px 20px;
+                .owl-carousel{
+                    .owl-nav{
+                        .owl-prev{
+                            span{
+                                transform: translate(-20%, -50%);
+                            }
+                        }
+                        .owl-next{
+                            span{
+                                transform: translate(-55%, -50%);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .box-tag, .box-view-most{
+                margin: 25px 0 0 0;
+            }
+            .box-tag{
+                .list-tag{
+                    margin-top: 15px;
+                    li{
+                        margin: 0 8px 8px 0;
+                        &:last-child{
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+            .box-view-most{
+                .title{
+                    margin-bottom: 20px;
+                }
+            }
+            .item-view-most{
+                .images{
+                    margin-right: 15px;
+                }
+                & + .item-view-most{
+                    margin-top: 18px;
+                }
+            }
+        }
+        @media (max-width:1280px){
+            .box-share-border{
+                .box-active{
+                    li + li{
+                        margin-left: 12px;
+                    }
+                }
+            }
+        }
+        @media (min-width: 481px) and (max-width: 1024px){
+            margin: 25px 0 0 0;
+            .item-view-most{                
+                .title-2{
+                    margin: 0 0 6px 0;
+                }
+                .images{
+                    min-width: 96px;
+                }
+            }            
+        }
+        @media (width: 1024px){
+        }
+        @media (min-width: 481px) and (max-width:1023px){
+            .item-info-project{
+                .item.row{
+                    .col-6{
+                        flex: 0 0 30%;
+                    }
+                }                
+            }
+            .item-view-most{
+                .images{
+                    min-width: auto;
+                    flex: 0 0 16%;
+                }
+            }
+        }
+        @media (max-width: 480px){
+            margin: 20px 0 0 0;
+        }
+    }
+
+    // ==========
+    @media (max-width:1440px){
+        .left-checklist{
+            .nav-tabs{
+                // flex-wrap: inherit;
+            }
+        }
+    }
+    @media (max-width: 1200px){        
+        .item-main-project{
+            padding: 18px 12px 15px 12px;
+            .box-cost{
+                margin: 0 -12px 0 -12px;
+            }
+            .form-time{
+                .time-run{
+                    width: 32px;
+                    height: 32px;
+                    line-height: 30px;
+                }
+            }
+        }
+
+        .item-info-project{
+            padding: 24px 22px;
+            .box-share{
+                flex-direction: column;
+                align-items: flex-start;
+                margin: 15px 0 0 0;
+                .box-active{
+                    margin: 10px 0 0 0;
+                    li + li {
+                        margin-left: 15px;
+                    }
+                }
+            }
+            .content{
+                margin: 24px 0 0 0;
+            }
+        }
+    }
+
+}
+
+// ================= RESIZE FONT ICON ===============
+
+// ============== END RESIZE FONT ICON =================
+
+
+// ================= RESIZE ICON ===============
+@media (min-width: 1441px) and (max-width: 1600px){
+    .list-menu-footer{
+        a:before{
+            top: 5px;
+        }
+    }
+}
+// ============== END RESIZE ICON =================

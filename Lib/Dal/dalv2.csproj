@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F7D5429A-B89A-426E-BF87-2187BC87DCF7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Dal</RootNamespace>
+    <AssemblyName>Dal</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\..\packages\Antlr3.Runtime.3.5.1\lib\net20\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.50.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Dapper.1.50.5\lib\net451\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="GemBox.Spreadsheet">
+      <HintPath>..\..\packages\GemBox.Spreadsheet.41.3.30.1122\lib\net30\GemBox.Spreadsheet.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel">
+      <HintPath>..\..\packages\Excel-DNA.Interop.14.0.1\lib\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Vbe.Interop">
+      <HintPath>..\..\packages\Excel-DNA.Interop.14.0.1\lib\Microsoft.Vbe.Interop.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Office">
+      <HintPath>..\..\packages\Excel-DNA.Interop.14.0.1\lib\Office.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20505.0\lib\net40\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20505.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.RegularExpressions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="analytic.cs" />
+    <Compile Include="api\SmsApi.cs" />
+    <Compile Include="article\WebContent.cs" />
+    <Compile Include="authen\AddressBook.cs" />
+    <Compile Include="authen\checkLogin.cs" />
+    <Compile Include="authen\UserInfo.cs" />
+    <Compile Include="Constant\WebContent.cs" />
+    <Compile Include="Dapper\Connection.cs" />
+    <Compile Include="Dapper\ConnectionProxy.cs" />
+    <Compile Include="Dapper\IConnection.cs" />
+    <Compile Include="Export.cs" />
+    <Compile Include="Interactive\WaitingNotify.cs" />
+    <Compile Include="Location\Location.cs" />
+    <Compile Include="article\ChuDes.cs" />
+    <Compile Include="article\Comment.cs" />
+    <Compile Include="article\Ranking.cs" />
+    <Compile Include="rate.cs" />
+    <Compile Include="paymentApi\vnpayment\Common\ConfirmRq.cs" />
+    <Compile Include="paymentApi\vnpayment\Common\ConfirmRs.cs" />
+    <Compile Include="paymentApi\vnpayment\Common\InitRq.cs" />
+    <Compile Include="paymentApi\vnpayment\Common\InitRs.cs" />
+    <Compile Include="paymentApi\vnpayment\Common\RequestObject.cs" />
+    <Compile Include="paymentApi\vnpayment\Common\ResponseObject.cs" />
+    <Compile Include="paymentApi\vnpayment\Common\Utils.cs" />
+    <Compile Include="paymentApi\vnpayment\Properties\Settings.cs" />
+    <Compile Include="paymentApi\vnpayment\VnPayment\ExecuteCompletedEventArgs.cs" />
+    <Compile Include="paymentApi\vnpayment\VnPayment\ExecuteCompletedEventHandler.cs" />
+    <Compile Include="paymentApi\vnpayment\VnPayment\HelloCompletedEventArgs.cs" />
+    <Compile Include="paymentApi\vnpayment\VnPayment\HelloCompletedEventHandler.cs" />
+    <Compile Include="paymentApi\vnpayment\VnPayment\PaymentApi.cs" />
+    <Compile Include="Seria.cs" />
+    <Compile Include="wareHowse.cs" />
+    <Compile Include="product.cs" />
+    <Compile Include="RequesUrlHandler.cs" />
+    <Compile Include="security\Connection.cs" />
+    <Compile Include="Contact.cs" />
+    <Compile Include="article\GifCode.cs" />
+    <Compile Include="Massage.cs" />
+    <Compile Include="article\News.cs" />
+    <Compile Include="notify.cs" />
+    <Compile Include="order.cs" />
+    <Compile Include="errorManager.cs" />
+    <Compile Include="filesManager\fileManager.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="filesManager\IMG.cs" />
+    <Compile Include="filesManager\uploadFile.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="security\makeRandom.cs" />
+    <Compile Include="security\RemoveHtmlTags.cs" />
+    <Compile Include="security\Token.cs" />
+    <Compile Include="security\Util.cs" />
+    <Compile Include="Interactive\SendMail.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="article\SysFaceBook.cs" />
+    <Compile Include="article\Tag.cs" />
+    <Compile Include="Themes.cs" />
+    <Compile Include="authen\UserProfile.cs" />
+    <Compile Include="tygia.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Enum\AEnum\AEnum.csproj">
+      <Project>{902A057E-5D51-4FEE-928A-AA892F6507D2}</Project>
+      <Name>AEnum</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Model\Models.csproj">
+      <Project>{b625e2cd-dcd7-4617-b8e9-203fbf8beb19}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ultil\Ultil.csproj">
+      <Project>{90044e38-5957-4819-a187-470f17e89af5}</Project>
+      <Name>Ultil</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

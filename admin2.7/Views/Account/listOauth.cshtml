@@ -1,0 +1,97 @@
+﻿@*@{
+    ViewBag.Title = "Open author";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@Html.Partial("_partial/userPartial/_partial_usersmenu")
+@if (ViewData["ulist"] != null)
+{
+    List<Dal.UserProfile> listUser = (List<Dal.UserProfile>)ViewData["ulist"];
+    <div class="table-scrollable " id="lb1">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Thumb</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Nguồn</th>
+                    <th>Số bài viết</th>
+                    
+                    <th>Quền hạn</th>
+                    <th></th>
+                    <th>phân quyền</th>
+                </tr>
+            </thead>
+            @for (int i = 0; i < listUser.Count; i++)
+            {
+                <tr>
+                    <td>@listUser[i].Id</td>
+                    <td class="avat">
+                        <a href="@listUser[i].Avatar">
+                            <img src="@listUser[i].Thumb" />
+                        </a>
+                    </td>
+                    <td>@listUser[i].UserName</td>
+                    <td>
+                        @if (listUser[i].PrivoderList != null && listUser[i].PrivoderList.Length > 0)
+                        {
+                            for (int j = 0; j < listUser[i].PrivoderList.Length; j++)
+                            {
+                                if (listUser[i].PrivoderList[j].ProviderName.Equals("facebook"))
+                                {
+                                    <a href="https://www.facebook.com/@listUser[i].PrivoderList[j].ProvoderUserId" target="_blank">
+                                        <img src="/images/facebookicon.png" />
+                                    </a>
+                                }
+                                else
+                                {
+                                    if (listUser[i].PrivoderList[j].ProviderName.Equals("google"))
+                                    {
+                                        <img src="/images/googleicon.png" />
+                                    }
+                                    else
+                                    {
+                                        <span>@listUser[i].PrivoderList[j].ProviderName</span>
+                                    }
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            <span>trực tiếp</span>
+                        }
+
+                    </td>
+                    <td>@listUser[i].PostCount</td>
+                    <td>@listUser[i].ViewTimeCount</td>
+                    <td>@listUser[i].Role</td>
+                    <td>
+                        @if (listUser[i].Block == 1)
+                        {<img src="/images/1394812673_lock.png" title="thành viên đã bị khóa" alt="Đã khóa" /> }
+                        else
+                        {<img src="/images/1394812681_camera_test.png" title="Thành viên đang hiện hoạt" /> }
+                </td>
+                <td><a href="/account/addusertorole?userName=@listUser[i].Id">Phân quền</a></td>
+            </tr>
+            }
+        </table>
+    </div>
+}
+else
+{
+    <div id="message-warning" class="message message-warning">
+        <div class="image">
+            <img src="/images/icons/warning.png" alt="Warning" height="32">
+        </div>
+        <div class="text">
+            <h6>Quản trị người dùng</h6>
+            <span>Không có người dùng nào.</span>
+        </div>
+        <div class="dismiss">
+            <a href="#message-warning"></a>
+        </div>
+    </div>
+}
+
+@Html.Raw(ViewBag.page)*@

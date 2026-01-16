@@ -1,0 +1,392 @@
+﻿@using FrontEnd.Controllers;
+@using Models;
+@{
+    Models.Webconfig commonInfo = new Models.Webconfig();
+    if (ViewData["CommonData"] != null)
+    {
+        commonInfo = (Models.Webconfig)ViewData["CommonData"];
+    }
+    var curentUrl = HttpContext.Current.Request.Url.AbsoluteUri;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="@(string.IsNullOrEmpty(commonInfo.Favicon)?commonInfo.Logo:commonInfo.Favicon)" type="image/x-icon">
+    <meta name="description" content="@commonInfo.ShortDesc" />
+    <meta name="title" property="og:title" content="@Html.Raw(ViewBag.Title)" />
+    <meta property="og:locale" content="vi_VN" />
+    <meta property="og:type" content="website" />
+    <meta name="distribution" content="Global" />
+    <meta name="revisit-after" content="1 days" />
+    <meta http-equiv="REFRESH" content="1800" />
+    <meta name="robots" content="index,follow,all" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <meta property="og:site_name" content="@commonInfo.Title" />
+    <meta property="og:url" content="@curentUrl" />
+    <meta name="author" content="@commonInfo.Title /">
+    <meta name="twitter:creator" content="@commonInfo.Title">
+    <meta name="twitter:title" content="@ViewBag.Title">
+    <meta name="twitter:card" content="website">
+    <meta name="facebook-domain-verification" content="j1vwwgtan92rt5wwr67orbonv2ormi" />
+    @Styles.Render("~/Content/css")
+    @*<link href="https://cdn-tinhieu365.cdn.vccloud.vn/static/css.css" rel="stylesheet" />*@
+    <meta property="fb:app_id" content="2910156589273465" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
+    <link href='/static/css' rel='stylesheet' type='text/css'>
+    @RenderSection("head", required: false)
+    <style>
+        #google_translate_element2, .goog-te-banner-frame, .skiptranslate {
+            display: none;
+        }
+
+        body {
+            top: 0px !important;
+        }
+
+        .box-search .dropdown-menu li {
+            color: #111111;
+            margin: 0 0 5px 0;
+            padding: 0 0 5px 0;
+            border-bottom: 1px dotted #cccccc;
+        }
+
+        .dropdown-menu li a {
+            margin-left: 15px;
+            color: #787b86;
+        }
+    </style>
+</head>
+<body>
+    @Html.AntiForgeryToken()
+    <header class="header">
+        <div class="top-header">
+            <div class="container">
+                <nav class="navbar navbar-light">
+                    <a class="navbar-brand" href="https://tinhieu365.com"><img src="@commonInfo.Logo" alt="@commonInfo.Title Logo"></a>
+                    <form method="get" action="/search" class="box-search dropdown">
+                        <div class="main-search">
+                            <i class="fas fa-search"></i>
+                            <input type="search" class="input-form dropdown-toggle" placeholder="Tìm theo Mã hoặc tên công ty" name="keyword" id="keyword" data-toggle="dropdown">
+                            <ul class="dropdown-menu" id="sarchResultContent">
+                                @if (ViewData["Top50Modal"] != null)
+                                {
+                                    List<TransactionModel> listTop = (List<TransactionModel>)ViewData["Top50Modal"];
+                                    listTop = listTop.Where(x=>!string.IsNullOrEmpty(x.BusinessName)).Take(20).ToList();
+                                    foreach (var item in listTop)
+                                    {
+                                        <li>
+                                            <a href="/symbols/@(string.IsNullOrEmpty(item.StockExchange)?"":item.StockExchange+"-")@item.Ticker" data-name="@item.BusinessName">@item.BusinessName</a>
+                                        </li>
+                                    }
+
+                                }
+                            </ul>
+                        </div>
+                    </form>
+                    <div class="box-right-header">
+                        @if (AppSession.CurentProfile.IsAuthenlication)
+                        {
+                            <div class="hidden-sm dropdown-header-mobile flex flex-jc-between flex-ai-end">
+                                <div class="show-sm icon-user-mobile">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="box-notification-header dropdown">
+                                    <div class="text dropdown-toggle flex flex-ai-center" id="dropdownNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="icon-notification box-icon-header">
+                                            <span class="icon-default icon-notification-xs"></span>
+                                            <span class="badge">@ViewBag.NotificationCount</span>
+                                        </div>
+                                        <span class="text">Thông báo</span>
+                                    </div>
+                                    <div class="dropdown-default dropdown-menu" aria-labelledby="dropdownNotification">
+                                        <div class="list-notification">
+                                            @if (ViewData["nofify"] != null)
+                                            {
+                                                List<Models.Notify.UserMessenge> userMsg = (List<Models.Notify.UserMessenge>)ViewData["nofify"];
+                                                foreach (var item in userMsg)
+                                                {
+                                                    <div class="item-notification flex flex-ai-center">
+                                                        <div class="content">
+                                                            <h4 class="name">@item.Title</h4>
+                                                            <p class="txt-name">@Html.Raw(Ultil.StringHelper.SubString(300, item.Content))</p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                            <a href="/account/notification" class="text-center view-more-notification">Xem tất cả các thông báo</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--box-notification-header-->
+                                @*<div class="box-project-header dropdown">
+                                        <div class="text dropdown-toggle flex flex-ai-center" id="dropdownProject" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <div class="box-icon-header">
+                                                <span class="icon-default icon-my-project"></span>
+                                            </div>
+                                            <span class="text">My Project</span>
+                                        </div>
+                                        <div class="dropdown-default dropdown-menu" aria-labelledby="dropdownProject">
+                                            <div class="main-project text-center">
+                                                <p><a href="/Project/MyProject">Project management</a></p>
+                                                <a href="/project/CreateNew" class="button button-type01 text-transform">Create new</a>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                <!--box-project-header-->
+                                <div class="box-user-header dropdown">
+                                    <div class="text dropdown-toggle flex flex-ai-center" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="box-icon-header">
+                                            <div class="images-avatar">
+                                                <img src="@AppSession.CurentProfile.Avata">
+                                            </div>
+                                            <span class="status online"></span>
+                                        </div>
+                                        <span class="text">@AppSession.CurentProfile.SureName</span>
+                                    </div>
+                                    <div class="dropdown-default dropdown-menu dropdown-menu-right" aria-labelledby="dropdownUser">
+                                        <div class="main-user">
+                                            <a href="#" class="info-user flex flex-ai-center">
+                                                <span class="images">
+                                                    <img src="@AppSession.CurentProfile.Avata">
+                                                </span>
+                                                <div class="content">
+                                                    <h4 class="name">@AppSession.CurentProfile.SureName</h4>
+                                                    <p class="txt-name">@AppSession.CurentProfile.UserName</p>
+                                                </div>
+                                            </a>
+                                            <ul class="list-active-user">
+                                                <li><a href="/account/myprofile" class="active">My Profile</a> </li>
+                                                <li><a href="/account/changepassword">Change password</a> </li>
+                                                <li><a href="javascript:Common.logOff();">Log out</a> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--box-project-header-->
+                            </div>
+                        }
+                        else
+                        {
+
+                            <ul class="box-login-register flex flex-ai-center">
+                                <li><a href="#" data-toggle="modal" data-target="#loginModal">Đăng nhập</a> </li>
+                                <li><a href="/account/Register">Đăng ký</a> </li>
+                            </ul>
+                        }
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="main-menu navbar navbar-expand-lg">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon fas fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="nav justify-content-center w-100pc flex-ai-center">
+                        @foreach (var item in commonInfo.MenuList)
+                        {
+                            <li class="nav-item active">
+                                <div class="d-flex flex-ai-center">
+                                    <a class="nav-link" href="@item.Link">
+                                        <span class="text">@item.Tittle</span>
+                                    </a>
+                                    <span class="icon-toggle-menu hidden-md"></span>
+                                </div>
+                                @if (item.ChidMenu.Count > 0)
+                                {
+                                    <div class="menu-level-2 menu-gellery">
+                                        <div class="item-menu-child">
+                                            <div class="child">
+                                                <ul class="list-menu-child">
+                                                    @foreach (var childItem in item.ChidMenu)
+                                                    {
+                                                        <li><a href="@childItem.Link">@childItem.Tittle</a> </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </li>
+                        }
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    @RenderBody()
+
+    <footer class="footer" style="margin-top:15px;">
+        <div class="top-footer">
+            <div class="container">
+                <div class="flex flex-ac-between flex-jc-between">
+                    <div class="content-foorer">
+                        <a href="/" class="logo-footer">
+                            <img src="@commonInfo.Logo" alt="@commonInfo.Title logo">
+                        </a>
+
+                        <ul class="box-list-share">
+                            <li>Language</li>
+                            <li><a href="javascript:doGTranslate('vi|vi');" class="icon-default lb-lang notranslate"><img src="/Assets/images/VN-Vietnam-Flag.jpg" style="height:14px;" /> Tiếng Việt</a> </li>
+                            <li><a href="javascript:doGTranslate('vi|en');" class="icon-default lb-lang notranslate"><img src="~/Assets/images/en-flag.jpg" style="height:14px;" /> English</a> </li>
+                            <li><hr /></li>
+                            <li><a href="@commonInfo.FaceBookLink" class="facebook" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a> </li>
+
+                        </ul>
+                    </div>
+                    @if (commonInfo.FooterMenuList != null)
+                    {
+                        foreach (var item in commonInfo.FooterMenuList)
+                        {
+                            <div class="content-foorer">
+                                <h4 class="title-small">@item.Tittle</h4>
+                                <ul class="list-menu-footer">
+                                    @foreach (var childItem in item.ChidMenu)
+                                    {
+                                        <li><a href="@childItem.Link">@childItem.Tittle </a></li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    }
+
+                    <div class="content-foorer">
+                        <h4 class="title-small">tinhieu365</h4>
+                        <div class="info-company">
+                            <div class="item-info">
+                                <p>
+                                    <i class="fas fa-map-marker-alt"></i> No. 26 Lane 218, Pham Van Dong Street, Co Nhue 2, North Tu Liem, Hanoi
+                                </p>
+                                <p><a href="tel:0906006580"><i class="fas fa-phone-alt"></i> 0906006580</a></p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="content-foorer">
+                        <a href="javascript:void(0)" title="Lên đầu trang" onclick="jQuery('html,body').animate({scrollTop: 0},300);" class="go_top go_tops">
+                            <img src="~/Assets/images/icon/icon-top.png" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-footer">
+            <div class="container">
+                <p class="text-center">Copyright © 2019 Tinhieu365. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    @*@Scripts.Render("~/bundles/script")*@
+
+
+    <script src="https://cdn-tinhieu365.cdn.vccloud.vn/static/script.js"></script>
+    @if (!AppSession.CurentProfile.IsAuthenlication)
+    {
+        <div class="modal fade modal-login" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="top-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                            <p class="text">Conect with social network</p>
+                            <a href="javascript:void(0)" data-dismiss="modal" aria-label="Close" class="close"></a>
+                        </div>
+                        @*<div class="container">*@
+                        <div class="row wp-action">
+                            @*<div class="col-sm-6"><a href="@commonInfo.FaceBookLink" class="icon-default facebook">Facebook</a></div>*@
+                            <div class="col-sm-12"><a href="javascript:void(0);" id="btn-googleLogin" class="icon-default google">Google</a></div>
+                        </div>
+                        @*</div>*@
+                    </div>
+                    <div class="modal-body">
+                        <p class="text">Or login with your Email</p>
+                        <form action="" class="">
+                            <div class="form-group">
+                                <label for="Email" class="col-form-label">Email</label>
+                                <div class="col-form-wrap">
+                                    <input type="text" name="Email" id="Email" class="form-control">
+                                    <div class="form-control-border"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-form-label">Password</label>
+                                <div class="col-form-wrap">
+                                    <input type="password" name="password" id="password" class="form-control">
+                                    <div class="form-control-border"></div>
+                                </div>
+                            </div>
+                            <div style="margin-top:15px;" class="g-recaptcha-login" id="g-recaptcha-login"></div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/account/forgetpassword" style="margin-right:10px;">Forget password</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="btnLogin">Đăng nhập</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <script src="/Assets/js/Modul/Profile.js"></script>
+        <script>
+               var _recapcha_key = "@AppConfig.googleCapchaSitekey";
+            loginControl.init();
+        </script>
+    }
+
+
+    <div id="fb-root"></div>
+    <script async defer src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.6"></script>
+
+    <script>
+        $(document).ready(function () {
+            if ($('#facebookComment').length > 0) {
+                $('#facebookComment').html('<div class="fb-comments" data-href="' + window.location.href + '" data-num-posts="20" data-width="' + $(".box-comment").width() + '"  style="width: 100% !important;"></div>');
+            }
+        });
+    </script>
+
+    <script type="application/ld+json">
+        {
+        "@@context": "https://schema.org",
+        "@@type": "WebSite",
+        "url": "@Url.Content("~")",
+        "potentialAction": {
+        "@@type": "SearchAction",
+        "target": "@(Url.Content("~").TrimEnd('/') + Url.RouteUrl("search") + "?keyword={keyword}")",
+        "query-input": "required name=keyword"
+        }
+        }
+    </script>
+
+    <style>
+        .header .item-notification .name, .header .info-user .name {
+            font-size: 10px;
+        }
+    </style>
+    <div id="google_translate_element2"></div>
+    <script type="text/javascript">
+        function GTranslateGetCurrentLang() { var keyValue = document.cookie.match('(^|;) ?googtrans=([^;]*)(;|$)'); return keyValue ? keyValue[2].split('/')[2] : null; }
+        function GTranslateFireEvent(element, event) { try { if (document.createEventObject) { var evt = document.createEventObject(); element.fireEvent('on' + event, evt) } else { var evt = document.createEvent('HTMLEvents'); evt.initEvent(event, true, true); element.dispatchEvent(evt) } } catch (e) { } }
+        function doGTranslate(lang_pair) {
+            localStorage.setItem('lang', lang_pair);
+            $("#langModal").modal("hide");
+            if (lang_pair.value) lang_pair = lang_pair.value; if (lang_pair == '') return; var lang = lang_pair.split('|')[1]; if (GTranslateGetCurrentLang() == null && lang == lang_pair.split('|')[0]) return; var teCombo; var sel = document.getElementsByTagName('select'); for (var i = 0; i < sel.length; i++) if (sel[i].className == 'goog-te-combo') teCombo = sel[i]; if (document.getElementById('google_translate_element2') == null || document.getElementById('google_translate_element2').innerHTML.length == 0 || teCombo.length == 0 || teCombo.innerHTML.length == 0) { setTimeout(function () { doGTranslate(lang_pair) }, 500) } else { teCombo.value = lang; GTranslateFireEvent(teCombo, 'change'); GTranslateFireEvent(teCombo, 'change') } $("body").css("top", 0);
+        }
+        function googleTranslateElementInit2() { new google.translate.TranslateElement({ pageLanguage: 'vi', autoDisplay: false }, 'google_translate_element2'); }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit2"></script>
+
+    @RenderSection("scripts", required: false)
+
+    @Html.Raw(commonInfo.PageScript)
+
+</body>
+</html>

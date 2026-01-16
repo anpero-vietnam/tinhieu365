@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+
+
+<div class="col-sm-12 col-md-12 col-lg-12 left-profile">
+    <div class="main-left-profile">
+        <div class="item-profile">
+            <h4 class="title title-3">Register</h4>
+            <div class="row form-group">
+                <div class="col-sm-5 text-right">
+                    <label class="txt-lable txt-lable-1">Login email <span class="color-main">*</span></label>
+                </div>
+                <div class="col-sm-7">
+                    <input type="text" placeholder="This email used to login" value="" class="input-form" name="email" id="email">
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+            </div>
+            
+            <div class="row form-group">
+                <div class="col-sm-5 text-right">
+                    <label class="txt-lable txt-lable-1">Phone number</label>
+                </div>
+                <div class="col-sm-7">
+                    <input type="text" placeholder="Phone" value="" class="input-form" name="Phone" id="Phone">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-5 text-right">
+                    <label class="txt-lable txt-lable-1">Nicknames <span class="color-main">*</span></label>
+                </div>
+                <div class="col-sm-7">
+                    <input type="text" placeholder="nicknames" value="" class="input-form" name="nicknames" id="nicknames"  autocomplete="off">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-5 text-right">
+                    <label class="txt-lable txt-lable-1">Password <span class="color-main">*</span></label>
+                </div>
+                <div class="col-sm-7">
+                    <input type="password" placeholder="Password" value="" class="input-form" name="Password" id="Password" autocomplete="off">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-5 text-right">
+                    <label class="txt-lable txt-lable-1">Confirm password <span class="color-main">*</span></label>
+                </div>
+                <div class="col-sm-7">
+                    <input type="password" placeholder="Confirm password "  autocomplete="off"  class="input-form" name="ConfirmPassword" id="ConfirmPassword">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-5 text-right">
+
+                </div>
+                <div class="col-sm-7">
+                    <div style="margin-top:15px;" class="g-recaptcha-register" name="g-recaptcha-register" id="g-recaptcha-register"></div>
+                </div>
+            </div>
+            <div class="row form-group change-password">
+                <div class="col-md-5 text-right"></div>
+                <div class="col-md-7">
+                    <button class="button button-type01 text-transform" id="btn-register">Register</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="/Assets/js/Modul/Profile.js"></script>
+    <script>
+        var googleCatchaRegister;
+        var _recapcha_key = "@FrontEnd.Controllers.AppConfig.googleCapchaSitekey";
+        $(document).ready(function () {
+            RegisterControl.init();
+        });
+    </script>
+}

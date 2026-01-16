@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = @ViewBag.Title;
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@section head{  
+@Html.Raw(ViewBag.s1)
+@Html.Raw(ViewBag.s2)
+@Html.Raw(ViewBag.s3)
+@Html.Raw(ViewBag.s4)
+@Html.Raw(ViewBag.s5)
+@Html.Raw(ViewBag.s6)
+@Html.Raw(ViewBag.s7)
+@Html.Raw(ViewBag.s8)
+
+}
+<div class="form-horizontal" itemprop="review" itemscope itemtype="http://schema.org/Review">
+    <div id="catelogiList">@Html.Raw(ViewBag.subCatelogiList)</div>
+    <h1 itemprop="name">@ViewBag.tieuDe</h1>
+    <div class="likes botron">
+        <div id="faceBookLike" class="fll"></div><div id="googlecong1" class="fll"></div>
+        <a title="Chia sẻ lên link hay" href="http://linkhay.com/submit" class="fll" target="_blank" rel="nofollow">
+            <img src="http://linkhay2.vcmedia.vn/l/templates/images/guide/button4.jpg" width="62" height="20" alt="Hot!" /></a>
+        <div class="flr" title="Điểm đánh giá tối đa là 5"> <span itemprop="ratingValue"><img src="/images/theme/rankingSmall.png"/>@ViewBag.R_avg</span>/ @ViewBag.totalRank Lượt đánh giá </div>
+    </div>
+    <div class="contentMenuList">@Html.Raw(ViewBag.newsByNewsTag)</div>
+    <div class="newdetailConten fll" itemprop="description">
+        @Html.Raw(ViewBag.noidung1)@Html.Raw(ViewBag.noiDung2)
+        @Html.Raw(ViewBag.imagesSlide)
+        <div class="r0" id="rank">
+            <a href="javascript:void(0)" id="rank1" title="Nội dung chán không muốn xem lại" onclick="RanKingtReport(1);">1</a>
+            <a href="javascript:void(0)" id="rank2" title="Bình thường" onclick="RanKingtReport(2);">2</a>
+            <a href="javascript:void(0)" id="rank3" title="Khá hay" onclick="RanKingtReport(3);">3</a>
+            <a href="javascript:void(0)" id="rank4" title="Hay" onclick="RanKingtReport(4);">4</a>
+            <a href="javascript:void(0)" id="rank5" title="Rất hay cần phát huy" onclick="RanKingtReport(5);">5</a>
+        </div>
+    </div>
+    <div class="tagList">
+        <img src="/images/theme/tag.png" />
+        @Html.Raw(ViewBag.tag)
+    </div>
+    <div class="contentMenu fll">Bài cùng chủ để</div>
+    <div class="contentMenuList">
+        @Html.Raw(ViewBag.baiCungChuDe)
+    </div>
+    @Html.Partial("_partial/_partial_comment")
+
+</div>
+
+

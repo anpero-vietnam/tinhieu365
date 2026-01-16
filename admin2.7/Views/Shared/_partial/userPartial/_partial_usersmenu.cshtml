@@ -1,0 +1,35 @@
+﻿<div class="col-md-12 portlet light">
+
+    <div class="search">
+        <form action="/account/listadmin" method="get">
+            <div class="input">
+               
+            </div>
+            <div class="button">
+               
+            </div>
+        </form>
+    </div>
+    <div class="portlet-title">
+        <div class="caption font-green-sharp">            
+            <span class="caption-subject"> Tìm kiếm người dùng</span>            
+        </div>
+        <div class="actions">
+            <form action="/account/listadmin" method="get">
+                <div class="btn-group">
+                    @Html.TextBox("search")
+                </div>
+              
+                <input type="submit" name="submit" value="Search" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+</div>
+    </div>
+	  <a href="/account/listadmin" class="btn btn-default mt-sweetalert">All (@ViewBag.allUserCount)</a>
+      <a href="/account/listadmin?role=addmin" class="btn btn-danger mt-sweetalert">Addmin (@ViewBag.adminCount)</a>
+      <a href="/account/listadmin?role=accounting" class="btn btn-default mt-sweetalert">Kế toán, thủ quỹ (@ViewBag.accounting)</a>
+      <a href="/account/listadmin?role=mod" class="btn btn-default mt-sweetalert">Mod (@ViewBag.Mod)</a>
+      <a href="/account/listadmin?role=uservip" class="btn btn-default mt-sweetalert">Vip (@ViewBag.Vip)</a>
+      <a href="/account/listadmin/0" class="btn btn-default mt-sweetalert">Thường (@(Convert.ToInt32(ViewBag.allUserCount)-Convert.ToInt32(ViewBag.adminCount)-Convert.ToInt32(ViewBag.Mod)))</a>
+      <a href="/account/listadmin?block=1" class="btn btn-default mt-sweetalert">Bị khóa (@ViewBag.allBlockUserUsercount)</a>
+      <a href="/account/listOauth" class="btn btn-default mt-sweetalert">Open Id(@ViewBag.allOauthUserCount)</a>
+</div>

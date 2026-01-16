@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    @Html.Raw(ViewBag.metaKey)
+    @Html.Raw(ViewBag.mataDes)
+    @Html.Raw(ViewBag.Keywords)
+}
+@Html.Partial("_partial/_partial_subCatelogi")
+

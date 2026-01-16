@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- TradingView Widget BEGIN -->
+<div style="height:900px;width:30%;">
+    <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>        
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
+            {
+                "symbol": "HOSE:VNM",
+                    "colorTheme": "light",
+                        "isTransparent": false,
+                            "largeChartUrl": "",
+                                "displayMode": "regular",
+                                    "width": "100%",
+                                        "height": "100%",
+                                            "locale": "vi_VN"
+            }
+        </script>
+    </div>
+</div>
+
+<!-- TradingView Widget END -->
+
+<!-- TradingView Widget BEGIN -->
+<div style="width:100%;height:100%;">
+
+    <!-- TradingView Widget BEGIN -->
+    <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>        
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+            {
+                "interval": "1m",
+                "width": 425,
+                "isTransparent": false,
+                "height": 450,
+                "symbol": "HOSE:VNM",
+                "showIntervalTabs": true,
+                "locale": "vi_VN",
+                "colorTheme": "dark"
+            }
+        </script>
+    </div>
+    <!-- TradingView Widget END -->
+</div>

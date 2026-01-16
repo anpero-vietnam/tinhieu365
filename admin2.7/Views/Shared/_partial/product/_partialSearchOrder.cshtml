@@ -1,0 +1,104 @@
+﻿<div class="right col-md-12">
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <th style="width: 10%;">Mã DH</th>
+            <th style="width: 10%;">Seria</th>
+            <th style="width: 15%;">Từ ngày</th>
+            <th style="width: 15%;">Đến ngày</th>
+            <th style="width: 25%;">Mã khách hàng</th>
+            <th style="width: 25%;">Lựa chọn</th>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="form-control form-filter input-sm" id="odid" placeholder="Mã đơn hàng">
+            </td>
+               <td>
+                <input type="text" class="form-control form-filter input-sm" id="seria" placeholder="Seria">
+            </td>
+            <td>
+                <div class="input-group date date-picker margin-bottom-5">
+                    <input type="text" class="form-control form-filter input-sm" id="ODbeginDate" placeholder="Từ ngày">
+                    <span class="input-group-btn">
+                        <button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </div>
+            </td>
+            <td>
+            <div class="input-group date date-picker margin-bottom-5">
+                    <input type="text" class="form-control form-filter input-sm" id="ODendDate" placeholder="Đến ngày">
+                    <span class="input-group-btn">
+                        <button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </div>
+            </td>
+            <td>
+                <div class="input-group">
+                    <input type="text" id="makh" class="form-control form-filter input-sm" name="KhId" placeholder="Ma KH"><span class="input-group-btn" data-target="#findAddr" data-toggle="modal"><span class="btn btn-sm default"><i class="fa icon-magnifier-add"></i></span></span>
+                </div>
+            </td>
+            <td>
+                <select id="odSSt" class="form-control form-filter input-sm">                
+                 @Html.Raw(Ultil.Static.Oderstatus.GetOrderStatusHtmlOption())                    
+                </select>           
+
+            </td>
+        </tr>
+    </table>
+    <p id="idsCt" style="overflow-x: scroll;"><img src='/Images/lightbox-ico-loading.gif'></p>
+</div>
+<script>
+    function searchOrder(_page) {
+        var ischecked = $("#odSSt option:selected").val();
+        var _seria = $("#seria").val();
+
+        $("#idsCt").html("<img src='/Images/lightbox-ico-loading.gif'>");
+        var valid = true;
+        if (valid) {
+            $.ajax({
+                type: "post",
+                url: "/handler/product.ashx",
+                data: {
+                    op: "searchOrder",
+                    fromDate: $("#ODbeginDate").val(),
+                    endDate: $("#ODendDate").val(),
+                    OID: $("#odid").val(),
+                    kh: $("#makh").val(),
+                    page: _page,
+                    sst: ischecked,
+                    seria: _seria,
+                    st: Anpero.CurentStore
+                },
+                success: function(msg) {
+                    $("#idsCt").html(msg);
+                    $("#seria").val("");
+                    //DragScroll("#idsCt", false);
+                }
+            });
+        }
+    }
+
+    function delOd(_id) {
+        var ischecked = $("#odSSt option:selected").val();
+
+        var valid = true;
+        if (!confirm("Bạn muốn xóa đơn hàng này không")) {
+            valid = false;
+        }
+        if (valid) {
+            $.ajax({
+                type: "post",
+                url: "/handler/product.ashx",
+                data: { op: "delOd", id: _id, st: Anpero.CurentStore },
+                success: function(msg) {
+
+                    searchOrder(1);
+                    showNotice("Xóa đơn hàng", "Xóa thành công " + msg );
+                    playSound01();
+
+                }
+            });
+        }
+
+    }
+</script>
+

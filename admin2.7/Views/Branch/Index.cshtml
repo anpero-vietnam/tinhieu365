@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "Thương hiệu, xuất xứ";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="page-breadcrumb breadcrumb">
+            <li><a href="/">Trang chủ</a><i class="fa fa-angle-right"></i></li>
+            <li><a href="/pr/Branch">Quản lý dự án</a>
+
+        </ul>
+    </div>
+</div>
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo" data-target="#originModed" data-toggle="modal">
+            <i class="icon-settings font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase"> Quản lý dự án</span>
+        </div>
+        <div class="actions">
+            <div class="btn-group">
+                <a class="btn btn-sm red dropdown-toggle" href="#" data-target="#originModed" data-toggle="modal">
+                    <i class="fa fa-file-excel-o"></i>  Thêm mới
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <div class="row">
+            <div class="col-md-12" id="branch-content">
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script src="/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+    <link href="~/Scripts/Modul/Small-fileUpload/Small-fileUpload.css" rel="stylesheet" />
+    <script src="/Scripts/product/Vendor.js"></script>
+    <script>
+        $(document).ready(function () {
+            Vendor.init();
+            Vendor.bindOriginHtml()
+        });
+
+    </script>
+
+
+}
+
+<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="originModed">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="lb-origin2">Thêm thương hiệu / xuất xứ</h4>
+                <div>
+                    Nhóm sản phẩm là những sản phẩm đi theo bộ, hoặc cùng một nhà sản xuất, thương hiệu. Nhóm sản phẩm giúp khách hàng tìm kiếm chi tiết hơn trên web của bạn
+                </div>
+            </div>
+            <div class="modal-body form">
+                <div class="form-horizontal">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Tên thương hiệu</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="originTxt">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Miêu tả (4000 ký tự)</label>
+                            <div class="col-md-9">
+                                <textarea class="form-control" rows="5" id="desc"></textarea>
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Thứ tự</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <i class="fa fa-info-circle tooltips" data-original-title="Các item cùng thứ tự sẽ sắp xếp từ a đến z" data-container="body" style="z-index:9999;"></i>
+                                    <input type="text" class="form-control" id="rank" value="1" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Ảnh đại diện</label>
+                            <div class="col-md-9">
+                                <input type="file" id="branchFile" />
+                                <img src="" id="brach-thumb" style="width:100%;display:none;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-4 col-md-8">
+                                <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn red" id="btn-branch-add">Thêm mới</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div id="originTable"></div>*@
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="quick-nav">
+    <a class="quick-nav-trigger" href="#0">
+        <span aria-hidden="true"></span>
+    </a>
+    <ul>
+        <li>
+            <a href="/pr/addpr" class="active">
+                <span>Thêm sản phẩm mới</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+
+        <li>
+            <a href="/pr/List">
+                <span>Danh sách sản phẩm</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/pr/categorymanager">
+                <span>Danh mục sản phẩm</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/pr/orderList">
+                <span>Xem đơn hàng</span>
+                <i class="icon-basket"></i>
+            </a>
+        </li>
+    </ul>
+    <span aria-hidden="true" class="quick-nav-bg"></span>
+</nav>
+<div class="quick-nav-overlay"></div>
+<style>
+    .tooltip{z-index:99999!important;}
+</style>

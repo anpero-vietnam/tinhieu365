@@ -1,0 +1,303 @@
+﻿@{
+    ViewBag.Title = "Đơn hàng";
+}
+@model Models.Modul.Product.OrderModel
+<script src="~/Scripts/order/wareHouse.js"></script>
+<script src="~/Scripts/product/addPr.js"></script>
+
+@if (Model != null)
+{
+    
+    Dal.Profile.AddressBook ad = new Dal.Profile.AddressBook();
+   var contact =  ad.GetAddressById(Model.CustomId, Model.StoreId);
+    <div class="col-md-12">
+        <ul class="page-breadcrumb breadcrumb">
+            <li><i class="fa fa-home"></i><a href="/">Trang tổng quan </a><i class="fa fa-angle-right"></i></li>
+            <li><a href="/pr/orderList">Danh sách đơn hàng</a><i class="fa fa-angle-right"></i></li>
+            <li><a href="javascript:void(0);">Chi tiết đơn hàng</a></li>
+        </ul>
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject font-dark sbold uppercase">
+                        Đơn hàng #@Model.Id
+                        <span class="hidden-xs">| @Ultil.Times.ConvertStringToTimeForMatVN(Model.DateCreate) </span>
+                    </span>
+                </div>
+                <div class="actions">
+                    <div class="btn-group btn-group-devided">
+                        <a type="button" class="btn red btn-outline btn-circle" href="/pr/printOrder?id=@Model.Id" target="_blank"><i class="fa fa-print"></i> In đơn hàng</a>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn red btn-outline btn-circle" href="javascript:;" data-toggle="dropdown">
+                            <i class="fa fa-share"></i>
+                            <span class="hidden-xs"> Tools </span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs nav-tabs-lg">
+                        <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true" class="active"> Thông tin đơn hàng </a></li>
+                        <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Thông tin ship</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <div class="tab-content form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="cardContent" class="table-scrollable" style="overflow-x: scroll; float: left;"></div>
+                                        <table class="table table-striped table-bordered">
+                                            <tr>
+                                                <td style="width:250px;"><span class="pull-right"><strong>Ngày lập : </strong></span></td>
+                                                <td><span class="pull-left">@Ultil.Times.convertStringToTimeForMat(Model.DateCreate)</span></td>
+                                            </tr>
+                                            @*<tr>
+                                                <td><span class="pull-right"><strong>Nhân viên bán hàng : </strong></span></td>
+                                                <td><span class="pull-left">@Model.StaffName</span></td>
+                                            </tr>*@
+                                            <tr>
+                                                <td><span class="pull-right"><strong>Khách hàng :</strong> </span></td>
+                                                <td><span class="pull-left">@contact.Name</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="pull-right"><strong>Điện thoại khách hàng:</strong> </span></td>
+                                                <td><span class="pull-left">@contact.Phone</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="pull-right"><strong>Email :</strong> </span></td>
+                                                <td><span class="pull-left">@contact.Mail</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="pull-right"><strong>Địa chỉ :</strong> </span></td>
+                                                <td><span class="pull-left">@contact.Address</span></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><span class="pull-right"><strong>Phương thức thanh toán :</strong> </span></td>
+                                                <td><span class="pull-left">@Ultil.Static.PayMenMethod.GetPaymentMethodText(Model.TranferType)</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="pull-right"><strong>Phương thức vận chuyển :</strong></span></td>
+                                                <td><span class="pull-left">@Ultil.Static.ShippingMethod.GetShippingMethodText(Model.ShipingMethod)</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="pull-right"><strong>Phí ship :</strong> </span></td>
+                                                <td><span class="pull-left">@Ultil.StringHelper.ConVertToMoneyFormatInt(Model.ShippingFee.ToString())</span></td>
+                                            </tr>
+                                        </table>
+                                        <table class="table table-striped table-bordered">
+                                            <tr>
+                                                <td style="width:250px;"><span class="pull-right"><strong>Tổng giá trị đơn hàng :</strong></span></td>
+                                                <td><span id="priceCont" class="pull-left">@Ultil.StringHelper.ConVertToMoneyFormat((Model.TotalPrice + Model.ShippingFee).ToString()) đã bao gồm (@Ultil.StringHelper.ConVertToMoneyFormatInt(Model.ShippingFee.ToString()) đ phí ship)</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:250px;"><span class="pull-right"><strong>Viết bằng chữ :</strong></span></td>
+                                                <td><span id="priceCont" class="pull-left">@Ultil.StringHelper.ToStringVN(Model.TotalPrice + Model.ShippingFee)</span></td>
+                                            </tr>
+                                            @*<tr>
+                                                    <td><span class="pull-right"><strong>Đã thanh toán:</strong></span></td>
+                                                    <td><span class="pull-left">@Ultil.StringHelper.ConVertToMoneyFormatInt(Model.Paided.ToString())</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span class="pull-right bold">Còn lại phải thanh toán:</span></td>
+                                                    <td>@Ultil.StringHelper.ConVertToMoneyFormatInt((Model.TottalPrice - Model.Paided).ToString())</td>
+                                                </tr>*@
+                                            <tr>
+                                                <td><span class="pull-right bold">Ghi chú:</span></td>
+                                                <td><span class="pull-left"><textarea id="orderDetail" class="form-control" style="min-width:400px;">@Model.Detail</textarea></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="pull-right  bold">Cập nhật trạng thái:</span></td>
+                                                <td>
+                                                    <span class="pull-left">
+                                                        <select class="form-control" id="odsst" onchange="javascript:updateODSst();">
+                                                            @Html.Raw(Ultil.Static.Oderstatus.GetOrderStatusHtmlOption())
+                                                        </select>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><button type="button" class="btn" onclick="updateODSst();"><i class="fa fa-check"></i> Cập trạng thái đơn hàng</button></td>
+                                            </tr>
+                                        </table>
+                                        <div class="form-group" style="display:none;">
+                                            <label class="control-label col-md-3">Nợ lại tiền hàng:</label>
+                                            <div class="col-md-9">
+                                                <input type="text" value="0" class="form-filter input-sm mask-money" id="rendPrice" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                 
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var orderStatus = document.getElementById("odsst");
+        orderStatus.value = "@Model.Status";
+    </script>
+}
+<script>
+
+    $(document).ready(function () {
+        $("body").addClass("page-sidebar-closed");
+        $(".page-sidebar-menu").addClass("page-sidebar-closed");
+        $(".page-sidebar-menu").addClass("page-sidebar-menu-closed");        
+        BindPROD();
+        //$("#payPrice")
+        //    .keyup(function () {
+        //        CalcRend();
+        //    });
+        //$("#rendPrice")
+        //    .keyup(function () {
+        //        CalcPayment();
+        //    });
+        //$("#OweVAT")
+        //    .keyup(function () {
+        //        CalcPayVAT();
+        //    });
+        //$("#payVAT")
+        //    .keyup(function () {
+        //        CalcOweVAT();
+        //    });
+        $(".mask-money").change(function () {
+            var _id = this.id.replace('spprice_', '').replace('spVat_', '');
+            UpdatePrOd(_id);
+        });
+        DragScroll("#cardContent", true);
+    });
+
+    function CalTtp2() {
+        var _VAT = $("#priceCont").html().replace(',', '').replace(',', '').replace(',', '').replace(',', '');
+        var _PaidVAT = $("#vatCont").val().replace(',', '').replace(',', '').replace(',', '').replace(',', '');
+        $("#ttp2").html(parseFloat(_VAT) + parseFloat(_PaidVAT));
+    }
+
+    //function CalcOweVAT() {
+    //    var _VAT = $("#vatCont").html().replace(',', '').replace(',', '').replace(',', '').replace(',', '');
+    //    var _PaidVAT = $("#payVAT").val().replace(',', '').replace(',', '').replace(',', '').replace(',', '');
+    //    $("#OweVAT").val(parseFloat(_VAT) - parseFloat(_PaidVAT));
+
+    //}
+
+    //function CalcPayVAT() {
+    //    var _VAT = $("#vatCont").html().replace(',', '').replace(',', '').replace(',', '').replace(',', '');
+    //    var _oweVAT = 0;
+    //    $("#payVAT").val(parseFloat(_VAT) - parseFloat(_oweVAT));
+    //}
+
+    //function CalcRend() {
+    //    var _price = $("#priceCont").html().replace(',', '').replace(',', '').replace(',', '').replace(',', '');
+    //    var _payPrice = $("#payPrice").val().replace(',', '').replace(',', '').replace(',', '').replace(',', '');
+    //    $("#rendPrice").val(parseFloat(_price) - parseFloat(_payPrice));
+    //}
+    function CalcPayment() {
+        var _price = $("#priceCont").html().replace(',', '').replace(',', '').replace(',', '').replace(',', '');
+        var _rendPrice = $("#rendPrice").val().replace(',', '').replace(',', '').replace(',', '').replace(',', '');
+        $("#payPrice").val(parseFloat(_price) - parseFloat(_rendPrice));
+
+    }
+      
+    function updateODSst() {
+        var _odSST = $("#odsst option:selected").val();
+        var detail = $("#orderDetail").val();
+        var _tranferType = $("#odsst option:selected").val();
+        $.ajax({
+            type: "post",
+            url: "/pr/UpdateOrder",
+            data: {
+                statusId: _odSST,
+                orderDetail: detail,
+                id: getParameterByName("id"),
+                tranferType: _tranferType,
+                st: Anpero.CurentStore
+            },
+            success: function (msg) {
+                showNotice("Cập nhật đơn hàng",
+                    "Bạn cập nhật thành công " + msg + " trạng thái, phương thức thanh toán và ghi chú cho đơn hàng");
+            }
+        });
+    }
+    function BindBank() {
+        var valid = true;
+        if (valid) {
+            $.ajax({
+                type: "post",
+                url: "/handler/orderHandler.ashx",
+                data: { op: "BindBankType2", st: Anpero.CurentStore },
+                success: function (msg) {
+                    $("#BankContent").html(msg);
+                }
+            });
+        }
+    }
+</script>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="Prwh">
+    <div class="modal-dialog modal-lg bs-example-modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Thêm kho bãi</h4>
+            </div>
+            <div class="modal-body">
+                <label>Vị trí kho </label>
+                <input type="text" id="whN" class="form-control" />
+                <button onclick="addwh();">Thêm</button><br />
+                <div id="tablewh">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .form-group span {
+        line-height: 38px;
+    }
+
+    .spcontent span a i {
+        font-size: 24px;
+        margin-left: 3px;
+    }
+
+        .spcontent span a i:hover {
+            font-size: 25px;
+            color: blue;
+        }
+
+    .spcontent .headerPr {
+        background-color: #eee !important;
+        float: left;
+        width: 100%;
+        border-bottom: 1px #CCC dashed;
+        margin: 15px 0 15px 0;
+        padding: 5px 0 5px 0;
+    }
+
+    .total {
+        text-align: left;
+        margin: 25px 0 25px 0;
+    }
+
+    ul, li {
+        list-style: none;
+    }
+
+    li {
+        line-height: 32px;
+    }
+</style>
+<script type="text/javascript" src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/order/wareHouse.js"></script>

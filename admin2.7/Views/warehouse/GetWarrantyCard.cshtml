@@ -1,0 +1,39 @@
+﻿@using Models.Modul.WareHouse;
+@model List<WarrantyCard>
+@if (Model != null && Model.Count > 0)
+{
+
+    <table class="table table-striped table-bordered table-hover">
+        <tr class="heading">
+            <th>Seria</th>
+
+            <th>Bảo hành</th>
+            <th>Ngày sửa</th>
+            <th>Từ ngày</th>
+            <th>Đến ngày</th>
+            <th>Đại lý</th>
+            <th>Tên khách hàng</th>
+            <th>Email</th>
+            <th>Địa chỉ</th>
+            <th>Sửa</th>
+            <th>Chọn nhiều<br /><input type="checkbox" id="checkAll" /> </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Seria</td>
+                <td>@item.Warranty</td>
+                <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.BeginDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.EndDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.Reseller</td>
+                <td>@item.contact.Name</td>
+                <td>@item.contact.Mail</td>
+                <td>@item.contact.Address</td>
+                <td><a href="javascript:Waranty.showUpdate('@item.Id');">sửa</a></td>
+                <td><input type="checkbox" value="@item.Id" name="cblDelete" /></td>
+            </tr>
+        }
+    </table>
+
+}

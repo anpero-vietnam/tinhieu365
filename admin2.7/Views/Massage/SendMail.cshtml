@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "SendMail";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="~/ckeditor/styles.js"></script>
+    <script src="~/Scripts/News.js"></script>
+    <link href="~/ckeditor/contents.css" rel="stylesheet" />   
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-reorder"></i>Gửi tin nhắn
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tiêu đề thư</label>
+                        <input class="form-control" id="tittle" placeholder="Tiêu đề thư">
+                    </div>
+                    <div class="form-group">
+                        <label>Nội dung tin nhắn</label>
+                        <div class="col-md-12">
+                            <div class="addMedia" style="display:none;">
+                                <ul>
+                                    <li>
+                                        <input type="file" id="file2" name="file2" style="float: left; line-height: 32px;" />
+                                        <input type="button" id="addImg" value="Tải ảnh" class="btn btn-success" />
+
+                                    </li>
+                                </ul>
+                            </div>
+                            <textarea name="ckeditor" class="ckeditor" id="editor1"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Thư đi mỗi thư cách nhau bởi dấu "," </label>
+                        <input class="form-control" id="mailto">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn blue" onclick="SendMassage();">Gửi tin</button>
+                    <button type="button" class="btn default">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</div>
+<script>
+    $(document).ready(function () {
+
+        $("#mailto").val(getParameterByName("mail"));
+        $("#addImg").click(function () {
+            getTokenData("#file2");
+        });
+    });
+    function SendMassage() {
+        var tittle = $("#tittle").val();
+        var editor = CKEDITOR.instances.editor1;
+        var content = editor.getData();
+      
+        var user_list =$("#mailto").val();        
+   
+        if (tittle.length<5) {
+            playSound01();
+            showNotice("Tin nhắn", "Tiêu đề quá ngắn");
+            return;
+        }
+        if (content.length < 5) {
+            playSound01();
+            showNotice("Tin nhắn", "Nội dung quá ngắn");
+            return;
+        }
+        $('#user-list input:checked').each(function () {
+            user_list += $(this).val() + "|";
+        });
+        if (user_list == "" || user_list == "|") {
+            playSound01();
+            showNotice("Tin nhắn", "Bạn chưa chọn người gửi");
+            return;
+        }
+        var sendMails = "0";
+        if ($('#sendMail').attr('checked')) {
+            sendMails = "1";
+        }
+        $.ajax({
+            type: "post", url: "/Handler/massage.ashx", dataType: "text",
+            data: { op: "sendMail", tittle: tittle, content: content, senderList: user_list, sendMail: sendMails },
+            success: function (msg) {
+                playSound02();
+                $("#tittle").val("");
+                SetContents("");
+                showNotice("Tin nhắn","Bạn đã gửi tin nhắn thành công");
+            }
+        });
+
+    }
+
+    
+</script>
+

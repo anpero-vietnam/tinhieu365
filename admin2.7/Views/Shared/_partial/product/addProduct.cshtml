@@ -1,0 +1,89 @@
+﻿
+<div class="col-md-8">
+    <div class="form-group col-md-12">
+        <label class="control-label  col-md-4" id="lb-prName">Tên sản phẩm: </label>
+        <div class="col-md-8">
+            <input type="text" class="form-control" id="prName" />
+        </div>
+    </div>
+    <div class="form-group col-md-12" id="tagct">
+        <label class="control-label col-md-4">Tag : </label>
+        <div class="col-md-8">
+            <input type="text" class="form-control" id="tag" />
+        </div>
+    </div>
+    <div class="form-group col-md-12">
+        <label class="control-label  col-md-4">Ảnh đại diện: </label>
+        <div class="col-md-8">
+            <button type="button" class="btn blue start" id="thumbLink2">
+                <i class="fa fa-upload"></i>
+                <span> Chọn file ảnh </span>
+            </button>
+            @*<input type="file" id="thumbLink2" />*@
+            <img src="" id="prThumb" style="width:100%;display:none;" />
+        </div>
+
+    </div>
+    <div class="form-group col-md-12" id="pruPct">
+        <label class="control-label  col-md-4" id="lb-prPrice">Giá bán lẻ: </label>
+        <div class="col-md-8">
+            <input type="text" class="form-control  mask-money" placeholder="Vnđ" id="price" value="0"/>
+        </div>
+    </div>
+    <div class="form-group col-md-12" id="salePrice" style="display:none;">
+        <label class="control-label  col-md-4" id="lb-price">Giá khuyến mại : </label>
+        <div class="col-md-8">
+            <input type="text" class="form-control mask-money" placeholder="vnđ" id="vprice"  value="0"/>
+        </div>
+    </div>
+   
+    
+    
+    <div class="form-group col-md-12" id="originCt">
+        <label class="control-label  col-md-4"><span id="lb-origin">Thương hiệu, xuất xứ:</span> </label>
+        <div class="col-md-8">
+            <div class="input-group">
+                <select class="form-control" id="origin">
+                    <option selected="selected" value="0">Chọn một nhóm</option>
+                </select>
+                <span class="input-group-addon"><a href="javascript:void(0);" data-target="#originModed" data-toggle="modal">Thêm</a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group  col-md-12">
+        <label class="control-label col-md-4 col-offset-8">Miêu tả chi tiết : </label>
+    </div>
+    <div class="col-md-12">
+        <div class="addMedia" style="display:none;">
+            <ul>
+                <li>
+                    <span class="btn green fileinput-button"><input type="file" id="file2" name="file2" /></span>
+                    <input type="button" id="addImg" value="Tải ảnh" class="btn btn-success" />
+                </li>
+            </ul>
+        </div>
+        <textarea name="editor1" class="ckeditor form-control" id="editor1"></textarea>
+    </div>
+    <div class="col-md-12">
+        <div class="form-actions right">
+            <div class="form-group">
+                <div class="md-checkbox" style="float:right;">
+                    <input type="checkbox" checked="checked" id="isPublish" class="md-check" />
+                    <label for="isPublish">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span> Hiển thị luôn trên web
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions right col-md-12">
+        <button type="button" class="btn red reveicemoney" onclick="Product.Create();"><i class="fa fa-check"></i>Thêm sản phẩm </button>
+    </div>
+</div>
+
+
+
+

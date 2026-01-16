@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "phần mềm quản lý web bán hàng tổng hợp";
+}
+@section head{
+    @Html.Raw(ViewBag.key)
+    @Html.Raw(ViewBag.des)
+}
+<div class="row">
+    <div class="col-md-12">
+        <ul class="page-breadcrumb breadcrumb">
+            <li><a href="/"><span class="stName">Trang tổng quan</span> <span class="lbExDate red"></span></a> </li>
+        </ul>
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="dashboard-stat red">
+                    <div class="visual"><i class="fa fa-shopping-cart"></i></div>
+                    <div class="details">
+                        <a href="/pr/orderList">
+                            <div class="number" id="home-order"></div>
+                            <div class="desc">Đơn hàng chờ duyệt / đã thanh toán Online</div>
+                        </a>
+                    </div>
+                    <a class="more" href="/pr/orderList">Danh sách đơn hàng <i class="m-icon-swapright m-icon-white"></i></a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="dashboard-stat green">
+                    <div class="visual"><i class="fa fa-comments"></i></div>
+                    <div class="details">
+                        <a href="/contact">
+                            <div class="number" id="contact-waiting"></div>
+                            <div class="desc">Liên hệ chưa đọc</div>
+                        </a>
+                    </div>
+                    <a class="more" href="/contact">Xem tất cả <i class="m-icon-swapright m-icon-white"></i></a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="dashboard-stat blue">
+                    <div class="visual"><i class="fa fa-comments"></i></div>
+                    <div class="details">
+                        <a href="/analytic?month=0&day=0">
+                            <div class="number" id="RequestCount"></div>
+                            <div class="desc">Lượt xem ngày hôm nay</div>
+                        </a>
+                    </div>
+                    <a class="more" href="/analytic?month=0&day=0">Xem báo cáo <i class="m-icon-swapright m-icon-white"></i></a>
+                </div>
+            </div>
+            <div class="col-md-12">
+                @Html.Partial("_RequestAnalyticChar")
+            </div>
+
+        </div>
+
+    </div>
+    <div class="portlet light  col-md-4">
+        <div class="slimScrollDiv">
+            <div class="scroller" style="height: 450px;overflow-y:scroll;">
+                <div class="general-item-list" id="sysNotify-home"></div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+<nav class="quick-nav">
+    <a class="quick-nav-trigger" href="#0">
+        <span aria-hidden="true"></span>
+    </a>
+    <ul>
+        <li>
+            <a href="/pr/addpr" class="active">
+                <span>Thêm sản phẩm mới</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+
+        <li>
+            <a href="/pr/List">
+                <span>Danh sách sản phẩm</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+
+        <li>
+            <a href="/pr/orderList">
+                <span>Xem đơn hàng</span>
+                <i class="icon-basket"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/pr/categorymanager">
+                <span>Danh mục sản phẩm</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/Properties/index">
+                <span>Thuộc tính</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+    </ul>
+    <span aria-hidden="true" class="quick-nav-bg"></span>
+</nav>
+<div class="quick-nav-overlay"></div>

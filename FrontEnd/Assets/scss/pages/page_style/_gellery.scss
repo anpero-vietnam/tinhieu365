@@ -1,0 +1,191 @@
+.page-gellery {
+    .box-filter-1 {
+      + .row {
+        @media all and (min-width: 767px){
+          margin-top: -40px;
+        }
+      }
+    }
+    
+    .box-menu-gellery {
+      margin-top: 30px;
+    }
+    
+    .box-content {
+      margin-top: 50px;
+    }
+  }
+  
+  .box-menu-gellery {
+    max-width: 1100px; margin: 0 auto;
+    li {
+      width: 25%;
+      + li {
+        margin-left: 12px;
+      }
+    }
+    .item-menu-gellery {
+      background-color: #ebebeb !important; border-color: #ccc !important; color: $color-text-1 !important;
+      width: 100%; position: relative;
+      &:before {
+        content: ''; position: absolute; top: 100%; left: 50%; margin-left: -12px;
+        width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent;
+        border-top: 11px solid $color-main; display: none;
+      }
+      &:hover, &.active {
+        color: #fff !important; background-color: $color-main !important; border-color: $color-main !important;
+      }
+      &.active {
+        &:before {
+          display: block;
+        }
+      }
+    }
+  }
+  
+  .left-checklist {
+    .nav-tabs li a {
+      min-width: auto;
+    }
+  }
+  
+  .tab-pane {
+      margin-top: 30px;
+  }
+  
+  .box-suggest {
+      margin-top: 0;
+      .images {
+          height: 310px;
+      }
+  
+      .item-blog {
+          margin-bottom: 35px;
+      }
+  
+      .info {
+          padding: 13px; border-top: 1px solid $color-border;
+      }
+  
+      .author {
+          font-size: 18px;
+      }
+  
+      .box-active {
+          height: auto; padding: 0; border: none;
+      }
+  }
+  
+  .box-limit {
+    color: #9c9c9c; background-color: #e6e6e6; @include border-radius(1px); height: 120px;
+    margin: 35px 0; max-width: 770px;
+    .icon {
+      font-size: 30px; margin-bottom: 5px;
+    }
+    .text {
+      font-size: 18px;
+    }
+  }
+  .box-form-question {
+      padding: 70px 60px 40px 135px;
+      @media all and (max-width: 1024px) {
+          padding: 50px 30px 50px 40px;
+      }
+      @media all and (max-width: 766px) {
+          padding: 30px;
+      }
+      @media all and (max-width: 639px) {
+          padding: 20x;
+          .text-right {
+              text-align: left!important;
+          }
+          .flex-jc-end {
+              justify-content: flex-start;
+          }
+      }
+      @media all and (max-width: 414px) {
+          padding: 20x;
+      }
+      .input-form {
+          height: 30px;
+      }
+  }
+  .item-add-file {
+      height: 195px;
+      width: 195px;
+      border: 2px dashed #e3e3e3;
+      margin-right: 30px;
+  }
+  
+  .furniture {
+      .table {
+          margin: 45px 0 15px 0;
+          .first {
+              th {
+                  border: 1px solid $color-border;
+              }
+          }
+      }
+      .box-limit {
+          margin: 35px auto;
+      }
+      .box-comment.box-comment-noborder {
+          border-top: 0;
+      }
+  }
+  .job-done {
+      margin: 20px 0 60px 0; flex-direction: row; overflow-x: scroll; padding-bottom: 60px;
+      .title-menu {
+          background-color: #096148;
+          color: #fff;
+          padding: 8px 10px;
+      }
+      .bg-clock-job {
+          background-color: #096148;
+          color: #fff;
+          padding: 2px 6px;
+          @include border-radius(2px);
+          font-size: 14px;
+      }
+      .item-job {
+          border-bottom: 1px solid #d9d9d9;
+          margin: 0 15px;
+          padding: 20px 0 6px 0;
+      }
+      .table-job-done {
+          border: 1px solid #d9d9d9; width: 265px; margin-right: 35px;
+          .name-job {
+              margin:0 0 5px 0; font-size: 16px; font-weight: normal;
+          }
+      }
+      .text-add {
+          padding: 20px 15px 25px 15px; font-size: 18px;
+      }
+  
+      .avata-job {
+          margin-left: 5px;
+          img {
+              width: 13px; height: 13px; @include border-radius(50%);
+          }
+      }
+  
+      .box-button-add {
+          .button-add {
+              padding: 0 10px;
+          }
+      }
+  }
+  
+  .box-info-project-4 {
+      margin-bottom: 50px;
+  }
+  
+  
+  .list-construction {
+      .td-img {
+          width: 215px;
+      }
+      + .list-construction {
+          margin-top: 50px;
+      }
+  }

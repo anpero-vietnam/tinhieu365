@@ -1,0 +1,197 @@
+﻿@*@{
+    ViewBag.Title = "activeaddr";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#tab_0" data-toggle="tab">Danh sách yêu cầu</a></li>
+    <li id="tab1"><a href="#tab_1" data-toggle="tab">Mẫu Mail</a></li>   
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active" id="tab_0">
+        <form action="/account/activeaddr">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="table-group-actions pull-right table-scrollable">
+                    <input type="text" placeholder="Nhập mã khách hàng" name="uc" />
+                    <select class="table-group-action-input form-control input-inline input-small input-sm">
+                        <option value="%">Lựa chọn...</option>
+                        <option value="1">Đã xác thực</option>
+                        <option value="0">Chưa xác thực</option>
+                    </select>
+                    <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>Lọc mã</button>
+                </div>
+            </div>
+        </form>
+
+        @if (ViewData["table"] != null)
+        {
+            System.Data.DataTable table = (System.Data.DataTable)ViewData["table"];
+            if (table.Rows.Count > 0)
+            {
+                <div class="table-scrollable">
+
+                    <table class="table table-striped table-bordered table-hover ">
+                        <tr>
+                            <td>Người dùng</td>
+                            <td>Ảnh CMT</td>
+                            <td>Ảnh thẻ</td>
+                            <td>Mã khách hàng</td>
+                            <td>Đã xác thực</td>
+                            <td>Sửa</td>
+                            <td>Xóa</td>
+                        </tr>
+                        @for (int i = 0; i < table.Rows.Count; i++)
+        {
+            Dal.Profile.AddressBook u = new Dal.Profile.AddressBook();
+            u.GetAddressById(Convert.ToInt32(table.Rows[i]["addressId"]));
+                    <tr class="customId">
+                        <td>
+                            <span></span>@u.Name
+                            <span class="cont" style="display: none;">
+                                Tên liên hệ : @u.Name<br>
+                                Điện thoại :@u.Phone<br>
+                                Địa chỉ: @u.Address<br>
+                                Email: @u.Maill
+                            </span>
+                        </td>
+                        <td>
+                            <a href="@Ultil.StringHelper.removeHtmlTangs(table.Rows[i]["passport"].ToString())" target="_blank">
+                                <img src="@Ultil.StringHelper.removeHtmlTangs(table.Rows[i]["passport"].ToString())" />
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Ultil.StringHelper.removeHtmlTangs(table.Rows[i]["paymentcard"].ToString())" target="_blank">
+                                <img src="@Ultil.StringHelper.removeHtmlTangs(table.Rows[i]["paymentcard"].ToString())" />
+                            </a>
+                        </td>
+                        <td><input type="text" value="@table.Rows[i]["userCode"]" id="uc_@table.Rows[i]["id"]" /></td>
+                        <td>
+                            @if (Convert.ToInt32(table.Rows[i]["isActive"]) == 0)
+                    {<input type="checkbox" id="rqCb_@table.Rows[i]["id"]" />}
+                    else
+                    {<input type="checkbox" id="rqCb_@table.Rows[i]["id"]" checked="checked" />}
+                        </td>
+                        <td><a href="javascript:UpdateRequest(@table.Rows[i]["id"],@table.Rows[i]["addressid"]);">Sửa</a></td>
+                        <td><a href="javascript:DelRequest(@table.Rows[i]["id"]);">Xóa</a></td>
+                    </tr>
+        }
+                    </table>
+                </div>
+                @Html.Raw(ViewBag.paged)
+            }
+
+
+        }
+    </div>
+    <div id="tab_1" class="tab-pane">
+        @{
+            Dal.MailTheme t = (Dal.MailTheme)ViewData["mailTemp"];
+            <textarea name="username" class="ckeditor form-control" id="editor1">@Html.Raw(t.MailContent)</textarea>
+        }
+        <div>
+            <button class="btn btn-sm yellow table-group-action-submit" type="button" onclick="updateMailTemp();"><i class="fa fa-check"></i>Cập nhật</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.customId').each(function () { // Grab all elements with a title attribute,and set "this"
+            $(this).qtip({ // 
+                content: {
+                    text: $(this).find('.cont').html() // WILL work, because .each() sets "this" to refer to each element
+                },
+                position: {
+                    my: 'bottom center',  // Position my top left...
+                    at: 'top center'
+
+                }
+            });
+        });
+    });
+   
+    function updateMailTemp(request) {
+        var valid = true;
+        var editor = CKEDITOR.instances.editor1;
+        var _content = editor.getData();
+        if (valid) {
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                data: { op: "updateMailTemlare", name: "shipActice", content: _content },
+                url: "/handler/mailTemplate.ashx",
+                success: function (msg) {
+                    if (msg > 0) {
+                        showNotice("Cập nhật thành công", "Cập nhật thành công " + msg + " mấu mail");
+                    } else {
+                        showNotice("Cập nhật thất bại", "Cập nhật " + msg + " mấu mail");
+                    }
+
+                }
+            });
+
+
+        }
+
+    }
+    function UpdateRequest(request, _addId) {
+        var valid = true;
+        var istactiveCheck = "#rqCb_" + request;
+        var usct = "#uc_" + request;
+        var _istactive = 0;
+        if ($(istactiveCheck).is(":checked")) {
+            _istactive = 1;
+        }
+        _userCode = $(usct).val();
+        if (_userCode == null) {
+            valid = false;
+        }
+        var editor = CKEDITOR.instances.editor1;
+        var _content = editor.getData();
+        if (valid) {
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                data: { op: "updateActiveStatus",addId:_addId, id: request, istactive: _istactive, userCode: _userCode, content: _content },
+                url: "/handler/address.ashx",
+                success: function (msg) {
+                    if (msg > 0) {
+                        showNotice("Cập nhật thành công", "Cập nhật thành công " + msg + " yêu cầu xác thực");
+                    } else {
+
+                        showNotice("Cập nhật thất bại", "Cập nhật " + msg + " yêu cầu xác thực");
+                    }
+                    
+                }
+            });
+
+
+        }
+
+    }
+    function DelRequest(request) {
+        var istactiveCheck = "#rqCb_" + request;
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            data: { op: "DelRequest", id: request },
+            url: "/handler/address.ashx",
+            success: function (msg) {
+                showNotice("Cập nhật thành công", "Xóa nhật thành công " + msg + " yêu cầu xác thực");
+                setTimeout(function () {
+                    location.reload();
+                }, 2000);
+
+            }
+        });
+
+    }
+</script>
+<style>
+    .table img
+    {
+        max-height: 150px;
+        max-width: 200px;
+    }
+</style>
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckeditor/styles.js"></script>
+<link href="~/ckeditor/contents.css" rel="stylesheet" />*@

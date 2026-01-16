@@ -1,0 +1,115 @@
+﻿@using Models.Modul.Product
+@using Ultil;
+@model SearchResult
+@if (Model != null && Model.ItemCount > 0)
+{
+    <div class="row">
+        @foreach (var item in Model.Item)
+        {
+            <div class="col-md-4 col-sm-6 item-gellery-1 item-product-me mt-element-ribbon">
+                @if (item.Rank > 0 && item.EndAdsDay > DateTime.Now)
+                {
+                    <div class="ribbon ribbon-vertical-right ribbon-color-success uppercase data-animate='{"class":"fadeInUpBig"}'" title="Tin Vip">
+                        @for (int i = 0; i < item.Rank; i++)
+                        {
+                            <i class="fa fa-star"></i>
+                        }
+                    </div>
+                }
+
+                <div class=" carousel slide carousel-fade" id="carouselProduct2" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <a href="/project/CreateNew?id=@item.Id"><img src="@item.Images" class="d-block w-100" alt="@item.Title"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-info-1">
+                    <h4 class="title-2 text-center"><a href="/project/CreateNew?id=@item.Id">@item.Title</a> </h4>
+                </div>
+            </div>
+        }
+        @Html.Raw(StringHelper.SetupAjaxPage(Model.CurrentPage, Model.PageSize, Model.ItemCount, 10, "MyProjectControl.getProject"))
+
+        @*<div class="col-md-4 col-sm-6 item-gellery-1 item-product-me">
+                <div class=" carousel slide carousel-fade" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleCaptions" data-slide-to="0" class=""></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="3" class="active"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item">
+                            <a href="#"><img src="/html/images/img-4.jpg" class="d-block w-100" alt="..."></a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="#"><img src="/html/images/img-5.jpg" class="d-block w-100" alt="..."></a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="#"><img src="/html/images/img-6.jpg" class="d-block w-100" alt="..."></a>
+                        </div>
+                        <div class="carousel-item active">
+                            <a href="#"><img src="/html/images/img-4.jpg" class="d-block w-100" alt="..."></a>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselProduct1" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselProduct1" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+                <div class="box-info-1">
+                    <h4 class="title-2 text-center"><a href="#">Tên Dự án 1</a> </h4>
+                </div>
+            </div>*@
+    </div>
+}
+else
+{
+    <p>
+        Sorry, there were no results you searched for.
+    </p>
+}
+<style>
+    .mt-element-ribbon {
+        position: relative;
+        margin-bottom: 30px;
+    }
+
+        .mt-element-ribbon .ribbon.ribbon-color-success {
+            background-color: #36c6d3;
+            color: #fff;
+        }
+
+        .mt-element-ribbon .ribbon.ribbon-vertical-right {
+            clear: none;
+            float: right;
+            margin: -2px 10px 0 0;
+            padding-top: 1em;
+            padding-bottom: 1em;
+            width: 41px;
+            text-align: center;
+        }
+
+        .mt-element-ribbon .ribbon {
+            z-index: 5;
+            float: left;
+            margin: 10px 0 0 -2px;
+            clear: left;
+            position: absolute;
+        }
+
+            .mt-element-ribbon .ribbon .fa {
+                padding: 3px;
+            }
+
+        .mt-element-ribbon .ribbon {
+            background-color: #bac3d0;
+            color: #384353;
+        }
+</style>

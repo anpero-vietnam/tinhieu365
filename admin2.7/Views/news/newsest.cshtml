@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "newsest";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@section head{
+  @Html.Raw(ViewBag.key)
+  @Html.Raw(ViewBag.des)
+<link href="/css/SlideNews.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.easing.js"></script>
+<script src="~/Scripts/script.js"></script>
+<script src="/Scripts/jQueryPlugin/slide/slide.js"></script>
+}
+@Html.Partial("_partial/_partialHomeNewsContent")
+
+

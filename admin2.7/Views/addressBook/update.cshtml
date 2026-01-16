@@ -1,0 +1,137 @@
+﻿@using Models;
+@{
+    ViewBag.Title = "Cập nhật địa chỉ khách hàng";
+    Layout = "~/Views/Shared/_Layout2.cshtml";    
+}
+@model Contact
+
+
+<div class="portlet light bordered">
+
+
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-settings font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">   Cập nhật thông tin khách hàng</span>
+        </div>
+
+    </div>
+    @if (Model != null)
+    {
+
+        <div class="portlet-body form">
+            <div id="findaddress" class="form-horizontal ">
+                <div class="row">
+                    <div id="AddAddress" class="form-horizontal ">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"><a href="/tygia">Tên liên hệ </a></label>
+                                    <div class="col-md-5">
+                                        <input type="text" name="name" id="names" class="form-control" value="@Model.Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Email</label>
+                                    <div class="col-md-5">
+                                        <input type="text" name="mail" id="mail" class="form-control" value="@Model.Mail">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Điện Thoại</label>
+                                    <div class="col-md-5">
+                                        <input type="text" name="phone" id="phone" class="form-control" value="@Model.Phone">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Địa chỉ</label>
+                                    <div class="col-md-5">
+                                        <textarea rows="4" name="address" id="address" class="form-control">@Model.Address</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Tỉnh thành </label>
+                                    <div class="col-md-5">
+                                        <input  type="text" rows="4" name="District" id="Province" class="form-control" value="@Model.Province">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Quận / Huyện</label>
+                                    <div class="col-md-5">
+                                        <input type="text" name="District" id="District" class="form-control" value="@Model.District">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="col-md-3"> </div>
+                            <div class="col-md-9"> <button class="btn blue pull-left" type="button" onclick="updateAddress();">Cập nhật địa chỉ</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+</div>
+<script>
+    function updateAddress() {
+        var valid = true;
+
+        if ($("#phone").val() ==="" && isVnFone($("#phone").val().trim()) == false) {
+            valid = false;
+            showNotify("#phone");
+            showNotice("Lỗi thêm địa chỉ", "Số điện thoại không đúng định dạng");
+        }
+        if ($("#mail").val() === "" && isEmail($("#mail").val().trim())) {
+            valid = false;
+            showNotify("#mail");
+            showNotice("Lỗi thêm địa chỉ", "Mail không đúng định dạng");
+        }
+        if ($("#names").val() == "" || $("#names").val() == null) {
+            valid = false;
+            showNotice("Lỗi thêm địa chỉ", "Tên liên hệ không được để trống");
+            showNotify("#names")
+        }
+        if ($("#address").val() == "" || $("#address").val() == null) {
+            valid = false;
+            showNotice("Lỗi thêm địa chỉ", "Địa chỉ không được để trống");
+            showNotify("#address")
+        }
+        var returl = getParameterByName("returlurl");
+        if (valid) {
+            var _id = getParameterByName("id");
+            $.ajax({
+                type: 'post',
+                dataType: 'text',
+                data: { op: 'updateAdd', name: $("#names").val(), mail: $("#mail").val(), phone: $("#phone").val(), address: $("#address").val(), adid: _id,Province:$("#Province").val(),District:$("#District").val(), st: Anpero.CurentStore },
+                url: '/handler/address.ashx',
+                success: function (msg) {
+                    showNotice("Cập nhật", "Cập nhật thành công.");
+                    playSound02();
+                    setTimeout(function () {
+                        window.location = "/addressbook/List?st=" + Anpero.CurentStore;
+                    }, 1500);
+
+
+                }
+            });
+        }
+
+
+
+    }
+
+</script>

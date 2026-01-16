@@ -1,0 +1,179 @@
+﻿@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@{
+    Dal.orderMng.productStatus statusMng = new Dal.orderMng.productStatus();
+    System.Data.DataTable sstTable = statusMng.getProductSSt();
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-shopping-cart"></i>
+                    Quản lý sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-container">
+                    <div id="datatable_products_wrapper" class="dataTables_wrapper dataTables_extended_wrapper" role="grid">
+                        <div class="row">
+                            <div class="col-md-8 col-sm-12">
+                                @Html.Raw(ViewBag.page)
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="table-group-actions pull-right">
+                                    <span></span>
+                                    <select class="table-group-action-input form-control input-inline input-small input-sm" id="opPr">
+                                        <option value="1">Lựa chọn..</option>
+                                        <option value="delete">Xoá</option>
+                                    </select>
+                                    <button class="btn btn-sm yellow table-group-action-submit" onclick="delOrder();">
+                                        <i class="fa fa-check"></i> Thực hiện</button>
+                                </div>
+                            </div>
+                        </div>
+                        <form method="get" action="/order">
+                            <div class="table-scrollable">
+                                <table class="table table-striped table-bordered table-hover table-scrollable" id="datatable_products">
+                                    <thead>
+                                        <tr role="row" class="heading">
+                                            <th width="1%"><div class="checker"><span><input type="checkbox" class="group-checkable"></span></div></th>
+                                            <th width="10%">Mã SP</th>
+                                            <th width="15%">Ngày tạo</th>
+                                            <th width="15%">Người đặt</th>
+                                            <th width="15%">Loại đơn hàng</th>
+                                            <th width="15%">Tổng giá </th>
+                                            <th width="15%">Trạng thái</th>
+                                            <th width="10%">Hành động </th>
+                                        </tr>
+                                        <tr role="row" class="filter">
+                                            <td rowspan="1" colspan="1"></td>
+                                            <td rowspan="1" colspan="1">
+                                                <input type="text" class="form-control form-filter input-sm" name="product_id">
+                                            </td>
+                                            <td rowspan="1" colspan="1">
+                                                <div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
+                                                    <input type="text" class="form-control form-filter input-sm" name="product_created_from" placeholder="Từ">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
+                                                    </span>
+                                                </div>
+                                                <div class="input-group date date-picker" data-date-format="dd/mm/yyyy">
+                                                    <input type="text" class="form-control form-filter input-sm" readonly="" name="product_created_to" placeholder="Đến">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td rowspan="1" colspan="1">
+                                                <div class="input-group">
+                                                <input type="text" class="form-control form-filter input-sm" name="customerName">
+                                                    </div>
+                                                <div class="input-group">
+                                                    <input type="text" id="customerName" class="form-control form-filter input-sm" name="KhId" placeholder="Ma KH">
+                                                    <span class="input-group-btn" data-target="#findAddr" data-toggle="modal">
+                                                        <span class="btn btn-sm default"><i class="fa icon-magnifier-add"></i></span>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td rowspan="1" colspan="1">
+                                                <select name="orderType" class="form-control form-filter input-sm">
+                                                    <option value="0">Lựa chọn..</option>
+                                                    <option value="1">Đặt mua</option>
+                                                    <option value="2">Tự ship</option>
+                                                </select>
+                                            </td>
+                                            <td rowspan="1" colspan="1">
+                                                <div class="margin-bottom-5">
+                                                    <input type="text" class="form-control form-filter input-sm" name="product_quantity_from" placeholder="From">
+                                                </div>
+                                                <input type="text" class="form-control form-filter input-sm" name="product_quantity_to" placeholder="To">
+                                            </td>
+                                            <td rowspan="1" colspan="1">
+                                                <select name="orderStatus" id="" class="form-control form-filter input-sm">
+                                                    <option value="-2">Lựa chọn..</option>
+                                                    <option value="0">Chờ báo giá</option>
+
+                                                    @if (sstTable != null && sstTable.Rows.Count > 0)
+                                                    {
+                                                        for (int i = 0; i < sstTable.Rows.Count; i++)
+                                                        {
+                                                        <option value="@sstTable.Rows[i]["sstid"]">@sstTable.Rows[i]["name"]</option> 
+                                                        }
+                                                    }
+
+                                                </select>
+                                            </td>
+                                            <td rowspan="1" colspan="1">
+                                                <div class="margin-bottom-5">
+                                                    <button class="btn btn-sm yellow filter-submit margin-bottom"><i class="fa fa-filter"></i> Tìm</button>
+                                                </div>
+                                                <button class="btn btn-sm red filter-cancel"><i class="fa fa-times"></i> Làm mới</button>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="/scripts/order.js"></script>
+    <script type="text/javascript" src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script> order.init();</script>
+    <script>
+        $(document).ready(function () {
+            $('.group-checkable').click(function (event) {  //on click 
+                if (this.checked) { // check select status
+                    $('.checkable').each(function () { //loop through each checkbox
+                        this.checked = true;  //select all checkboxes with class "checkbox1"               
+                    });
+                } else {
+                    $('.checkable').each(function () { //loop through each checkbox
+                        this.checked = false; //deselect all checkboxes with class "checkbox1"                       
+                    });
+                }
+            });
+
+        });
+        function delOrder() {
+            if ($('#opPr').val() == 'delete') {
+                if (confirm("Bạ có muốn xóa các đơn hàng không")) {
+                    $('.checkable:checked').each(function () { //loop through each checkbox 
+
+                        $.ajax({
+                            type: "post",
+                            datatype: "text",
+                            url: "/handler/orderhandler.ashx",
+                            data: { op: "delOrder", id: $(this).val() },
+                            success: function (msg) {
+                                showNotice("Hệ thống", "Xóa " + msg + " đơn hàng thành công")
+                            }
+                        });
+                    });
+
+                }
+            }
+        }
+
+    </script>
+    
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    })
+  
+</script>
+    @Html.Partial("_partial/searchAddress")
+}

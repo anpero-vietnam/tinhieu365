@@ -1,0 +1,368 @@
+.banner-project {
+    .main-form {
+      @extend %icon-default; position: absolute; top: 0; left: 0; width: 100%; z-index: 3;
+    }
+    
+    .box-gellery-thumbs {
+      max-width: 1690px; margin: 0 auto; height: 190px; margin-top: -55px;
+    }
+  }
+  
+  .main-banner-project {
+    .box-gellery-top {
+      height: 980px; position: relative;
+      &:before {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); content: '';
+      }
+    }
+  }
+  
+  .banner-type-1 {
+    .text-banner {
+      padding-top: 60px;
+    }
+    .box-filter-1 {
+      margin-top: 30px;
+    }
+  }
+  
+  .box-info-project {
+    margin-top: 50px;
+    .box-gellery-thumbs {
+      height: 107px;
+      .gellery-thumbs {
+        padding-top: 17px;
+      }
+    }
+  }
+  
+  .box-info-project-1 {
+    margin-top: 40px;
+  }
+  
+  .item-info-project {
+    border: 1px solid $color-border; padding: 35px 25px; font-size: 16px;
+    + .item-info-project {
+      margin-top: 30px;
+    }
+    .txt-note {
+      margin: 10px 0 0 0;
+    }
+    .box-share {
+      margin-top: 25px;
+    }
+    .content {
+      margin-top: 50px;
+      .title {
+        font-size: 25px;
+      }
+      .text {
+        font-size: 14px; margin: 10px 0 0 0;
+      }
+    }
+    .list-info {
+      margin-top: 23px;
+    }
+    
+    .des {
+      line-height: 1.5;
+      p {
+        margin: 0 0 10px 0;
+      }
+    }
+    
+    .item-list {
+      padding: 7px 0; color: $color-text-1;
+      + .item-list {
+        padding-top: 22px; border-top: 1px solid $color-border;
+      }
+      &:last-child {
+        padding-bottom: 0;
+      }
+      .icon {
+        width: 29px; display: inline-block; color: $color-blue;
+      }
+    }
+  }
+  
+  
+  .main-info-project, .main-list-project {
+    &.row {
+      @media all and (min-width: 1720px){
+        margin-left: -22px; margin-right: -22px;
+        .col-lg-9, .col-lg-3, .col-lg-3 {
+          padding-left: 22px; padding-right: 22px;
+        }
+      }
+    }
+  }
+  
+  .box-list-project {
+    margin-top: 55px;
+    .box-pagination {
+      margin: 30px 0;
+    }
+  }
+  
+  .background-slides {
+    background: #f1f2f4;
+  }
+  
+  .item-main-project, .list-service {
+    .owl-nav {
+      button {
+        &.owl-prev, &.owl-next {
+          width: 30px; height: 30px; border: none; margin-top: -15px; background-color: transparent;
+          @include border-radius(0);
+          span {
+            &:before {
+              font-size: 20px; font-weight: 300;
+            }
+          }
+        }
+        
+        &.owl-prev {
+          left: -28px;
+        }
+        
+        &.owl-next {
+          right: -28px;
+        }
+      }
+    }
+  }
+  
+  .item-main-project {
+      border: 1px solid $color-border; padding: 23px 23px 15px 23px; box-shadow: 4px 2px 6px #e8e8e8;
+      .box-images {
+          height: 225px; overflow: hidden; display: block;
+          img {
+              width: 100%;
+          }
+      }
+  
+      .top-project {
+          margin-top: 25px; border-bottom: 1px solid $color-border; padding-bottom: 20px;
+          .title  {
+              font-size: 16px; font-weight: normal; margin: 0 0 7px 0;
+              a {
+                  color: $color-text-1;
+              }
+          }
+  
+          .star {
+              font-size: 13px; margin-right: 10px;
+          }
+          
+          .user {
+              color: #464646;
+              i {
+                  font-size: 13px;
+              }
+          }
+  
+          .right-top {
+              width: 30px;
+          }
+      }
+  
+      .list-info {
+          margin-top: 17px;
+          .title {
+              text-transform: uppercase;
+          }
+          ul {
+              margin-top: 23px; font-size: 16px;
+              i {
+                  color: $color-blue; font-size: 14px; margin-right: 7px;
+              }
+              li {
+                  + li {
+                      margin-top: 10px;
+                  }
+              }
+          }
+      }
+  
+      .slide-img {
+          padding-left: 40px; padding-right: 40px; margin: 20px 0 27px 0;
+          .owl-nav {
+              button {
+                  &.owl-prev {
+                      left: -5px;
+                  }
+  
+                  &.owl-next {
+                      right: -5px;
+                  }
+              }
+          }
+  
+          .item-slide-img {
+              .main-content {
+                  display: block; text-align: center;
+              }
+              img {
+                  height: 29px; width: auto; display: inline-block; max-width: 70%;
+              }
+          }
+        
+        .owl-item {
+          position: relative;
+          + .owl-item {
+            @extend %center-me;
+            &:before {
+              content: "+"; left: -10px;
+            }
+          }
+        }
+  
+          .owl-dots {
+              display: none;
+          }
+      }
+  
+      .box-cost {
+          background-color: #ebebeb; padding: 18px 23px 15px 23px; margin-left: -23px;
+        margin-right: -23px; border: none; font-size: 16px;
+        p {
+          margin: 0;
+        }
+        .text-2 {
+          font-weight: 600; font-size: 18px;
+        }
+      }
+    
+    .box-result {
+      margin-top: 17px;
+        @media all and (max-width: 1440px){
+            flex-direction: column; margin-top: 10px;
+        }
+      p {
+        margin-bottom: 0;
+      }
+    }
+    
+    .box-time {
+      border-top: 1px solid $color-border; margin-top: 20px; padding-top: 15px;
+      p {
+        margin: 0;
+      }
+      .text-1 {
+        margin: 0 0 5px 0;
+      }
+      
+      .text-2 {
+        font-weight: 500;
+      }
+    }
+    
+    .form-time {
+      margin-top: 7px;
+      .time-run {
+        width: 37px; height: 31px; line-height: 31px; text-align: center; background-color: #000;
+        @include border-radius(2px); color: #fff; font-size: 25px; font-weight: 700; margin-bottom: 5px;
+        position: relative;
+      }
+      
+      .txt-time {
+        font-size: 14px;
+      }
+      
+      .item-time {
+        + .item-time {
+          margin-left: 18px;
+          .time-run {
+            &:before {
+              content: ':'; position: absolute; left: -11px; color: #000; font-size: 20px;
+            }
+          }
+        }
+      }
+    }
+    
+    .box-button {
+      margin-top: 15px; margin-bottom: 27px;
+    }
+  }
+  
+  .box-service {
+    &.background-slides {
+      padding: 35px 0 15px 0;
+    }
+  }
+  
+  .list-service {
+    margin-top: 20px; padding-top: 34px; border-top: 1px solid $color-border;
+    .title {
+      margin-bottom: 20px;
+    }
+    .owl-carousel {
+      background-color: #ebebeb; padding: 20px 10px;
+    }
+    
+    .main-content {
+      color: $color-text-1; font-size: 15px; text-align: center; display: block;
+      img {
+        height: 35px; width: auto; display: inline-block;
+      }
+      + .main-content {
+        margin-top: 25px;
+      }
+      .text {
+        @include multi-line-ellipsis(1.3,2); margin: 15px 0 0 0; height: 38px;
+      }
+    }
+  }
+  
+  .box-service-room {
+    padding-bottom: 45px; padding-top: 35px;
+  }
+  
+  .box-checklist {
+    margin-bottom: 100px;
+    .title {
+      .icon {
+        margin-right: 10px;
+      }
+    }
+    
+    .title-main {
+      margin: 15px 0 37px 0;
+    }
+  }
+  
+  .main-checklist {
+    @media all and (min-width: 1720px){
+      &.row {
+        margin-left: -40px; margin-right: -40px;
+        .left-checklist, .right-checklist {
+          padding-left: 40px; padding-right: 40px;
+        }
+      }
+    }
+  }
+  
+  .box-start-other {
+    .title-3 {
+      font-size: 25px; padding-bottom: 20px; margin-bottom: 70px;
+      .icon {
+        margin-right: 20px;
+      }
+    }
+  }
+  
+  .right-checklist {
+    .box-view-most, .box-tag {
+      border: none; padding: 0; margin: 30px 0 0 0;
+    }
+    
+    .box-view-most {
+      .title {
+        font-size: 30px; margin-bottom: 30px;
+      }
+    }
+  }
+  
+  

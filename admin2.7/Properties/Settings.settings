@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="admin.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="admin_sendSmsWs_sensms" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://ws.tmtshipping.vn/sensms.asmx</Value>
+    </Setting>
+    <Setting Name="admin_vn_esms_api_MainService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://api.esms.vn/MainService.svc/soap</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

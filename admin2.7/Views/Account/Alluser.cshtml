@@ -1,0 +1,76 @@
+﻿@using Models
+@model  List<UserProfile>
+@{
+    ViewBag.Title = "Alluser";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="col-md-12 portlet light">
+
+    <div class="search">
+        <form action="/account/listadmin" method="get">
+            <div class="input">
+
+            </div>
+            <div class="button">
+
+            </div>
+        </form>
+    </div>
+    <div class="portlet-title">
+        <div class="caption font-green-sharp">
+            <span class="caption-subject"> Tìm kiếm người dùng</span>
+        </div>
+        <div class="actions">
+            <form action="/account/alluser" method="get">
+                <div class="btn-group">
+                    <input id="search" name="userName" type="text" value="">
+                </div>
+
+                <input type="submit" name="submit" value="Search" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+        </div>
+    </div>
+</div>
+@if (Model != null && Model.Count > 0)
+{
+    <div class="table-scrollable" id="lb1">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ảnh đại diện</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Ngày đăng nhập</th>
+                    <th>Tình trạng</th>
+                    <th>phân quyền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.UserId</td>
+                        <td class="avat">
+                            @if (!string.IsNullOrEmpty(item.Avata))
+                            {
+                                <img src="@item.Avata" />
+                            }
+                        </td>
+                        <td>@item.UserName</td>
+                        <td>
+                            @item.LastVisit
+                        </td>
+                        <td>@(item.IsActive?"Đang hoạt động":"Đang bị khóa")</td>
+                        <td><a href="#">Phân quền</a></td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+    @Html.Raw(ViewBag.paged)
+}
+
+
+

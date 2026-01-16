@@ -1,0 +1,149 @@
+﻿@model  Models.Modul.Product.UpdateProductModels
+@{
+    ViewBag.Title = "Update product";
+    var Product = Model;
+}
+
+@section head{
+    <script src="~/Scripts/order/wareHouse.js"></script>
+    <script src="~/Scripts/product/addPr.js"></script>
+    <script src="~/assets/plugins/jstree/dist/jstree.min.js"></script>
+    <script src="~/Scripts/product/prType.js"></script>
+    <link href="~/assets/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" />
+
+}
+<div class="portlet light">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="page-breadcrumb breadcrumb">
+                <li><i class="fa fa-home"></i><a href="/"></a>Trang chủ<i class="fa fa-angle-right"></i></li>
+                <li><a href="/pr/List" id="bcList">Danh sách sản phẩm</a><i class="fa fa-angle-right"></i></li>
+                <li><a href="javascript:void(0);">Chi tiết</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tab-content form-horizontal">
+                <div class="portlet">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_0" data-toggle="tab" class="active">Sửa sản phẩm</a></li>
+                        <li class=""><a href="#tab_3" data-toggle="tab" id="table3">Tối ưu tìm kiếm - Script tiếp thị lại</a></li>
+                        <li><a href="#tab_1" data-toggle="tab">Thêm ảnh đại diện </a></li>
+                        <li><a href="#tab_2" data-toggle="tab">Slide ảnh</a></li>
+                    </ul>
+                    <div class="tab-content ">
+                        <div class="tab-pane active" id="tab_0">
+                            @{
+                                Html.RenderPartial("_partial/product/UpdateProduct", Product);
+                            }
+
+                            <div class="col-md-4">
+                                @Html.Partial("_partial/product/partial_PrMenuLeft")
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_3">
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Script: </label>
+                                    <textarea class="form-control" id="scriptCode"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Mô tả ngắn (meta description)</label>
+                                    <textarea id="shortDesc" rows="6" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Từ khóa (meta keywords)</label>
+                                    <textarea id="keywords" rows="6" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions right col-md-12 right">
+                                <button type="button" class="btn red" onclick="delPr();"><i class="fa fa-trash-o"></i> Xóa</button>   <button type="button" class="btn blue" onclick="Product.UpdatePr();"><i class="fa fa-check"></i>Cập nhật sản phẩm</button>
+                            </div>
+                        </div>
+                        <div class="tab-pane portlet-body" id="tab_1">
+                            @Html.Partial("_partial/product/addImgThumb")
+                        </div>
+                        <div class="tab-pane portlet-body" id="tab_2">
+                            @Html.Partial("_partial/product/addImgThumb2")
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <link href="~/Scripts/Modul/Small-fileUpload/Small-fileUpload.css" rel="stylesheet" />
+    <script src="~/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+    <script src="~/Scripts/Modul/SlideControl.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("body").addClass("page-sidebar-closed");
+            $(".page-sidebar-menu").addClass("page-sidebar-closed");
+            $(".page-sidebar-menu").addClass("page-sidebar-menu-closed");
+            Location.Init();
+           
+            var refId = getParameterByName("sp");  
+            slideControl.getThumbByContent("sp" + refId,"#thumbContent-slide");                 
+            slideControl.getThumbByContent("ps"+refId,"#thumbContent-slide2");
+            Vendor.bindOriginSelect();
+            $("#addThumb-slide").smallFileUpload({
+                Size: "full",
+                allowExtension: ".jpg,.png,.jpeg,.svg,.gif,.ico",
+                success: function (data) {                              
+                    slideControl.addSlide(data.uploadedImages[0].Url, "", "","sp"+refId,"#thumbContent-slide");                    
+                }
+            });            
+            $("#addThumb-slide2").smallFileUpload({
+                Size: "full",
+                allowExtension: ".jpg,.png,.jpeg,.svg,.gif,.ico",
+                success: function (data) {              
+                    slideControl.addSlide(data.uploadedImages[0].Url, "", "","ps" + refId,"#thumbContent-slide2");
+                }
+            });            
+
+        });
+    </script>
+}
+<!-- BEGIN QUICK NAV -->
+<nav class="quick-nav">
+    <a class="quick-nav-trigger" href="#0">
+        <span aria-hidden="true"></span>
+    </a>
+    <ul>
+        <li>
+            <a href="/pr/addpr" class="active">
+                <span>Thêm sản phẩm mới</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/pr/List">
+                <span>Danh sách sản phẩm</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/pr/orderList">
+                <span>Xem đơn hàng</span>
+                <i class="icon-basket"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/Properties/index">
+                <span>Thuộc tính</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+    </ul>
+    <span aria-hidden="true" class="quick-nav-bg"></span>
+</nav>
+<div class="quick-nav-overlay"></div>
+<!-- END QUICK NAV -->
+@Html.Partial("_partial/_ckeditor")

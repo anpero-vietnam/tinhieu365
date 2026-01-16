@@ -1,0 +1,266 @@
+﻿@{
+    ViewBag.Title = "Giao diện menu";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+   
+
+}
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <h3 class="page-title">Giao diện <small>Menu chính</small></h3>
+    </div>
+
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <th>Chữ hiển thị</th>
+            <th>link</th>
+            <th>Thứ tự</th>
+            <th>Loại menu</th>
+            <th>Đặt làm menu Con của</th>
+            <th>Thêm</th>
+        </tr>
+        <tr>
+            <td><input id="menuName" class="form-control" /></td>
+            <td>
+                <div class="form-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="menuLink" class="form-control" />
+                            <span class="input-group-addon"><a href="javascript:void(0);" id="tkIco"><i class="fa fa-link"></i></a></span>
+                        </div>
+                    </div>
+                    <div class="form-group" id="p-1" style="display:none;">
+                        <select id="parentLink" class="form-control">
+                            <option value="0" selected> - Link tới trang</option>
+                            <option value="0" mn-type="pr-cat"> - Danh mục sản phẩm</option>
+                            <option value="0" mn-type="pr-group"> - Thương hiệu</option>
+                            <option value="/home/contact"> - Liên hệ</option>
+                            <option value="/blog"> - Tin tức</option>
+                            <option value="/shippolicy"> - Chính sách vận chuyển</option>
+                            <option value="/ProductReturnPolicy"> - Chính sách đổi trả</option>
+                            <option value="/WarrantyPolicy"> - Chính sách bảo hành</option>
+                            <option value="/PrivacyPolicy"> - Chính sách bảo mật</option>
+                            <option value="/PaymentInfo"> - Hướng dẫn thanh toán</option>
+                        </select>
+                    </div>
+                    <div class="form-group"  style="display:none;"  id="p-2">
+                        <select id="subLink" class="form-control">
+                            <option value="0" selected> - Link tới trang</option>                           
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:none;" id="btn-gl">
+                        <button class="btn blue" onclick="addLink();">Lấy link</button>
+                    </div>
+                </div>
+            </td>
+            <td><input id="menuPrioty" class="form-control" /></td>
+            <td>
+                <select id="menuPosition" class="form-control">
+                    <option value="@AEnum.MenuPosition.TopMenu" selected>- Menu chính</option>
+                    <option value="@AEnum.MenuPosition.FooterMenu">- Menu chân trang</option>
+                </select>
+            </td>
+            <td id="menuParentCt">
+                <select id="menuParent" class="form-control">
+                    <option value="0">- Đặt làm menu cha</option>                    
+                </select>
+            </td>
+            <td><button class="btn blue" onclick="addMenu();">Thêm</button></td>
+        </tr>
+    </table>
+    <div id="menuParentTableCt"></div>
+</div>
+<script src="/Scripts/product/prType.js"></script>
+<script src="/Scripts/product/Vendor.js"></script>
+<script src="/Scripts/product/addPr.js"></script>
+<script>
+    $(document).ready(function () {
+        GetSelectMenu();
+        GetTableMenu();
+        $("#tkIco").click(function () {
+            $("#p-1").show();
+        });
+
+        $("#parentLink").change(function () {
+            var selectedValue = $("#parentLink option:selected").val();
+            if (selectedValue != 0) {
+                $("#btn-gl").show();
+                $("#p-2").hide();
+                $("#subLink").html('<option value="0" selected> - Link tới trang</option>');
+
+            } else {
+                var mtType = $("#parentLink option:selected").attr("mn-type");
+                switch (mtType) {
+                    case "pr-cat": {
+                        Product.bindPrCatLink();
+                        $("#p-2").show();
+                        $("#btn-gl").show();
+                        break;
+                    }
+                    case "pr-group": {
+                        Vendor.bindSelectOriginLink();
+                        $("#p-2").show();
+                        $("#btn-gl").show();
+                        break;
+                    }
+
+                    default:
+                }
+
+            }
+        });
+        $("#subLink").change(function () {
+            var selectedValue = $("#subLink option:selected").val();
+            if (selectedValue != 0) {
+                $("#btn-gl").show();
+            }
+        });
+        $("#menuPosition").change(function () {
+            GetTableMenu();
+            GetSelectMenu();
+        });
+    });
+    function addLink() {
+        var p1 = $("#parentLink option:selected").val();
+        var p2 = $("#subLink option:selected").val();
+        if (p2 != 0 && p2!=null) {
+            $("#menuLink").val(p2);
+        } else if (p1!=0 && p1!=null) {
+            $("#menuLink").val(p1);
+        }
+    }
+    function delMenu(_id) {
+        $.ajax({
+            type: "post",
+            url: "/handler/theme.ashx",
+            data: { op: "delMenu", id: _id, st: Anpero.CurentStore },
+            success: function (msg) {
+                if (parseInt(msg) <= 0) {
+                    showNotice("Lỗi", "Menu này có chứa menu con - Không xóa được"); playSound01();
+                    valid = false;
+                }
+                if (msg == 1) {
+                    GetTableMenu();
+                    showNotice("Thông báo", "Xóa thành công " + msg + " bản ghi"); playSound01();
+
+                }
+            }
+        });
+    };
+    function UpdateMenu(_id) {
+        var valid = true;
+        var _menuText = $("#menuT_" + _id).val();
+        var _link = $("#menuL_" + _id).val();
+        var _parent = $("#menuP_" + _id).val();
+
+        var _prioty = $("#menuPri_" + _id).val();
+        if (_menuText == null || _menuText == '') {
+            showNotice("Lỗi", "Bạn chưa nhập chữ hiển thị"); playSound01();
+            valid = false;
+        }
+        if (isNaN(_parent)) {
+            valid = false; showNotice("Lỗi", "id menu cha yêu cầu phải là số"); playSound01();
+
+        }
+        if (_link == null || _link == '') {
+            showNotice("Lỗi", "Bạn chưa nhập link"); playSound01(); valid = false;
+        }
+        if (_prioty == null || _prioty == '') {
+            showNotice("Lỗi", "Bạn chưa nhập thứ tự của menu"); playSound01(); valid = false;
+        }
+        if (isNaN(_prioty)) {
+            valid = false; showNotice("Lỗi", "Thứ tự link chỉ có thể là số"); playSound01();
+
+        }
+        if (valid) {
+            $.ajax({
+                type: "post",
+                url: "/handler/theme.ashx",
+                data: { op: "updateMenu", menuText: _menuText, link: _link, parent: _parent,prioty: _prioty, id: _id, st: Anpero.CurentStore },
+                success: function (msg) {
+                    if (msg > 0) {
+                        valid = false; showNotice("Thông báo", "Bạn đã cập nhật thành công " + msg + " bản ghi"); playSound01();
+                    }
+                    if (msg <= 0) {
+                        valid = false; showNotice("Thông báo", "Cập nhật không thành công, Menu cha không tồn tại"); playSound01();
+                    }
+                }
+            });
+        }
+
+    }
+
+    function GetTableMenu() {
+        var prentId = $("#menuParent option:selected").val();
+        var _position = $("#menuPosition option:selected").val();
+
+        if (prentId == null) {
+            prentId = 0;
+        }
+        $.ajax({
+            type: "post",
+            url: "/handler/theme.ashx",
+            data: { op: "GetTableMenu", parent: prentId, st: Anpero.CurentStore, position: _position },
+            success: function (msg) {
+                $("#menuParentTableCt").html(msg);
+            }
+        });
+    }
+    function GetSelectMenu() {
+        var _position = $("#menuPosition option:selected").val();
+        $.ajax({
+            type: "post",
+            url: "/handler/theme.ashx",
+            data: { op: "GetSelectMenu",position: _position, st: Anpero.CurentStore },
+            success: function (msg) {
+                $("#menuParentCt").html(msg);
+                GetTableMenu();
+                $("#menuParent").change(function () {
+                    GetTableMenu();
+                });
+            }
+        });
+    }
+    function addMenu() {
+        var valid = true;
+        var _name = $("#menuName").val();
+        var _menuLink = $("#menuLink").val();
+        var _menuPrioty = $("#menuPrioty").val();
+        var _menuPosition = $("#menuPosition option:selected").val();
+
+        var _menuParent = $("#menuParent option:selected").val();
+        if (_name == null || _name == '') {
+            showNotice("Lỗi", "Bạn chưa nhập chữ hiển thị"); 
+            Common.PlayErrorSound();
+            valid = false;
+        }
+        if (_menuLink == null || _menuLink == '') {
+            showNotice("Lỗi", "Bạn chưa nhập link");
+            Common.PlayErrorSound();
+            valid = false;
+        }
+        if (_menuPrioty == null || _menuPrioty == '') {
+            showNotice("Lỗi", "Bạn chưa nhập thứ tự của menu");
+            Common.PlayErrorSound();
+            valid = false;
+        }
+        if (isNaN(_menuPrioty)) {
+            valid = false; showNotice("Lỗi", "Thứ tự link chỉ có thể là số"); 
+            Common.PlayErrorSound();
+        }
+        if (valid) {
+            $.ajax({
+                type: "post",
+                url: "/handler/theme.ashx",
+                data: { op: "addMenu", name: _name, menuLink: _menuLink, menuPrioty: _menuPrioty, menuPosition: _menuPosition, menuParent: _menuParent, st: Anpero.CurentStore },
+                success: function (msg) {
+                    if (msg > 0) {
+                        showNotice("Thêm thành công", "bạn vừa thêm 1 link vào menu"); playSound01();
+                        Common.PlaySuccessSound();
+                        GetSelectMenu();
+                    }
+
+                }
+            })
+        }
+    }
+</script>

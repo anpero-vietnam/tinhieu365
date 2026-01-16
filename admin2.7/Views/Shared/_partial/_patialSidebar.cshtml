@@ -1,0 +1,143 @@
+﻿
+
+
+<div class="page-sidebar-wrapper">
+    <div class="page-sidebar navbar-collapse collapse">
+        <ul class="page-sidebar-menu" data-auto-scroll="true" data-slide-speed="200">
+            <li class="sidebar-toggler-wrapper">
+                <div class="sidebar-toggler hidden-phone"></div>
+            </li>
+            <li class="nav-item start active">
+
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-home"></i> Trang chủ
+                    <span class="selected"></span>
+                </a>
+            </li>
+            @if (Security.Store.IsInRole(AEnum.UserRole.Admin))
+            {
+                <li class="nav-item start">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-cogs"></i>
+                        <span class="title">Cài đặt chung</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="/store/adduser"><i class="fa fa-user-plus"></i> Thêm Quản trị viên<span class="badge badge-warning badge-roundless">+</span></a></li>
+                        <li><a href="/store/UserInRole"><i class="fa fa-user"></i> Danh sách Admin</a></li>
+                        <li><a href="/account/alluser"><i class="fa fa-user"></i> Tất cả người dùng</a></li>
+                        <li><a href="/webconfig"><i class="fa fa-globe"></i> Thông tin webstie</a></li>
+                        @*<li><a href="/paymentconfig"><i class="fa fa-credit-card"></i><span class="title">Thanh toán online</span></a></li>
+                        <li><a href="/WebConfig/UpdateKeyValue"><i class="fa fa-credit-card"></i><span class="title">Cấu hình đăng tin VIP</span></a></li>
+                        <li><a href="/account/AddCredit"><i class="fa fa-credit-card"></i><span class="title">Nạp tiền vào tài khoản</span></a></li>*@
+                    </ul>
+                </li>
+                <!--<li class="nav-item start prNav" id="staticCt">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-bar-chart"></i>
+                        <span class="title">Báo cáo - thống kê</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">-->
+                        @*<li>
+                            <a href="/analytic?month=0&day=0"><i class="fa fa-eye"></i> Lượt xem sản phẩm </a>
+                        </li>*@
+                        <!--<li>
+                            <a href="/payment/transaction?isCredit=true"><i class="fa fa-eye"></i> Credit transaction </a>
+                        </li>
+                        <li>
+                            <a href="/payment/transaction?isCredit=false"><i class="fa fa-eye"></i> Debit transaction </a>
+                        </li>
+                    </ul>
+                </li>-->
+            }
+            @if (Security.Store.IsInRole(AEnum.UserRole.CanSale))
+            {
+                <li class="nav-item start">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-cube"></i>
+                        <span class="title" id="nv-spname">Sản phẩm</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="/pr/categorymanager"><i class="fa fa-dot-circle-o"></i><span class="title" id="mnCatN">Danh mục BĐS</span></a>
+                            <span class="arrow "></span>
+                        </li>
+                        <li class="prNav">
+                            <a href="/Properties/index"><i class="fa fa-dot-circle-o"></i><span class="title" id="mnCatN">Thuộc tính BĐS</span></a>
+                            <span class="arrow "></span>
+                        </li>
+
+                        @*<li class="prNav"> <a href="/pr/orderList"><i class="fa fa-dot-circle-o"></i><span class="title" id="nv-order">Đơn hàng</span></a><span class="arrow "></span></li>*@
+
+                        @if (Security.Store.IsInRole(AEnum.UserRole.CanUpdateProduct))
+                        {
+                            @*<li>
+                            <a href="/pr/addpr"><i class="fa fa-dot-circle-o"></i><span class="title" id="nv-addpr">Thêm sản phẩm</span> <span class="badge badge-warning badge-roundless">+</span></a>
+                            <span class="arrow "></span>
+                        </li>*@
+                            <li> <a href="/pr/List"><i class="fa fa-dot-circle-o"></i><span class="title" id="nv-prList">Danh sách bất động sản</span></a><span class="arrow "></span></li>
+                            <li class="prNav"> <a href="/Branch"><i class="fa fa-dot-circle-o"></i><span class="title">Dự án</span></a></li>
+
+                        }
+                    </ul>
+                </li>
+
+
+            }
+            @if (Security.Store.IsInRole(AEnum.UserRole.CanViewAllCustomer))
+            {
+                <li class="nav-item start prNav">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-users"></i>
+                        <span class="title">Khách hàng</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li class=""> <a href="/addressbook/List"><i class="fa fa-dot-circle-o"></i><span class="title">Danh sách khách hàng</span></a><span class="arrow "></span></li>
+                    </ul>
+                </li>
+            }
+            @if (Security.Store.IsInRole(AEnum.UserRole.CanUpdateAndAddNew))
+            {
+                <li class="nav-item start prNav">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-pencil-square-o"></i>
+                        <span class="title">Tin bài</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="/news/Category"><i class="fa fa-dot-circle-o"></i>Quản lý chủ đề</a></li>
+                        <li><a href="/news/addnews"><i class="fa fa-dot-circle-o"></i> Thêm tin <span class="badge badge-warning badge-roundless">+</span></a></li>                        
+                        <li><a href="/news/search"><i class="fa fa-dot-circle-o"></i> Bài đã đăng</a></li>
+                    </ul>
+                </li>
+            }
+
+
+            @if (Security.Store.IsInRole(AEnum.UserRole.CanUpdateTheme))
+            {
+                <li class="nav-item start">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-object-group"></i>
+                        <span class="title">Quản lý giao diện</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="/theme/index"><i class="fa fa-dot-circle-o"></i> Menu chính </a></li>
+                        <li><a href="/theme/ads"><i class="fa fa-dot-circle-o"></i> Slide và quảng cáo </a></li>
+                        <li><a href="/webconfig/Footer"><i class="fa fa-dot-circle-o"></i> Java Script toàn trang</a></li>
+                        <li><a href="/webconfig/Css"><i class="fa fa-dot-circle-o"></i> CSS toàn trang</a></li>
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

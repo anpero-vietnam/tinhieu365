@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "Đăng ký bảo hành";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="col-md-9">
+    <div class="portlet light portlet-fit portlet-form bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                Bảo hành cho <span id="pr-name">tất cả sản phẩm</span>
+            </div>
+            <div class="actions">
+                @*<div class="btn-group">
+                    <button class="btn btn-sm yellow filter-submit margin-bottom"><i class="fa fa-filter"></i>Tìm</button>
+                </div>*@
+                <div class="action">
+                    <a class="btn red" href="javascript:void(0);" id="btn-delete-choise">Xóa</a>
+                    <a class="btn btn-sm green dropdown-toggle" href="javascript:void(0);" id="export">
+                        <i class="fa fa-file-excel-o"></i> Export
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div id="rs-content"></div>
+        </div>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="portlet light portlet-fit portlet-form bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                Tìm kiếm bảo hành 
+            </div>
+          
+        </div>
+        <div class="form-body">
+            <div class="dropdown">
+                <div class="form-group">
+                    <input type="text" name="keyWord" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Tìm sản phẩm" autocomplete="off" aria-expanded="true">
+                    <ul class="dropdown-menu" id="sarchResultContent">
+                        <li><a href="javascript:void(0);"></a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Từ ngày</label>
+                <div class="input-icon right">
+                    <i class="fa fa-info-circle tooltips" data-original-title="Tìm kiếm theo ngày tạo phiếu bảo hành" data-container="body"></i>
+                    <input class="form-control date-picker" type="text" id="beginTime" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Từ ngày</label>                
+                <input class="form-control date-picker" type="text" id="endTime" />
+            </div>
+            <div class="actions">
+                <a class="btn btn-transparent blue btn-outline btn-sm active" href="javascript:void(0);" id="btn-search">Tìm kiếm</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content form-body">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cập nhật phiếu bảo hành</h4>
+            </div>
+            <div class="modal-body form-horizontal">
+                <div class="col-md-12" style="display:none;">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Thời gian bảo hành:</label>
+                        <div class="col-md-7">
+                            <input class="form-control" type="text" id="wr" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Từ ngày:</label>
+                        <div class="col-md-7">
+                            <input class="form-control date-picker" type="text" id="fromDate" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Đến ngày:</label>
+                        <div class="col-md-7">
+                            <input class="form-control date-picker" type="text" id="toDate" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Đại lý:</label>
+                        <div class="col-md-7">
+                            <input class="form-control" type="text" id="reseller" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Tên khách hàng:</label>
+                        <div class="col-md-7">
+                            <input class="form-control" type="text" id="customerName" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">CMT/Hộ chiếu:</label>
+                        <div class="col-md-7">
+                            <input class="form-control" type="text" id="IdCard" />
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Email:</label>
+                        <div class="col-md-7">
+                            <input class="form-control" type="text" id="email" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Điện thoại:</label>
+                        <div class="col-md-7">
+                            <input class="form-control" type="text" id="phone" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Địa chỉ:</label>
+                        <div class="col-md-7">
+                            <input class="form-control" type="text" id="address" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Ghi chú:</label>
+                        <div class="col-md-7">
+                            <textarea class="form-control" id="note"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="btn-update-warranty">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Raw(ViewBag.paged)
+@section scripts{
+    <script src="~/Scripts/Modul/warantyCard-Control.js"></script>
+    <script src="~/Scripts/Modul/Search-Product-Dropdow.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            SearchProductDropdown.init(function (id) {
+                Waranty.productId = id;
+                //Seria.bindSeria(id, 1, 50);
+            });
+            Waranty.init();
+        });
+
+    </script>
+
+}

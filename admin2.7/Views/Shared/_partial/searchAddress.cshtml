@@ -1,0 +1,51 @@
+﻿<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="findAddr">
+    <div class="modal-dialog modal-lg bs-example-modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Tìm địa chỉ</h4>
+            </div>
+            <div class="modal-body">
+                <div id="findaddress" class="form-horizontal ">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-grourop">
+                                <label class="control-label col-md-3"><a href="/tygia">Tên| điện thoại| mail </a></label>
+                                <div class="col-md-9">
+                                    <input type="text" id="txtSearchContact" class="form-control" placeholder="Nhập và ấn Enter">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="findContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#txtSearchContact').on('keyup', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                var search = new Search({
+                    keyWord: $('#txtSearchContact').val(),
+                    container: "#findContent"
+                   
+                });                
+                search.searchContact();
+                $(".setaddresshng").click(function () {
+                    $("#makh").val($(this).attr("data-id"));
+                    $('#findAddr').modal('toggle');
+                    searchOrder(1);
+                })
+            }
+        });
+       
+    })
+    
+  
+</script>

@@ -1,0 +1,175 @@
+﻿@{
+    ViewBag.Title = "Thuộc tính sản phẩm";
+}
+@section head{    
+    <script src="~/Scripts/Modul/ProductPrioty.js"></script>
+    <link href="/Scripts/Modul/Small-fileUpload/Small-fileUpload.css" rel="stylesheet" />
+    <script src="/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+}
+<div class="col-md-12 ">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-red-sunglo">
+                <i class="icon-settings font-red-sunglo"></i>
+                <span class="caption-subject bold uppercase"> Quản lý thuộc tính</span>
+            </div>
+            <div class="actions">
+                <div class="table-group-actions pull-right">
+                    <button class="btn btn-sm btn-success table-group-action-submit red addCatBtn">
+                        <i class="glyphicon glyphicon-plus"></i> Thêm Thuộc tính mới cho sản phẩm
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <label id="updateCatNotice"></label>
+            <div id="catTableContent" style="display:none">
+                <div class="note note-info">
+                    <h4>Bạn chưa có thuộc tính nào</h4>
+                    <div>Thuộc tính sản phẩm giúp khách hàng tìm chi tiết hơn về sản phẩm. Một Danh mục sản phẩm có thể có nhiều thuộc tính ví dụ : Ram, Ổ cứng, CPU</div>
+
+                    <div>Click vào <button class="btn btn-sm btn-success addCatBtn">đây</button> để thêm thuộc tính đầu tiên</div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<style>
+    .sub-item {
+        color: #a7bdcd;
+    }
+
+        .sub-item .s-itemName {
+            color: #333;
+        }
+
+    .parent-name {
+        font-weight: 600;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        ProductProperties.Init();
+    });
+</script>
+<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="updateCategoryModel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="lb-origin2">Thêm giá trị cho thuộc tính</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="form-group col-md-12 pri-ct">
+                            <label class="control-label col-md-1"> </label>
+                            <label class="control-label col-md-3">Tên thuộc tính*: </label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" id="CatName" value="" placeholder="Vd: Ram, ổ cứng, màu sắc, Loại da ...">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 val-ct">
+                            <label class="control-label col-md-1"> </label>
+                            <label class="control-label col-md-3">Giá trị *: </label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" id="values" value="" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-1"> </label>
+                            <label class="control-label col-md-3">Độ ưu tiên hiển thị: </label>
+                            <div class="col-md-7">
+                                <input type="number" class="form-control" id="catPrioty" value="1">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 pri-ct">
+                            <label class="control-label col-md-1"> </label>
+                            <label class="control-label col-md-3">Miêu tả ngắn ( meta description): </label>
+                            <div class="col-md-7"><textarea class="form-control" id="catShotDesc"></textarea></div>
+                        </div>
+                        <div class="form-group col-md-12 pri-ct">
+                            <label class="control-label col-md-1"> </label>
+                            <label class="control-label col-md-3">keywords ( meta keywords): </label>
+                            <div class="col-md-7"><textarea class="form-control" id="catkeywords"></textarea></div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-1"> </label>
+                            <label class="control-label col-md-3">Ảnh đại diện: </label>
+                            <div class="col-md-4">
+                                <input type="file" class="form-control" id="addThumb" />
+                            </div>
+                            <div class="col-md-12" id="thumbContent">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-9 margin-top-15">
+                                    <img id="imgCatThum" src="" style="max-width:100%;" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 val-ct" style="display:none;">
+                            <label class="control-label col-md-1"> </label>
+                            <label class="control-label col-md-3">Ảnh đại diện nhỏ: </label>
+                            <div class="col-md-4">
+                                <input type="file" class="form-control" id="smallThumb" />
+                            </div>
+                            <div class="col-md-12" id="thumbContent">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-9 margin-top-15">
+                                    <img id="smallThumbImg" src="" style="max-width:100%;" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 right">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-9">
+                                <button id="btn-cancel" class="btn blue" data-dismiss="modal">Hủy thao tác</button>
+                                <button id="btn-add" class="btn red"><i class="glyphicon glyphicon-plus"></i>Cập nhật</button>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    @*<div class="col-md-12"><a href="https://cdn.anpero.com/images/38/42019/capture2019042301224037.png" target="_blank" style="cursor:zoom-in;"><img class="img-responsive" src="https://cdn.anpero.com/images/38/42019/capture2019042301224037.png" /></a></div>*@
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="quick-nav">
+    <a class="quick-nav-trigger" href="#0">
+        <span aria-hidden="true"></span>
+    </a>
+    <ul>
+        <li>
+            <a href="/pr/addpr" class="active">
+                <span>Thêm sản phẩm mới</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/pr/List">
+                <span>Danh sách sản phẩm</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+
+        <li>
+            <a href="/pr/orderList">
+                <span>Xem đơn hàng</span>
+                <i class="icon-basket"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/Properties/index">
+                <span>Thuộc tính</span>
+                <i class="fa fa-cube"></i>
+            </a>
+        </li>
+    </ul>
+    <span aria-hidden="true" class="quick-nav-bg"></span>
+</nav>
+<div class="quick-nav-overlay"></div>

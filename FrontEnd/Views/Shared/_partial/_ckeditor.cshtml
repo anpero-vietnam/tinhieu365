@@ -1,0 +1,59 @@
+﻿<script src="/assets/ckeditor/ckeditor.js"></script>
+<script src="/assets/ckeditor/lang/vi.js"></script>
+<link href="/assets/ckeditor/contents.css" rel="stylesheet" />
+<script src="/assets/ckeditor/styles.js"></script>
+<div style="display:none;">
+    <input type="file" id="file2" name="file2" style="float: left; line-height: 32px;" />
+    <input type="button" id="addImg" value="Tải ảnh" class="btn btn-success" />
+</div>
+<div class="modal modal-small fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="youTube">
+    <div class="modal-dialog modal-lg bs-example-modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Vui lòng nhập link Youtube</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-1"> </label>
+                        <label class="txt-lable txt-lable-1">
+                            Link video:
+                        </label>                        
+                            <input type="text" class="input-form" id="YouTubeLink" value="">
+                        
+                    </div>
+                   
+                    <div class="form-group col-md-12 right">
+                        <label class="control-label col-md-2"> </label>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-6">
+                            <button id="btn-cancel" class="btn red" data-dismiss="modal">Hủy thao tác</button>
+                            <button id="btnAddYoutube" class="btn blue"><i class="glyphicon glyphicon-plus"></i>Nhúng video vào bài viết</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+    .cke_button_label.cke_button__imgbutton_label, .cke_button_label.cke_button__addvideo_label {
+        display: inline-block !important;
+    }
+</style>
+<script>
+    function InsertHTML(String) {
+        // Get the editor instance that we want to interact with.
+        var editor = CKEDITOR.instances.editor1;
+        // Check the active editing mode.
+        if (editor.mode == 'wysiwyg') {
+
+            editor.insertHtml(String);
+        }
+        else
+            alert('You must be in WYSIWYG mode!');
+    }
+
+</script>

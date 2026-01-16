@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Tạo cửa hàng mới";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section head{
+    <link href="~/assets/global/css/components-md.min.css" rel="stylesheet" />
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+}
+<div class="content">
+    @using (Html.BeginForm("index", "Store", FormMethod.Post, new { @class = "addStr form-horizontal" }))
+    {
+
+        
+        @Html.ValidationSummary(true)
+        <h3 class="form-title font-green">Tạo website</h3>
+        <div>
+            <span> @ViewBag.Result</span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Tên website *</label>
+            <input name="storeName" class="form-control form-control-solid placeholder-no-fix" id="storeName" placeholder="Tên cửa hàng" />
+            <input type="hidden" id="captcha" name="captcha"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9"> Miêu tả ngắn</label>
+            <input name="desc" class="form-control form-control-solid placeholder-no-fix" placeholder="Miêu tả ngắn" />
+        </div>
+        <div  class="form-group">
+            <label class="control-label"> Loại Hình</label>
+            <select name="stTypeselec" class="form-control" id="stTypeselec">
+                <option value="1">Bán Hàng</option>
+                <option value="2">Dịch vụ nhân sự</option>
+                <option value="3">Bất động sản</option>
+                <option value="4">Trang tin tức</option>
+            </select>
+            <input type="hidden" id="stType" name="stType" />
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Nhập seria <span class="required" aria-required="true"> * </span></label>
+            <input name="seria" id="seria" class="form-control form-control-solid placeholder-no-fix" placeholder="Nhập seria" />
+        </div>
+        <div class="form-group">
+            <div id="g-recaptcha"></div>
+            <div class="help-block help-block-error">@ViewBag.Result</div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn red uppercase" onclick="return checkForm();">Tạo website</button>
+            <a href="http://anpero.com" class="btn green uppercase">Trang chủ</a>
+        </div>
+
+    }
+  
+    <div class="create-account">
+        <p>
+            <a href="/account/register" id="register-btn" class="uppercase">Lấy Seria</a>
+        </p>
+    </div>
+    <div class="create-account">
+        <p>
+            <a href="javascript:document.getElementById('logoutForm').submit()" id="register-btn" class="uppercase">Đăng xuất</a>
+        </p>
+    </div>
+</div>
+<form action="/Account/LogOff" id="logoutForm" method="post">
+    
+    <input name="stid" type="hidden" value="@Request.QueryString["st"]">
+</form>
+<script>
+    var googleCatchaLogin;
+    $("#stType").val($("#stTypeselec option:selected").val());
+    $(document).ready(function () {
+        $("#stTypeselec").change(function () {
+            $("#stType").val($("#stTypeselec option:selected").val());
+        });
+       
+    })
+    function checkForm() {
+        var seria = $("#seria").val();
+        if (seria == "" || seria == null) {
+            $(".help-block").html("Vui lòng nhập Seria");
+            return false;
+        }
+        var captchaResponse = grecaptcha.getResponse(googleCatcha);
+        if (captchaResponse == "" || captchaResponse == null) {
+            grecaptcha.reset();
+            $(".help-block").html("Vui lòng click vào ô kiểm tra");
+            return false;
+        } else {
+            $("#captcha").val(captchaResponse);
+            return true;
+        }
+    }
+</script>

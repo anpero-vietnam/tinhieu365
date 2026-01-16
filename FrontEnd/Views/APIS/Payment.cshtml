@@ -1,0 +1,444 @@
+﻿@using FrontEnd.Controllers
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var pricePant = Request["price"];
+    Dal.UserProfileControl profileControl = new Dal.UserProfileControl();
+    var currentProfile = profileControl.GetUserProfileById(AppSession.CurentProfile.UserId);
+}
+<div class="box-page-profile">
+    <div class="container">
+        <div class="main-page-profile row">
+
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <h4>Vui lòng chọn phương thức thanh toán</h4>
+                <p class="mt-3">
+                    <div><strong>Số tiền</strong> : @Ultil.StringHelper.ConVertToMoneyFormatInt(ViewBag.Price) đ</div>
+                    <div><strong>Dịch vụ</strong>: @(pricePant== "Vip2Price" ?"Quảng cáo Vip 2, tối ưu hiển thị ngoài trang chủ, kết quả tìm kiếm, và dự án nổi bật": "Quảng cáo Vip 1, tối ưu hiển thị kết quả tìm kiếm, và dự án nổi bật") </div>
+                    <div><strong>Thời gian</strong>: @ViewBag.Day ngày</div>
+                </p>
+                <label for="radio_button_11" id="lb11">
+                    <input type="radio" name="paymentCode" id="radio_button_11" value="WhereViet" payment-code="WhereViet" data-ship="0">
+                    Thanh toán bằng tài khoản WhereViet. <strong>Hiện bạn đang có @Ultil.StringHelper.ConVertToMoneyFormat(currentProfile.Credit.ToString()) đ</strong>
+                </label>
+                <p class="mt-3">
+                    <label for="radio_button_9" id="lb0">
+                        <input type="radio" name="paymentCode" id="radio_button_9" value="VISA" payment-code="VISA" data-ship="0">
+                        <img src="~/Assets/images/visamaster.png" />
+                        <br />Thanh toán bằng thẻ VISA/MASTER
+                    </label>
+                </p>
+                <div class="mt-3">
+                    <label for="radio_button_8" id="lb1">
+                        <input type="radio" name="paymentCode" value="ATM_ONLINE" id="radio_button_8" payment-code="ATM_ONLINE" data-ship="0"> Thanh toán online bằng thẻ ngân hàng nội địa
+                    </label>
+                    <ul class="cardList form-list clearfix" style="display:none;" id="brank-list">
+                        <li class="bank-online-methods ">
+                            <label for="vcb_ck_on">
+                                <i class="VCB" title="Ngân hàng TMCP Ngoại Thương Việt Nam"></i>
+                                <input type="radio" name="bankcode" id="vcb_ck_on" value="VCB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="vnbc_ck_on">
+                                <i class="DAB" title="Ngân hàng Đông Á"></i>
+                                <input type="radio" name="bankcode" id="vnbc_ck_on" value="DAB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="tcb_ck_on">
+                                <i class="TCB" title="Ngân hàng Kỹ Thương"></i>
+                                <input type="radio" name="bankcode" id="tcb_ck_on" value="TCB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="sml_atm_mb_ck_on">
+                                <i class="MB" title="Ngân hàng Quân Đội"></i>
+                                <input type="radio" name="bankcode" id="sml_atm_mb_ck_on" value="MB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="shb_ck_on">
+                                <i class="SHB" title="Ngân hàng Sài Gòn - Hà Nội"></i>
+                                <input type="radio" name="bankcode" id="shb_ck_on" value="SHB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="sml_atm_vib_ck_on">
+                                <i class="VIB" title="Ngân hàng Quốc tế"></i>
+                                <input type="radio" name="bankcode" id="sml_atm_vib_ck_on" value="VIB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="sml_atm_vtb_ck_on">
+                                <i class="ICB" title="Ngân hàng Công Thương Việt Nam"></i>
+                                <input type="radio" name="bankcode" id="sml_atm_vtb_ck_on" value="ICB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="sml_atm_exb_ck_on">
+                                <i class="EXB" title="Ngân hàng Xuất Nhập Khẩu"></i>
+                                <input type="radio" name="bankcode" id="sml_atm_exb_ck_on" value="EXB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="sml_atm_acb_ck_on">
+                                <i class="ACB" title="Ngân hàng Á Châu"></i>
+                                <input type="radio" name="bankcode" id="sml_atm_acb_ck_on" value="ACB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="sml_atm_hdb_ck_on">
+                                <i class="HDB" title="Ngân hàng Phát triển Nhà TPHCM"></i>
+                                <input type="radio" name="bankcode" id="sml_atm_hdb_ck_on" value="HDB">
+                            </label>
+                        </li>
+                        <li class="bank-online-methods ">
+                            <label for="sml_atm_msb_ck_on">
+                                <i class="MSB" title="Ngân hàng Hàng Hải"></i>
+                                <input type="radio" name="bankcode" id="sml_atm_msb_ck_on" value="MSB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="sml_atm_nvb_ck_on">
+                                <i class="NVB" title="Ngân hàng Nam Việt"></i>
+                                <input type="radio" name="bankcode" id="sml_atm_nvb_ck_on" value="NVB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="sml_atm_vab_ck_on">
+                                <i class="VAB" title="Ngân hàng Việt Á"></i>
+                                <input type="radio" name="bankcode" id="sml_atm_vab_ck_on" value="VAB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="sml_atm_vpb_ck_on">
+                                <i class="VPB" title="Ngân Hàng Việt Nam Thịnh Vượng"></i>
+                                <input type="radio" name="bankcode" id="sml_atm_vpb_ck_on" value="VPB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="sml_atm_scb_ck_on">
+                                <i class="SCB" title="Ngân hàng Sài Gòn Thương tín"></i>
+                                <input type="radio" name="bankcode" id="sml_atm_scb_ck_on" value="SCB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="ojb_ck_on">
+                                <i class="OJB" title="Ngân hàng Đại Dương"></i>
+                                <input type="radio" name="bankcode" id="ojb_ck_on" value="OJB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="bnt_atm_pgb_ck_on">
+                                <i class="PGB" title="Ngân hàng Xăng dầu Petrolimex"></i>
+                                <input type="radio" name="bankcode" id="bnt_atm_pgb_ck_on" value="PGB">
+
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="bnt_atm_gpb_ck_on">
+                                <i class="GPB" title="Ngân hàng TMCP Dầu khí Toàn Cầu"></i>
+                                <input type="radio" name="bankcode" id="bnt_atm_gpb_ck_on" value="GPB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="bnt_atm_agb_ck_on">
+                                <i class="AGB" title="Ngân hàng Nông nghiệp &amp; Phát triển nông thôn"></i>
+                                <input type="radio" name="bankcode" id="bnt_atm_agb_ck_on" value="AGB">
+
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="bnt_atm_sgb_ck_on">
+                                <i class="SGB" title="Ngân hàng Sài Gòn Công Thương"></i>
+                                <input type="radio" name="bankcode" id="bnt_atm_sgb_ck_on" value="SGB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="bnt_atm_nab_ck_on">
+                                <i class="NAB" title="Ngân hàng Nam Á"></i>
+                                <input type="radio" name="bankcode" id="bnt_atm_nab_ck_on" value="NAB">
+                            </label>
+                        </li>
+
+                        <li class="bank-online-methods ">
+                            <label for="sml_atm_bab_ck_on">
+                                <i class="BAB" title="Ngân hàng Bắc Á"></i>
+                                <input type="radio" name="bankcode" id="sml_atm_bab_ck_on" value="BAB">
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mt-3">
+                    <div class="alert alert-warning alert-dismissible fade" role="alert">
+                        <strong>Thông báo !</strong>
+                        <span class="alert-content">For domestic payment, please choose a bank.</span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <button class="btn btn-warning" id="btn-payment">Thanh toán</button>
+                    <a class="btn btn-warning" href="/Project/MyProject" style="display:none;" id="btn-projectLink">Quản lý dự án</a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("input[name=paymentCode]").click(function () {
+                if ($(this).val() == "ATM_ONLINE") {
+                    $("#brank-list").fadeIn();
+                } else {
+                    $("#brank-list").fadeOut();
+                }
+                $('.alert').removeClass("show");
+            });
+            $("#btn-payment").click(function () {
+                var _paymentCode = $("input[name=paymentCode]:checked").val();
+                var _bankcode = $("input[name=bankcode]:checked").val();
+                $('.alert').removeClass("show");
+                var valid = true;
+                if (_paymentCode == null) {
+                    $(".alert-content").html("Please choose a bank.");
+                    $('.alert').addClass("show");
+                    valid = false;
+                }
+                else if (_paymentCode == "ATM_ONLINE" && _bankcode == null) {
+                    $(".alert-content").html("For domestic payment, please choose a bank.");
+                    $('.alert').addClass("show");
+                    valid = false;
+                }
+                var _url = "/apis/GetUrlCheckOut";
+                if (_paymentCode == "WhereViet") {
+                    _url = "/apis/WhereVietCheckOut";
+                }
+                if (valid) {
+                    $.ajax({
+                        type: "post",
+                        url: _url,
+                        data: { paymentMethod: _paymentCode, bankcode: _bankcode, price: Common.getParameterByName("priceKey"), projectId: Common.getParameterByName("projectId") },
+                        success: function (rs) {
+                            if (Common.ValidURL(rs)) {
+                                window.location.href = rs;
+                           
+                            } else {
+                                $(".alert-content").html(rs);
+                                $('.alert').addClass("show");
+                                $("#btn-payment").hide();
+                                $("#btn-projectLink").show();
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+<style>
+    .form-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .cardList {
+        border: 1px solid whitesmoke;
+        padding: 8px;
+    }
+
+    .red {
+        color: red;
+    }
+
+    ul.bankList {
+        clear: both;
+        height: 202px;
+        width: 636px;
+    }
+
+        ul.bankList li {
+            list-style-position: outside;
+            list-style-type: none;
+            cursor: pointer;
+            float: left;
+            margin-right: 0;
+            padding: 5px 2px;
+            text-align: center;
+            width: 90px;
+        }
+
+    .list-content li {
+        list-style: none outside none;
+        margin: 0 0 10px;
+    }
+
+        .list-content li .boxContent {
+            display: none;
+            width: 636px;
+            border: 1px solid #cccccc;
+            padding: 10px;
+        }
+
+        .list-content li.active .boxContent {
+            display: block;
+        }
+
+        .list-content li .boxContent ul {
+            height: 280px;
+        }
+
+    i.VISA, i.MASTE, i.AMREX, i.JCB, i.VCB, i.TCB, i.MB, i.VIB, i.ICB, i.EXB, i.ACB, i.HDB, i.MSB, i.NVB, i.DAB, i.SHB, i.OJB, i.SEA, i.TPB, i.PGB, i.BIDV, i.AGB, i.SCB, i.VPB, i.VAB, i.GPB, i.SGB, i.NAB, i.BAB {
+        width: 80px;
+        height: 30px;
+        display: block;
+        background: url(//cdn.anpero.com/images/38/102017/12017102516572466.png) no-repeat;
+    }
+
+    i.MASTE {
+        background-position: 0px -31px
+    }
+
+    i.AMREX {
+        background-position: 0px -62px
+    }
+
+    i.JCB {
+        background-position: 0px -93px;
+    }
+
+    i.VCB {
+        background-position: 0px -124px;
+    }
+
+    i.TCB {
+        background-position: 0px -155px;
+    }
+
+    i.MB {
+        background-position: 0px -186px;
+    }
+
+    i.VIB {
+        background-position: 0px -217px;
+    }
+
+    i.ICB {
+        background-position: 0px -248px;
+    }
+
+    i.EXB {
+        background-position: 0px -279px;
+    }
+
+    i.ACB {
+        background-position: 0px -310px;
+    }
+
+    i.HDB {
+        background-position: 0px -341px;
+    }
+
+    i.MSB {
+        background-position: 0px -372px;
+    }
+
+    i.NVB {
+        background-position: 0px -403px;
+    }
+
+    i.DAB {
+        background-position: 0px -434px;
+    }
+
+    i.SHB {
+        background-position: 0px -465px;
+    }
+
+    i.OJB {
+        background-position: 0px -496px;
+    }
+
+    i.SEA {
+        background-position: 0px -527px;
+    }
+
+    i.TPB {
+        background-position: 0px -558px;
+    }
+
+    i.PGB {
+        background-position: 0px -589px;
+    }
+
+    i.BIDV {
+        background-position: 0px -620px;
+    }
+
+    i.AGB {
+        background-position: 0px -651px;
+    }
+
+    i.SCB {
+        background-position: 0px -682px;
+    }
+
+    i.VPB {
+        background-position: 0px -713px;
+    }
+
+    i.VAB {
+        background-position: 0px -744px;
+    }
+
+    i.GPB {
+        background-position: 0px -775px;
+    }
+
+    i.SGB {
+        background-position: 0px -806px;
+    }
+
+    i.NAB {
+        background-position: 0px -837px;
+    }
+
+    i.BAB {
+        background-position: 0px -868px;
+    }
+
+    ul.cardList li {
+        cursor: pointer;
+        float: left;
+        margin-right: 0;
+        padding: 5px 4px;
+        text-align: center;
+        width: 90px;
+        list-style: none;
+    }
+</style>
+

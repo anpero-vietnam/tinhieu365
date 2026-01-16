@@ -1,0 +1,612 @@
+.icon-default, %icon-default {
+    position: relative;
+    &:before {
+      content: ''; background-repeat: no-repeat; background-size: contain; display: inline-block;
+    }
+  }
+  
+  .icon-utility-xs, %icon-utility-xs {
+    &:before {
+      background-image: url("../images/icon/icon-utility-xs.png"); width: 24px; height: 25px;
+    }
+  }
+  
+  .icon-my-project, %icon-my-project {
+    &:before {
+      background-image: url("../images/icon/icon-my-project.png"); width: 30px; height: 30px;
+    }
+  }
+  
+  .icon-left, %icon-left {
+    &:before {
+      background-image: url("../images/icon/icon-left.png"); width: 24px; height: 39px;
+    }
+  }
+  
+  .icon-right, %icon-right {
+    &:before {
+      background-image: url("../images/icon/icon-right.png"); width: 24px; height: 39px;
+    }
+  }
+  
+  .icon-left-1, %icon-left-1 {
+    &:before {
+      background-image: url("../images/icon/icon-left-1.png"); width: 16px; height: 26px;
+    }
+  }
+  
+  .icon-left-2, %icon-left-2 {
+    &:before {
+      background-image: url("../images/icon/icon-left-2.png"); width: 23px; height: 40px;
+    }
+  }
+  
+  .icon-right-1, %icon-right-1 {
+    &:before {
+      background-image: url("../images/icon/icon-right-1.png"); width: 16px; height: 26px;
+    }
+  }
+  
+  .icon-right-2, %icon-right-2 {
+    &:before {
+        background-image: url("../images/icon/icon-right-2.png"); width: 23px; height: 40px;
+    }
+  }
+  
+  .icon-choose, %icon-choose {
+    &:before {
+      background-image: url("../images/icon/icon-choose.png"); width: 134px; height: 171px;
+    }
+  }
+  
+  .icon-time, %icon-time {
+    &:before {
+      background-image: url("../images/icon/icon-time.png"); width: 144px; height: 142px;
+    }
+  }
+  .icon-star-yellow, %icon-star-yellow {
+    &:before {
+      background-image: url("../images/icon/icon-star-yellow.png"); width: 32px; height: 32px;
+    }
+  }
+  .icon-star-gray, %icon-star-gray {
+    &:before {
+      background-image: url("../images/icon/icon-star-gray.png"); width: 32px; height: 32px;
+    }
+  }
+  .icon-plan, %icon-plan {
+    &:before {
+      background-image: url("../images/icon/icon-plan.png"); width: 159px; height: 168px;
+    }
+  }
+  
+  .icon-finish, %icon-finish {
+    &:before {
+      background-image: url("../images/icon/icon-finish.png"); width: 158px; height: 156px;
+    }
+  }
+  
+  .icon-thietke, %icon-thietke {
+    &:before {
+      background-image: url("../images/icon/icon-thietke.png"); width: 48px; height: 48px;
+    }
+  }
+  
+  .icon-thietke-noithat, %icon-thietke-noithat {
+    &:before {
+      background-image: url("../images/icon/icon-thietke-noithat.png"); width: 46px; height: 48px;
+    }
+  }
+  
+  .icon-hoanthien, %icon-hoanthien {
+    &:before {
+      background-image: url("../images/icon/icon-complete.png"); width: 47px; height: 47px;
+    }
+  }
+  
+  .icon-caitaophong, %icon-caitaophong {
+    &:before {
+      background-image: url("../images/icon/icon-caitaophong.png"); width: 30px; height: 67px;
+    }
+  }
+  
+  .icon-hethongdien, %icon-hethongdien {
+    &:before {
+      background-image: url("../images/icon/icon-hethongdien.png"); width: 45px; height: 56px;
+    }
+  }
+  
+  .icon-hethongnuoc, %icon-hethongnuoc {
+    &:before {
+      background-image: url("../images/icon/icon-hethongnuoc.png"); width: 47px; height: 54px;
+    }
+  }
+  
+  .icon-cuadi-cuaso, %icon-cuadi-cuaso {
+    &:before {
+      background-image: url("../images/icon/icon-cuadi-cuaso.png"); width: 50px; height: 39px;
+    }
+  }
+  
+  .icon-noithat, %icon-noithat {
+    &:before {
+      background-image: url("../images/icon/icon-noithat.png"); width: 52px; height: 52px;
+    }
+  }
+  
+  .icon-sannha, %icon-sannha {
+    &:before {
+      background-image: url("../images/icon/icon-sannha.png"); width: 46px; height: 45px;
+    }
+  }
+  
+  .icon-cauthang, %icon-cauthang {
+    &:before {
+      background-image: url("../images/icon/icon-cauthang.png"); width: 49px; height: 48px;
+    }
+  }
+  
+  .icon-trangia, %icon-trangia {
+    &:before {
+      background-image: url("../images/icon/icon-trangia.png"); width: 69px; height: 44px;
+    }
+  }
+  
+  .icon-sontrangtri, %icon-sontrangtri {
+    &:before {
+      background-image: url("../images/icon/icon-sontrangtri.png"); width: 50px; height: 57px;
+    }
+  }
+  
+  .icon-datrangtri, %icon-datrangtri {
+    &:before {
+      background-image: url("../images/icon/icon-datrangtri.png"); width: 61px; height: 39px;
+    }
+  }
+  
+  .icon-rem, %icon-rem {
+    &:before {
+      background-image: url("../images/icon/icon-rem.png"); width: 47px; height: 43px;
+    }
+  }
+  
+  .icon-cuago, %icon-cuago {
+    &:before {
+      background-image: url("../images/icon/icon-cuago.png"); width: 44px; height: 55px;
+    }
+  }
+  
+  .icon-thepkinh, %icon-thepkinh {
+    &:before {
+      background-image: url("../images/icon/icon-thepkinh.png"); width: 45px; height: 54px;
+    }
+  }
+  
+  .icon-sanvuon, %icon-sanvuon {
+    &:before {
+      background-image: url("../images/icon/icon-sanvuon.png"); width: 67px; height: 47px;
+    }
+  }
+  
+  .icon-maiche, %icon-maiche {
+    &:before {
+      background-image: url("../images/icon/icon-maiche.png"); width: 38px; height: 38px;
+    }
+  }
+  
+  .icon-hethongtuoi, %icon-hethongtuoi {
+    &:before {
+      background-image: url("../images/icon/icon-hethongtuoi.png"); width: 58px; height: 50px;
+    }
+  }
+  
+  .icon-dieuhoa, %icon-dieuhoa {
+    &:before {
+      background-image: url("../images/icon/icon-dieuhoa.png"); width: 50px; height: 50px;
+    }
+  }
+  
+  .icon-cuacuon, %icon-cuacuon {
+    &:before {
+      background-image: url("../images/icon/icon-cuacuon.png"); width: 56px; height: 52px;
+    }
+  }
+  
+  .icon-xaydung, %icon-xaydung {
+    &:before {
+      background-image: url("../images/icon/icon-xaydung.png"); width: 52px; height: 51px;
+    }
+  }
+  
+  .icon-thicong, %icon-thicong {
+    &:before {
+      background-image: url("../images/icon/icon-thicong.png"); width: 45px; height: 45px;
+    }
+  }
+  
+  .icon-heart, %icon-heart {
+    &:before {
+      background-image: url("../images/icon/icon-heart.png"); width: 29px; height: 25px;
+    }
+  }
+  
+  .icon-heart-1, %icon-heart-1 {
+    &:before {
+      background-image: url("../images/icon/icon-heart-1.png"); width: 29px; height: 25px;
+    }
+  }
+  
+  .icon-heart-2, %icon-heart-2 {
+    &:before {
+      background-image: url("../images/icon/icon-heart-2.png"); width: 23px; height: 20px;
+    }
+  }
+  
+  .icon-comment, %icon-comment {
+    &:before {
+      background-image: url("../images/icon/icon-comment.png"); width: 22px; height: 20px;
+    }
+  }
+  
+  .icon-house, %icon-house {
+    &:before {
+      background-image: url("../images/icon/icon-house.png"); width: 16px; height: 16px;
+    }
+  }
+  
+  .icon-authentication, %icon-authentication {
+    &:before {
+      background-image: url("../images/icon/icon-authentication.png"); width: 40px; height: 40px;
+    }
+  }
+  
+  .icon-blog, %icon-blog {
+    &:before {
+      background-image: url("../images/icon/icon-blog.png"); width: 32px; height: 32px;
+    }
+  }
+  
+  .icon-blog-xs, %icon-blog-xs {
+    &:before {
+      background-image: url("../images/icon/icon-blog-xs.png"); width: 16px; height: 16px;
+    }
+  }
+  
+  .icon-shop, %icon-shop {
+    &:before {
+      background-image: url("../images/icon/icon-shop.png"); width: 47px; height: 41px;
+    }
+  }
+  
+  .icon-shop-xs, %icon-shop-xs {
+    &:before {
+      background-image: url("../images/icon/icon-shop-xs.png"); width: 24px; height: 21px;
+    }
+  }
+  
+  .icon-gellery, %icon-gellery {
+    &:before {
+      background-image: url("../images/icon/icon-gellery.png"); width: 43px; height: 34px;
+    }
+  }
+  
+  .icon-gellery-xs, %icon-gellery-xs {
+    &:before {
+      background-image: url("../images/icon/icon-gellery-xs.png"); width: 22px; height: 18px;
+    }
+  }
+  
+  .icon-duan-xs, %icon-duan-xs {
+    &:before {
+      background-image: url("../images/icon/icon-duan-xs.png"); width: 19px; height: 19px;
+    }
+  }
+  
+  .icon-partner-xs, %icon-partner-xs {
+    &:before {
+      background-image: url("../images/icon/icon-partner-xs.png"); width: 26px; height: 18px;
+    }
+  }
+  
+  .icon-notification-xs, %icon-notification-xs {
+    &:before {
+      background-image: url("../images/icon/icon-notification-xs.png"); width: 29px; height: 30px;
+    }
+  }
+  
+  .icon-blog-nhacua, %icon-blog-nhacua {
+    &:before {
+      background-image: url("../images/icon/icon-blog-1.png"); width: 63px; height: 52px;
+    }
+  }
+  
+  .icon-blog-nhacua-xs, %icon-blog-nhacua-xs {
+    &:before {
+      background-image: url("../images/icon/icon-blog-1-xs.png"); width: 24px; height: 20px;
+    }
+  }
+  
+  .icon-blog-caitao, %icon-blog-caitao {
+    &:before {
+      background-image: url("../images/icon/icon-blog-2.png"); width: 61px; height: 60px;
+    }
+  }
+  
+  .icon-blog-caitao-xs, %icon-blog-caitao-xs {
+    &:before {
+      background-image: url("../images/icon/icon-blog-2-xs.png"); width: 20px; height: 20px;
+    }
+  }
+  
+  .icon-blog-camhung, %icon-blog-camhung {
+    &:before {
+      background-image: url("../images/icon/icon-blog-3.png"); width: 71px; height: 68px;
+    }
+  }
+  
+  .icon-blog-camhung-xs, %icon-blog-camhung-xs {
+    &:before {
+      background-image: url("../images/icon/icon-blog-3-xs.png"); width: 21px; height: 20px;
+    }
+  }
+  
+  .icon-blog-meovat, %icon-blog-meovat {
+    &:before {
+      background-image: url("../images/icon/icon-blog-4.png"); width: 53px; height: 53px;
+    }
+  }
+  
+  .icon-blog-meovat-xs, %icon-blog-meovat-xs {
+    &:before {
+      background-image: url("/Assets/images/icon/icon-blog-4-xs.png"); width: 20px; height: 20px;
+    }
+  }
+
+.icon-blog-ngansach, %icon-blog-ngansach {
+    &:before {
+        background-image: url("/Assets/images/icon/icon-blog-5.png");
+        width: 58px;
+        height: 58px;
+    }
+}
+  
+  .icon-blog-ngansach-xs, %icon-blog-ngansach-xs {
+    &:before {
+      background-image: url("../images/icon/icon-blog-5-xs.png"); width: 20px; height: 20px;
+    }
+  }
+  
+  .icon-blog-danhgia, %icon-blog-danhgia {
+    &:before {
+      background-image: url("../images/icon/icon-blog-6.png"); width: 66px; height: 62px;
+    }
+  }
+
+  
+  .icon-blog-danhgia-xs, %icon-blog-danhgia-xs {
+    &:before {
+      background-image: url("../images/icon/icon-blog-6-xs.png"); width: 21px; height: 20px;
+    }
+  }
+  
+  .icon-blog-tintuc, %icon-blog-tintuc {
+    &:before {
+      background-image: url("../images/icon/icon-blog-7.png"); width: 68px; height: 55px;
+    }
+  }
+  
+  .icon-blog-tintuc-xs, %icon-blog-tintuc-xs {
+    &:before {
+      background-image: url("../images/icon/icon-blog-7-xs.png"); width: 24px; height: 20px;
+    }
+  }
+  
+  .icon-blog-phongthuy, %icon-blog-phongthuy {
+    &:before {
+      background-image: url("../images/icon/icon-blog-8.png"); width: 56px; height: 56px;
+    }
+  }
+  
+  .icon-blog-phongthuy-xs, %icon-blog-phongthuy-xs {
+    &:before {
+      background-image: url("../images/icon/icon-blog-8-xs.png"); width: 20px; height: 20px;
+    }
+  }
+  
+  .icon-blog-agohomestyle, %icon-blog-agohomestyle {
+    &:before {
+      background-image: url("../images/icon/icon-blog-9.png"); width: 70px; height: 52px;
+    }
+  }
+  
+  .icon-blog-agohomestyle-xs, %icon-blog-agohomestyle-xs {
+    &:before {
+      background-image: url("../images/icon/icon-blog-9-xs.png"); width: 25px; height: 18px;
+    }
+  }
+  .icon-blog-kitchen-xs, %icon-blog-kitchen-xs {
+    &:before {
+      background-image: url("../images/icon/icon-blog-10-xs.png"); width: 27px; height: 27px;
+    }
+  }
+  .icon-blog-kitchen, %icon-blog-kitchen {
+    &:before {
+      background-image: url("../images/icon/icon-blog-11.png"); width: 60px; height: 59px;
+    }
+  }
+  .icon-blog-furniture, %icon-blog-furniture {
+    &:before {
+      background-image: url("../images/icon/icon-blog-12.png"); width: 63px; height: 56px;
+    }
+  }
+  .icon-blog-home-decor, %icon-blog-home-decor {
+    &:before {
+      background-image: url("../images/icon/icon-blog-13.png"); width: 64px; height: 67px;
+    }
+  }
+  .icon-blog-laundry, %icon-blog-laundry {
+    &:before {
+      background-image: url("../images/icon/icon-blog-14.png"); width: 56px; height: 56px;
+    }
+  }
+  .icon-blog-storage, %icon-blog-storage {
+    &:before {
+      background-image: url("../images/icon/icon-blog-15.png"); width: 63px; height: 61px;
+    }
+  }
+  .icon-blog-home-smart, %icon-blog-home-smart {
+    &:before {
+      background-image: url("../images/icon/icon-blog-16.png"); width: 61px; height: 60px;
+    }
+  }
+  .icon-blog-phongngu-sm, %icon-blog-phongngu-sm {
+    &:before {
+      background-image: url("../images/icon/icon-blog-17.png"); width: 62px; height: 45px;
+    }
+  }
+  .icon-blog-dodientu-sm, %icon-blog-dodientu-sm {
+    &:before {
+      background-image: url("../images/icon/icon-blog-dodientu-sm.png"); width: 62px; height: 55px;
+    }
+  }
+  .icon-blog-dogiadung-sm, %icon-blog-dogiadung-sm {
+    &:before {
+      background-image: url("../images/icon/icon-blog-dogiadung-sm.png"); width: 62px; height: 64px;
+    }
+  }
+  .icon-blog-phongtam-sm, %icon-blog-phongtam-sm {
+    &:before {
+      background-image: url("../images/icon/icon-blog-phongtam-sm.png"); width: 62px; height: 58px;
+    }
+  }
+  .icon-duan-dientich, %icon-duan-dientich {
+    &:before {
+      background-image: url("../images/icon/icon-duan-dientich.png"); width: 20px; height: 20px;
+    }
+  }
+  .icon-dichvuphong-sm-red, %icon-dichvuphong-sm-red {
+    &:before {
+      background-image: url("../images/icon/icon-dichvuphong-sm-red.png"); width: 36px; height: 28px;
+    }
+  }
+  .icon-dichvuthicongphong-sm-red, %icon-dichvuthicongphong-sm-red {
+    &:before {
+      background-image: url("../images/icon/icon-dichvuthicongphong-sm-red.png"); width: 29px; height: 32px;
+    }
+  }
+  .icon-ngansach-sm, %icon-ngansach-sm {
+    &:before {
+      background-image: url("../images/icon/icon-ngansach-sm.png"); width: 19px; height: 19px;
+    }
+  }
+  .icon-loaiduan-sm, %icon-loaiduan-sm {
+    &:before {
+      background-image: url("../images/icon/icon-loaiduan-sm.png"); width: 22px; height: 23px;
+    }
+  }
+  .icon-sco-red, %icon-sco-red {
+    &:before {
+      background-image: url("../images/icon/icon-sco-red.png"); width: 100px; height: 98px;
+    }
+  }
+  .data-time-sm-red, %data-time-sm-red {
+    &:before {
+      background-image: url("../images/icon/data-time-sm-red.png"); width: 34px; height: 34px;
+    }
+  }
+  .icon-tuong-sm-red, %icon-tuong-sm-red {
+    &:before {
+      background-image: url("../images/icon/icon-tuong-sm-red.png"); width: 25px; height: 25px;
+    }
+  }
+  .icon-phongbep-sm-red, %icon-phongbep-sm-red {
+    &:before {
+      background-image: url("../images/icon/icon-phongbep-sm-red.png"); width: 20px; height: 32px;
+    }
+  }
+  .icon-sontrangtri-sm-red, %icon-sontrangtri-sm-red {
+    &:before {
+      background-image: url("../images/icon/icon-sontrangtri.png"); width: 27px; height: 30px;
+    }
+  }
+  .icon-hethongdien-sm-red, %icon-hethongdien-sm-red {
+    &:before {
+      background-image: url("../images/icon/icon-hethongdien.png"); width: 24px; height: 30px;
+    }
+  }
+  .icon-stuongthachcao-red, %icon-stuongthachcao-red {
+    &:before {
+      background-image: url("../images/icon/icon-stuongthachcao-red.png"); width: 96px; height: 94px;
+    }
+  }
+  .icon-smailop-red, %icon-smailop-red {
+    &:before {
+      background-image: url("../images/icon/icon-smailop-red.png"); width: 146px; height: 63px;
+    }
+  }
+  .icon-tinhbetong-red, %icon-tinhbetong-red {
+    &:before {
+      background-image: url("../images/icon/icon-tinhbetong-red.png"); width: 128px; height: 94px;
+    }
+  }
+  .icon-dientich-dantuong, %icon-dientich-dantuong {
+    &:before {
+      background-image: url("../images/icon/icon-dientich-dantuong.png"); width: 100px; height: 100px;
+    }
+  }
+  .icon-tinhdientichson-xs-red, %icon-tinhdientichson-xs-red {
+    &:before {
+      background-image: url("../images/icon/icon-tinhdientichson-xs-red.png"); width: 84px; height: 103px;
+    }
+  }
+  .icon-doluong-tinhdientich-xs-red, %icon-doluong-tinhdientich-xs-red {
+    &:before {
+      background-image: url("../images/icon/icon-doluong-tinhdientich-xs-red.png"); width: 103px; height: 103px;
+    }
+  }
+  
+  .icon-close, %icon-close {
+    &:before {
+      background-image: url("../images/icon/icon-close.png"); width: 31px; height: 31px;
+    }
+  }
+  
+  .icon-close-1, %icon-close-1 {
+    &:before {
+      background-image: url("../images/icon/icon-close-1.png"); width: 29px; height: 29px;
+    }
+  }
+  .icon-check-job, %icon-check-job {
+    &:before {
+      background-image: url("../images/icon/icon-check-job.png"); width: 14px; height: 14px;
+    }
+  }
+  .icon-clock-sm, %icon-clock-sm {
+    &:before {
+      background-image: url("../images/icon/icon-clock-sm.png"); width: 11px; height: 11px;
+    }
+  }
+  .icon-avata-job, %icon-avata-job {
+    &:before {
+      background-image: url("../images/icon/icon-avata-job.png"); width: 13px; height: 13px;
+    }
+  }
+  %icon-fa {
+    &:before {
+      -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; display: inline-block;
+      font-style: normal; font-variant: normal; content: '';
+      text-rendering: auto; line-height: 1; font-family: "Font Awesome 5 Free"; font-weight: 900;
+    }
+  }
+  
+  .box-like {
+    width: 54px; height: 54px; @include border-radius(50%); background-color: rgba(0,0,0,.5); text-align: center;
+    line-height: 54px; color: #fff; position: absolute; bottom: 19px; right: 19px; z-index: 5; cursor: pointer;
+    &:before {
+      position: absolute; top: 50%; left: 50%; margin-left: -15px; margin-top: -13px;
+    }
+    &.liked {
+      @extend %icon-heart-1;
+    }
+  }
+  

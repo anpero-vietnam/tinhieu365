@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="UpdateSeriaCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="status" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tokenkey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="synTime" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="storeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateSeriaCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateSeriaCodeResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSeriaList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="monthAdd" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="usedStatus" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="lockedByuser" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="addToStore" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="beginRow" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="endRow" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="tokenkey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="synTime" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSeriaListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSeriaListResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddSeriaCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="montToAdd" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="quantity" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="tokenkey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="synchTimeNow" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddSeriaCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddSeriaCodeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="UpdateSeriaCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateSeriaCode" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSeriaCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateSeriaCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSeriaListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSeriaList" />
+  </wsdl:message>
+  <wsdl:message name="GetSeriaListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSeriaListResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddSeriaCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:AddSeriaCode" />
+  </wsdl:message>
+  <wsdl:message name="AddSeriaCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:AddSeriaCodeResponse" />
+  </wsdl:message>
+  <wsdl:portType name="storeSrvSoap">
+    <wsdl:operation name="UpdateSeriaCode">
+      <wsdl:input message="tns:UpdateSeriaCodeSoapIn" />
+      <wsdl:output message="tns:UpdateSeriaCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSeriaList">
+      <wsdl:input message="tns:GetSeriaListSoapIn" />
+      <wsdl:output message="tns:GetSeriaListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSeriaCode">
+      <wsdl:input message="tns:AddSeriaCodeSoapIn" />
+      <wsdl:output message="tns:AddSeriaCodeSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="storeSrvSoap" type="tns:storeSrvSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UpdateSeriaCode">
+      <soap:operation soapAction="http://tempuri.org/UpdateSeriaCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSeriaList">
+      <soap:operation soapAction="http://tempuri.org/GetSeriaList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSeriaCode">
+      <soap:operation soapAction="http://tempuri.org/AddSeriaCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="storeSrvSoap12" type="tns:storeSrvSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UpdateSeriaCode">
+      <soap12:operation soapAction="http://tempuri.org/UpdateSeriaCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSeriaList">
+      <soap12:operation soapAction="http://tempuri.org/GetSeriaList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSeriaCode">
+      <soap12:operation soapAction="http://tempuri.org/AddSeriaCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="storeSrv">
+    <wsdl:port name="storeSrvSoap" binding="tns:storeSrvSoap">
+      <soap:address location="http://anperowsv.azurewebsites.net/storeSrv.asmx" />
+    </wsdl:port>
+    <wsdl:port name="storeSrvSoap12" binding="tns:storeSrvSoap12">
+      <soap12:address location="http://anperowsv.azurewebsites.net/storeSrv.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

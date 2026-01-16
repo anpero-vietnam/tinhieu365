@@ -1,0 +1,144 @@
+footer {
+    font-size: 18px; color: #fff;
+    @media all and (max-width: 1024px){
+      font-size: 16px;
+    }
+    
+    @media all and (max-width: 768px){
+      font-size: 15px;
+      .logo-footer {
+        width: 130px; display: block;
+      }
+    }
+    
+    @media all and (max-width: 480px){
+      .flex {
+        display: block;
+      }
+    }
+    p {
+      margin: 0;
+      + p {
+        margin-top: 5px;
+      }
+  
+      i {
+        font-size: 14px; margin-right: 5px;
+      }
+    }
+  
+    a {
+      color: #fff;
+      &:hover {
+        color: $color-link; text-decoration: none;
+      }
+    }
+  
+    ul {
+      li {
+        + li {
+          margin-top: 15px;
+          @media all and (max-width: 480px){
+            margin-top: 7px;
+          }
+        }
+      }
+  
+      a {
+        position: relative;
+      }
+  
+    }
+  
+    &.RemoveCss {
+      .go_top, .box-cart-fast {
+        position: static;
+      }
+  
+      .go_top {
+        margin-top: 20px; display: flex; justify-content: center;
+      }
+    }
+  }
+  
+  .top-footer {
+    background-color: $bg-brown-1; padding: 85px 0 80px 0;
+    @media all and (max-width: 1024px){
+      padding: 40px 0;
+    }
+    .content-foorer {
+      max-width: 20%;
+      @media all and (max-width: 1024px){
+        max-width: 25%;
+      }
+   
+      @media all and (max-width: 480px){
+        max-width: 100%;
+        + .content-foorer {
+          margin-top: 25px;
+        }
+      }
+  
+      .item-info {
+        + .item-info {
+          margin-top: 26px;
+        }
+      }
+    }
+  }
+  
+  .list-menu-footer {
+    a {
+      @extend %icon-fa; padding-left: 15px;
+      &:before {
+        content: "\f054"; font-size: 10px; position: absolute; top: 7px; left: 0;
+      }
+    }
+  }
+  
+  .box-list-share {
+    margin-top: 55px;
+    @media all and (max-width: 480px){
+      margin-top: 20px;
+    }
+    i {
+      width: 19px; height: 19px; @include border-radius(50%); border: 1px solid #fff; text-align: center;
+      line-height: 19px; font-size: 13px; margin-right: 7px;
+    }
+    .pinterest {
+      i {
+        background-color: #f00;
+      }
+    }
+    .facebook {
+      i {
+        background-color: #045cb7;
+      }
+    }
+    .instagram {
+      i {
+        background-image: linear-gradient(#7541b9, #e63f5f, #fecd76); background-color: #eb3331;
+      }
+    }
+  }
+  
+  .bottom-footer {
+    background-color: $bg-black; font-size: 12px; color: #ababab; line-height: 39px;
+    p {
+      margin: 0;
+    }
+  }
+  
+  .go_top {
+    position: fixed; bottom: 95px; right: 130px;
+    @media all and (max-width: 1024px){
+      right: 30px;
+    }
+    //bottom: 400px; right: 150px;
+  }
+  
+  
+  
+  
+  
+  

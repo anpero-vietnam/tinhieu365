@@ -1,0 +1,169 @@
+﻿<div class="table-scrollable">
+    <div id="prpri"></div>
+    <table class="table table-bordered table-hover" id="datatable_products" aria-describedby="datatable_products_info">
+        <thead>
+            <tr role="row" class="heading">
+                <th class="sorting_disabled" role="columnheader">Mã</th>
+                <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="datatable_products">
+                   Tìm tên SP
+                </th>
+                <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="datatable_products">
+                  Loại thuộc tính chung
+                </th>
+            </tr>
+            <tr role="row" class="filter">
+                <td>
+                    <span><input type="text" class="form-control form-filter input-sm" name="product_id" id="product_id2"></span>
+                </td>
+                <td><input type="text" class="form-control form-filter input-sm" name="product_name" id="product_name2"></td>
+                <td>
+                    <select id="GRPr" class="form-control">
+                        <option value="0">- Chọn nhóm thuộc tính </option>
+                        <option value="Color">- Màu sắc</option>
+                        <option value="Dung lượng">- Dung lượng</option>
+                        <option value="Cỡ">- Cỡ</option>
+                        <option value="Số lượng">- Số lượng</option>
+                        <option value="Cấu hình">- Cấu hình</option>
+                        <option value="Phiên bản">- Phiên bản</option>
+                        <option value="Chiều dài">- Chiều dài</option>
+                        <option value="rf">- Sản phẩm liên quan</option>
+                    </select>
+                </td>
+            </tr>
+        </thead>
+    </table>
+    <div class="dotted"></div>
+    <div class="productContent2">
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        
+        //$("#addGroupPrioty").click(function () { Product.AddPrPiotiGroup(); });
+        //$("#product_name2").keyup(function () {
+        //    searchPr3(); 
+        //});
+        //$("#product_id2").change(function () {
+        //    seachProduct2();
+        //});
+        //$("#GRPr").change(function () {
+        //    if ($("#GRPr option:selected").val() == "Color") {
+        //        $('.prig').colorpicker();
+        //    }
+        //});
+    });
+    //function updatePrPri(_Prid) {
+    //    var _val = $("#priotty_" + _Prid).val();
+    //    $.ajax({
+    //        dataType: "text",
+    //        mothod: "post",
+    //        url: "/handler/prpriotyGroup.ashx",
+    //        data: { op: "updatePrPri", Prid: _Prid, val: _val, st: Anpero.CurentStore },
+    //        success: function (msg) {
+    //            if (msg > 0) {
+    //                $("#update_" + _Prid).html("Đã cập nhật");
+    //            }
+
+    //        }
+    //    });
+    //}
+    //function OutG(_Prid) {
+    //    if (confirm("Bạn có chắc muốn sản phẩm này ra khỏi các nhóm")) {
+    //        $.ajax({
+    //            dataType: "text",
+    //            mothod: "post",
+    //            url: "/handler/prpriotyGroup.ashx",
+    //            data: { op: "OutG", Prid: _Prid, st: Anpero.CurentStore },
+    //            success: function (msg) {
+    //                BindPrInGroup();
+    //            }
+    //        });
+    //    }
+
+    //}
+ 
+    //function addPrPG(_adid) {
+    //    $.ajax({
+    //        dataType: "text",
+    //        mothod: "post",
+    //        url: "/handler/prpriotyGroup.ashx",
+    //        data: { op: "addOrprioty", prid: _adid, st: Anpero.CurentStore },
+    //        success: function (msg) {
+    //            BindPrInGroup();
+    //        }
+    //    });
+    //}
+    //function searchPr3() {
+    //    var product_id = $("#product_id2").val();
+    //    var productName = $("#product_name2").val();
+    //    var valid = true;
+    //    if (valid) {
+    //        $(".productContent").html('<img src="/Images/lightbox-ico-loading.gif" />');
+    //        $.ajax({
+    //            type: "post",
+    //            url: "/handler/prpriotyGroup.ashx",
+    //            data: { op: "searchProduct2", prId: product_id, prName: productName, st: Anpero.CurentStore },
+    //            success: function (msg) {
+    //                $(".productContent2").html(msg);
+    //            }
+    //        });
+    //    }
+    //}
+    //function seachProduct2() {
+    //    var product_id = $("#product_id2").val();
+    //    var productName = $("#product_name2").val();
+    //    var valid = true;
+    //    if (valid) {
+    //        $(".productContent").html('<img src="/Images/lightbox-ico-loading.gif" />');
+    //        $.ajax({
+    //            type: "post",
+    //            url: "/handler/prpriotyGroup.ashx",
+    //            data: { op: "searchProduct2", prId: product_id, prName: productName,st:Anpero.CurentStore },
+    //            success: function (msg) {
+    //                $(".productContent2").html(msg);
+    //            }
+    //        });
+    //    }
+    //}
+    //function BindPrInGroup() {
+    //    var product_id = $("#product_id").val();
+    //    var productName = $("#product_name").val();
+    //    var valid = true;
+    //    if (valid) {
+    //        $(".productContent").html('');
+    //        $.ajax({
+    //            type: "post",
+    //            url: "/handler/prpriotyGroup.ashx",
+    //            data: { op: "GetPrInGroup", st: Anpero.CurentStore },
+    //            success: function (msg) {
+    //                $("#prpri").html(msg);
+    //                $(".prig").keyup(function () {
+    //                    var id = this.id;
+    //                    updatePrPri(id.replace("priotty_", ""));
+    //                });
+    //                $(".prig").change(function () {
+    //                    var id = this.id;
+    //                    updatePrPri(id.replace("priotty_", ""));
+    //                });
+    //                if ($("#GRPr option:selected").val() == "Color") {
+    //                    $('.prig').colorpicker();
+    //                }
+
+    //            }
+    //        });
+    //    }
+    //}
+    //function delPrIg(prid) {
+    //    $.ajax({
+    //        dataType: "text",
+    //        mothod: "post",
+    //        url: "/handler/prpriotyGroup.ashx",
+    //        data: { op: "DellPrIPG", prid: prid, st: Anpero.CurentStore },
+    //        success: function (msg) {
+    //            BindPrInGroup();
+    //        }
+    //    });
+    //}
+</script>
+<script src="~/assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+<link href="~/assets/plugins/bootstrap-colorpicker/css/colorpicker.css" rel="stylesheet" />

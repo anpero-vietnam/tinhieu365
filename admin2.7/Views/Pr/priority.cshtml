@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Nhóm các sản phẩm";
+}
+@section head{
+    <script src="~/Scripts/order/wareHouse.js"></script>    
+    <script src="~/Scripts/News.js"></script>
+    <script src="~/Scripts/product/addPr.js"></script>    
+    <script src="~/Scripts/product/prType.js"></script>
+    
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-horizontal form-row-seperated">
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-shopping-cart"></i>Nhóm các sản phẩm có cùng thuộc tính
+                    </div>
+                    <div class="actions btn-set">
+                        <button class="btn btn-success" id="addGroupPrioty">
+                            <i class="fa fa-check"></i> Tạo nhóm này
+                        </button>
+
+                    </div>
+                </div>
+                <div class="portlet-body">                    
+                    <div class="tab-content form-horizontal">
+                        @Html.Partial("_partial/product/_partialSetPriority")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

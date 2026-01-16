@@ -1,0 +1,85 @@
+﻿<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-reorder"></i>Thông tin thêm
+        </div>
+
+    </div>
+    <div class="portlet-body form">
+        <div class="skin skin-line">
+            <div class="form-body">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-green sbold uppercase">Chọn chủ đề cho tin</span>
+                    </div>
+                </div>
+                <div class="catContent">@Html.Raw(ViewBag.data)</div>
+                <div class="form-group">
+                    <label>Ảnh đại diện :</label>
+                    <div class="input input-file">
+                        <img src="" id="prThumb" style="width:100%;display:none;" />
+
+                        <button type="button" class="btn blue start" id="thumbLink2">
+                            <i class="fa fa-upload"></i>
+                            <span> Chọn file ảnh </span>
+                        </button>
+                        @*<input type="file" id="thumbLink2" name="thumbLink2">*@
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="checked">
+                            <input type="radio" name="isvideo" id="isvideo">
+                        </span>
+                        Hiển thị nút PlayVideo
+                    </label>
+
+                </div>
+                <div class="form-group">
+                    <select id="prioty" class="form-control input-lg">
+                        <option value="1">Ưu tiên bình thường</option>
+                        <option value="2">Ưu tiên cao</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="publish" class="form-control input-lg">
+                        <option value="1">Đăng lên luôn</option>
+                        <option value="0">Đăng lên sau</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Lượt xem</label>
+                    <div class="input-icon right">
+                        <i class="icon-eye-open"></i>
+                        <input type="text" value="0" id="view" class="form-control" />
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $('input:radio[name="radiocat"]').change(function () {
+            news.cat = $(this).val();
+        });
+        $("#thumbLink2").smallFileUpload({
+            Size: "400x400",
+            allowExtension: ".jpg,.png,.jpeg,.svg,.gif,.ico",
+            success: function (data) {                
+                $("#prThumb").fadeOut().attr("src", data.uploadedImages[0].Url).fadeIn();
+            }
+        });
+
+
+    });
+
+
+</script>

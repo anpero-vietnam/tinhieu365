@@ -1,0 +1,192 @@
+﻿@{
+    ViewBag.Title = ViewBag.tieuDe;
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+ 
+   
+
+}
+@section head{
+    @Html.Raw(ViewBag.s7)
+    @Html.Raw(ViewBag.s8)
+<script src="~/Scripts/News.js"></script>
+<link href="/assets/plugins/ckeditor/contents.css" rel="stylesheet" />
+}
+@if (ViewData["news"] != null)
+{
+    Dal.News news = (Dal.News)ViewData["news"];
+    <div class="row">
+        <div class="col-md-12">
+
+            <ul class="page-breadcrumb breadcrumb">
+                <li><i class="fa fa-home"></i><a href="/"></a>Trang chủ<i class="fa fa-angle-right"></i></li>
+                <li><a href="/news/search">Danh sách tin </a><i class="fa fa-angle-right"></i></li>
+                <li><a href="javascript:void(0);">@news.SubCategoryName</a></li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <div class="portlet box blue">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-reorder"></i>Cập nhật tin </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label>Tiêu đề tin</label>
+                            <input type="text" class="form-control valid" placeholder="Tối đa 300 ký tự" id="tittle" value="@news.Tittle">
+                        </div>
+                        <div class="form-group">
+                            <label>Miêu tả ngắn</label>
+                            <input type="text" class="form-control valid" placeholder="Tối đa 300 ký tự" id="shortDesc" value="@news.ShotDesc">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="addMedia">
+
+                                    <ul>
+                                        <li>
+                                            <input type="file" id="file2" name="file2" style="float: left; line-height: 32px;" />
+                                            <input type="button" id="addImg" value="Tải ảnh" class="btn btn-success" />
+                                            
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <textarea name="username" class="ckeditor" id="editor1">@Html.Raw(news.NewsDesc)</textarea>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-md-3 control-label">Tag :</label>
+                            <input type="text" class="form-control valid" placeholder="nhiều tag cách nhau bởi dấu , tag rất tốt cho seo" id="tag" value="@news.Tag">
+                        </div>
+                        <div class="form-actions">
+                            <input type="button" value="Cập nhật tin" class="btn btn-primary" onclick="UpdateNew();">
+                            <input type="button" value="Xóa tin" class="btn btn-primary" onclick="delNewsV2();">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            @Html.Partial("_partial/newsContent/_leftcontent")
+            @*<div class="portlet box blue">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-reorder"></i>Thông tin thêm
+                    </div>
+
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <ul id="cat" class="ztree"></ul>
+                        <div class="form-group">
+                            <label>Ảnh đại diện :</label>
+                            <div class="input input-file">
+                                <input class="file" style="display: inline; width: 250px;" id="thumbLink" type="text" value="@news.ImgThumb">
+                                <a class="ui-input-file">
+                                    <input type="file" id="thumbLink2" name="thumbLink2" size="40" style="position: relative; height: 28px; width: 250px; display: inline; cursor: pointer; opacity: 0; margin-left: -110px;" value="@news.ImgThumb">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <span class="checked">
+                                    <input type="radio" name="isvideo" id="isvideo">
+                                </span>
+                                Hiển thị nút PlayVideo
+                            </label>
+
+                        </div>
+                        <div class="form-group">
+                            <select id="prioty" class="form-control input-lg">
+                                @if (news.UuTien.Equals(1))
+                                {
+                                <option value="1" selected="selected">Ưu tiên bình thường</option>}
+                                else
+                                {
+                                <option value="1">Ưu tiên bình thường</option>
+                                }
+                                @if (news.UuTien.Equals(2))
+                                {
+                                    <option value="2" selected="selected">Ưu tiên bình cao</option>}
+                                else
+                                {
+                                    <option value="2">Ưu tiên cao</option>
+                                }
+                                @if (news.UuTien.Equals(3))
+                                {
+                                    <option value="3" selected="selected">Ưu tiên cao nhất</option>}
+                                else
+                                {
+                                    <option value="3">Ưu tiên cao nhất</option>
+                                }
+
+                                
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select id="publish" class="form-control input-lg">                               
+                                <option value="1">Đăng lên luôn</option>
+                                <option value="0">Đăng lên sau</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Lượt xem</label>
+                            <div class="input-icon right">
+                                <i class="icon-eye-open"></i>
+                                <input type="text" value="@news.ViewTime" id="view" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@     
+
+        </div>
+    </div>
+    <script>
+        news.cat = "@news.SubCatID";
+        $(document).ready(function () { 
+
+            $("#addImg").click(function () {
+                getTokenData("#file2");
+            });
+            $("#thumbLink2").change(function () {
+                getTokenData2("#thumbLink2");
+            });
+        });
+
+       
+        function delNewsV2() {
+            delNews2(getnewId());
+        }
+      
+        function setCat(id) {
+          news.cat = id; 
+        }
+    </script>
+}
+
+
+<script src="/assets/plugins/ckeditor/ckeditor.js"></script>
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+    .content-page .primary .mothuong table tr th {
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+    .content-page .primary .mothuong table tr td {
+    color: #333;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-size: 16px;
+}
+</style>

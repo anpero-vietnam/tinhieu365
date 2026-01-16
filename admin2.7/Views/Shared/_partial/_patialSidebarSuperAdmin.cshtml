@@ -1,0 +1,47 @@
+﻿
+<div class="page-sidebar-wrapper">
+    <div class="page-sidebar navbar-collapse">
+        <ul class="page-sidebar-menu" data-auto-scroll="true" data-slide-speed="200">
+            <li class="sidebar-toggler-wrapper">
+                <div class="sidebar-toggler hidden-phone"></div>
+            </li>
+            @if (UserControl.("addmin"))
+            {
+                <li class="nav-item start active">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <span class="title">SuperAdmin</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        
+                        
+                        
+                        <li><a href="/store/Turning">Turning</a></li>
+                        
+                        
+                        <li><a href="/Massage">Gửi thông báo và Mail</a></li>
+                        <li>
+                            <a href="javascript:;">
+                                <span class="title">Người dùng</span><span class="arrow "></span>
+                            </a>
+                            <ul class="sub-menu">                                    
+                                <li><a href="/account/adminChangePass">Đổi mật khẩu người dùng</a></li>
+                            </ul>
+                        </li>
+                        
+                    </ul>
+                </li>
+
+            }
+            <li style="display: none;">
+                <a href="javascript:;"><i class="fa fa-envelope-open"></i><span class="title">Tin nhắn</span><span class="arrow "></span></a><ul class="sub-menu">
+                    <li><a href="/massage/inboxs"><i class="fa fa-dot-circle-o"></i> Thư đến</a></li>
+                    <li><a href="/massage/sender"><i class="fa fa-dot-circle-o"></i> Thư đã gửi</a></li>
+                    <li><a href="/massage"><i class="fa fa-dot-circle-o"></i> Gửi trong hệ thống</a></li>
+                    <li><a href="/massage/sendMail"><i class="fa fa-dot-circle-o"></i> Gửi Email mới</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

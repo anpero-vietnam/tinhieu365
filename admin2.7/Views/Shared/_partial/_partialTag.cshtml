@@ -1,0 +1,26 @@
+﻿@if (ViewData["tagList"] != null)
+{
+    System.Data.DataTable table = (System.Data.DataTable)ViewData["tagList"];
+    for (int i = 0; i < table.Rows.Count; i++)    {    
+    <div class="newContent" itemprop="review" itemscope itemtype="http://schema.org/Review">
+        <div class="newImg">
+            <img src="  @table.Rows[i]["anhdaidien"]" itemprop="image"/></div>
+        @if(Convert.ToBoolean(table.Rows[i]["isVideo"])==true){
+          <a class="play" itemprop="url" href="/@Ultil.StringHelper.ToURLgach(table.Rows[i]["loaitinName"].ToString())@Html.Raw("/")@Ultil.StringHelper.ToURLgach(table.Rows[i]["TieuDe"].ToString())@Html.Raw("-Tin")@table.Rows[i]["Id"]" itemprop="url">  @table.Rows[i]["TieuDe"]>Play</a>
+        }      
+        <div class="newReview">
+            <h3><a href="/@Ultil.StringHelper.ToURLgach(table.Rows[i]["loaitinName"].ToString())@Html.Raw("/")@Ultil.StringHelper.ToURLgach(table.Rows[i]["TieuDe"].ToString())@Html.Raw("-Tin")@table.Rows[i]["Id"]" itemprop="url">  @table.Rows[i]["TieuDe"]</a></h3>
+            <div class="catelogiName fll">
+               <h4><a href="/@Ultil.StringHelper.ToURLgach(table.Rows[i]["loaitinName"].ToString())/@Web.Mvc.Controllers.newManager.getChuDeIdByNewsId(table.Rows[i]["id"].ToString())">@table.Rows[i]["loaitinname"]</a></h4>
+                <time> @table.Rows[i]["NgayDang"]</time></div>
+            <div class="shortNew" itemprop="description">
+               @Html.Raw(table.Rows[i]["mieutangan"])
+            </div>
+            <div class="viewTime fll" itemprop="reviews">@table.Rows[i]["viewtime"] Lượt xem</div>
+            <div class="commentTag fll" itemprop="comment">@Dal.Util.GetAllCommetInnew(table.Rows[i]["id"].ToString()) bình luận</div>
+        </div>
+
+    </div>    
+    }
+}
+@Html.Raw(ViewBag.paged) 

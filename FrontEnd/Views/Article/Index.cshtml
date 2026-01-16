@@ -1,0 +1,179 @@
+﻿@using Models.Modul.Article;
+@model  ArticleItem
+@section head{
+    <meta property="fb:app_id" content="639748136134144">
+    <meta property="og:image" content="@(string.IsNullOrEmpty(Model.Thumb)?"https://cdn-anpero.cdn.vccloud.vn/images/70/42021/logo22021042117402952.png":Model.Thumb)" />
+    <meta property="og:description" content="@Model.ShortDesc">
+    <meta property="og:title" content="@Model.Tittle" />
+
+}
+<div class="box-breadcrumb">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.CateGoryName</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="box-blog-detail">
+    <div class="container">
+        <div class="main-blog-detail row">
+            <div class="col-sm-9 box-content-blog">
+                <div class="blog-top item-blog detail-blog">
+                    <div class="top-detail info">
+                        <h1 class="title-2">@Model.Tittle</h1>
+                        <div class=" info-category flex flex-ai-center flex-jc-between">
+                            <div class="flex info-1">
+                                <span class="date"><i class="fas fa-calendar-alt"></i> @Model.CreateDate.Value.ToString("dd/mm/yyyy")</span>
+                                <ul class="box-active flex">
+                                    <li><span class="icon-default icon-heart-2"></span> @Model.ViewTime</li>
+
+                                </ul>
+                            </div>
+
+                            <div class="flex info-2 box-share">
+                                <span class="text"><i class="fas fa-share-alt"></i> Chia sẻ Blog:</span>
+                                <ul class="box-active flex">
+                                    <li class="facebook"><a href="https://www.facebook.com/share.php?u=@ViewBag.WebsiteUrl" class="color-facebook"><i class="fab fa-facebook-square"></i></a> </li>
+                                    <li class="pinterest"><a href="http://pinterest.com/pinthis?url=@ViewBag.WebsiteUrl" class="color-pinterest"><i class="fab fa-pinterest-square"></i></a> </li>
+                                    <li class="twitter"><a href="https://twitter.com/intent/tweet?url=@ViewBag.WebsiteUrl" class="color-twitter"><i class="fab fa-twitter"></i></a> </li>
+                                    <li class="linkedin"><a href="https://www.linkedin.com/sharing/share-offsite/?url=@ViewBag.WebsiteUrl" class="color-linkedin"><i class="fab fa-linkedin-in"></i></a> </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-content">
+                        @Html.Raw(Model.NewsDesc)
+                    </div>
+                </div>
+                <!--detail-blog-->
+
+                <div class="blog-other">
+                    <h4 class="title-2">Same topic:</h4>
+                    <ul class="list-blog-other">
+                        @if (ViewData["RelateArticle"] != null)
+                        {
+                            var articleList = (List<Models.Modul.Article.ArticleItem>)ViewData["RelateArticle"];
+                            foreach (var item in articleList)
+                            {
+                                <li><a href="@Ultil.UrlHelper.GetArticleLink(item.Tittle,item.Id)">@item.Tittle</a> </li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="box-comment" id="facebookComment"></div>
+            </div>
+
+            <div class="col-sm-3 box-right-blog">
+                <div class="row">
+                    <div class="col-12">
+                        @Html.Partial("AutoAds")
+                    </div>
+                </div>
+                @if (ViewData["featureArticle"] != null)
+                {
+                    var articleList = (List<Models.Modul.Article.ArticleItem>)ViewData["featureArticle"];
+                    <div class="box-propose">
+                        <h3 class="title">Bài tương tự</h3>
+
+                        <div class="list-propose">
+                            @for (int i = 0; i < articleList.Count; i++)
+                            {
+                                var item = articleList[i];
+                                if (i <= 4)
+                                {
+                                    
+                                    <div class="item-propose">
+                                        <a href="@Ultil.UrlHelper.GetArticleLink(item.Tittle,item.Id)" class="images">
+                                            <img src="@item.Thumb" alt="@item.Tittle">
+                                        </a>
+                                        <div class="content">
+                                            <h4 class="title-2"><a href="@Ultil.UrlHelper.GetArticleLink(item.Tittle,item.Id)">@item.Tittle</a> </h4>
+                                            <div class="flex flex-ai-center active-default">
+                                                <a href="@Ultil.UrlHelper.GetBlogCategoryLink(item.CateGoryName,item.CategoryId)" class="icon-default category icon-blog-meovat-xs">@item.CateGoryName</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+
+                        </div>
+
+
+                    </div>
+
+                    if (articleList.Count > 4)
+                    {
+                        <div class="box-view-most">
+                            <h3 class="title">Most read</h3>
+                            <div class="list-view-most">
+                                @for (int i = 4; i < articleList.Count; i++)
+                                {
+                                    var item = articleList[i];
+                                    <div class="item-view-most flex">
+                                        <a href="@Ultil.UrlHelper.GetBlogCategoryLink(item.CateGoryName,item.CategoryId)" class="images">
+                                            <img src="@item.Thumb" alt="@item.Tittle">
+                                        </a>
+                                        <div class="content">
+                                            <h4 class="title-2"><a href="@Ultil.UrlHelper.GetArticleLink(item.Tittle,item.Id)">@item.Tittle</a> </h4>
+                                            <div class="flex flex-ai-center active-default">
+                                                <a href="@Ultil.UrlHelper.GetBlogCategoryLink(item.CateGoryName,item.CategoryId)" class="category">@item.CateGoryName</a>
+
+                                                <ul class="box-active">
+                                                    <li><span class="icon-default icon-heart-2"></span>@item.ViewTime</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    }
+
+
+                }
+
+                @*<div class="box-tag">
+                        <h3 class="title-2"><i class="fas fa-tag"></i> Tag:</h3>
+                        <ul class="list-tag">
+
+                            <li>Thiết kế nội thất</li>
+                            <li>Thiết chung cư</li>
+                            <li>chung cư</li>
+                            <li>Nội thất cao cấp</li>
+                            <li>Sofa nỉ</li>
+                            <li>Phòng trẻ em</li>
+                            <li>Phòng khách cao cấp</li>
+                        </ul>
+                    </div>*@
+                <!--box-view-most-->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <link href="//cdn.anpero.com/cdn/plugins/fancybox-3/src/css/core.css" rel="stylesheet" />
+    <link href="//cdn.anpero.com/cdn/plugins/fancybox-3/src/css/fullscreen.css" rel="stylesheet" />
+    <script src="//cdn.anpero.com/cdn/plugins/fancybox-3/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        function resizeVideo() { var contentW = $('.container').width(); var iframe = $('.container iframe'); var iframeW = iframe.css('width', contentW); iframe.css('width', iframeW); var iframeH = contentW / 16 * 9; iframe.css('height', iframeH); }
+        $(document).ready(function () {
+            resizeVideo();
+            $(".container .lazy").fancybox({
+                openEffect: 'none',
+                closeEffect: 'none'
+            });
+        });
+    </script>
+
+
+}
+

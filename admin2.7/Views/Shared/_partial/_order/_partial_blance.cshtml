@@ -1,0 +1,18 @@
+﻿   @if (User.IsInRole("addmin") || User.IsInRole("accounting")) { 
+   <div id="chartdiv" style="height:550px;"  class="col-md-12"></div>
+   }else{
+   <p>Chỉ admin và kế toán mới có quền xem </p>
+   }
+<script src="~/assets/plugins/amcharts/amcharts.js"></script>
+<script src="~/assets/plugins/amcharts/pie.js"></script>
+<script src="~/assets/plugins/amcharts/themes/light.js"></script>
+<script src="~/Scripts/order/Char.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#blance").click(function () {
+            getBalanceOfbank(1);
+        });
+       
+    });
+
+</script>

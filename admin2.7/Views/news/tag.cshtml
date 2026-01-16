@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = ViewBag.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+   
+    @Html.Raw(ViewBag.metaKey)
+    @Html.Raw(ViewBag.mataDes)
+    @Html.Raw(ViewBag.Keywords)
+}
+<div id="catelogiList">
+  @Html.Raw(ViewBag.tagByTag)  
+</div>
+
+@Html.Partial("_partial/_partialTag")

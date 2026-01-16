@@ -1,0 +1,73 @@
+﻿<script type="text/javascript" src="/assets/plugins/flot/jquery.flot.js"></script>
+<div class="portlet" style="box-shadow: none;background-color:white;">
+    <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-bar-chart-o"></i>Lượt xem tháng này <a href="/analytic?month=0&day=0">Chi tiết</a></div>
+    </div>
+    <div class="portlet-body" id="requestAnalyticChar" style="min-height: 200px;padding:5px;"></div>
+</div>
+
+<script type="text/javascript">
+    var previousPoint = null;
+    var options2 = {
+        series: {
+            lines: {
+                show: true
+            },
+            points: {
+                show: true
+            }
+        },
+        legend: {
+            noColumns: 1
+        },
+        grid: {
+            hoverable: true,
+            clickable: true
+        },
+        xaxis: {
+            tickDecimals: 0
+        },
+        yaxis: {
+        },
+        selection: {
+            mode: "x"
+        }
+    };
+    $(document).ready(function () {
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            data: { st: Anpero.CurentStore },
+            url: "/home/GetReqestDashBoad",
+            success: function (jsonObj) {
+                $.plot($("#requestAnalyticChar"), jsonObj, options2);
+            }
+        });
+    });
+   
+    function showTooltip(x, y, contents) {
+        $("<div id='tooltip'>" + contents + "</div>").css({
+            position: "absolute",
+            display: "none",
+            top: y + 5,
+            left: x + 5,
+            border: "1px solid #fdd",
+            padding: "4px",
+            "background-color": "#fee",
+            opacity: 0.80
+        }).appendTo("body").fadeIn(200);
+    }
+    $("#requestAnalyticChar").bind("plothover", function (event, pos, item) {
+        if (item) {
+            if (previousPoint != item.dataIndex) {
+                previousPoint = item.dataIndex;
+                $("#tooltip").remove();
+                var x = item.datapoint[0].toFixed(2),
+                    y = item.datapoint[1].toFixed(2);
+                showTooltip(item.pageX, item.pageY,
+                    "Ngày" + " " + parseInt(x) + " có " + parseInt(y) + " lượt xem");
+            }
+        }
+    });
+   
+</script>

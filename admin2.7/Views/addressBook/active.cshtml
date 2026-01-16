@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "Gửi yêu cầu xác thực tài khoản";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    Dal.authen.AddressBook addr = new Dal.authen.AddressBook();
+    if (ViewData["addr"] != null)
+    {
+        addr = (Dal.authen.AddressBook)ViewData["addr"];
+    }
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title">Shipping<small>Xác thực địa chỉ</small></h3>
+    </div>
+
+    @if (addr.IsActive == 1)
+    {
+        <h2 class="htitle red"><i class="fa fa-check"></i>Tài khoản đã được xác thực</h2>
+        <h2>Bạn được cấp mã khách hàng như sau : <strong class="red">@addr.UserCode</strong></h2>
+        <h3>Bạn đã có thể sử dụng mã trên để yêu cầu đơn hàng tự mua.</h3>
+        <img src="@addr.PaymentCard" />
+        <br />
+        <img src="@addr.IdentityCard" />
+    }
+    else
+    {
+        <h2 class="htitle"><i class="fa fa-check"></i>Tiến hành xác thực tài khoản</h2>
+
+
+        <div>Bước 1: vui lòng tải Ảnh chụp mặt trước chứng minh nhân dân, hoặc trang chính của hộ chiếu </div>
+    <div>
+        click vào đây <a href="javascript:void(0);" class="btn btn-default btn-file">
+            
+            <input type="file" id="cmtFile">
+        </a>chọn tải file
+    </div>
+
+        <img src="/images/profile/hochieu.jpg" id="cmtImg" />
+    <div>Bước 2: vui lòng tải ảnh chụp mặt trước Thẻ tín dụng đã bôi đen 8 số đầu. </div>
+    <div>
+        click vào đây <a href="javascript:void(0);" class="btn btn-default btn-file">
+           
+            <input type="file" id="cardFile">
+        </a>chọn tải file
+    </div>
+    <div>
+        <img src="/images/profile/VISAPlatinumFRONT.jpg" id="cardImg" />
+    </div>
+    <div>
+        <img src="/captcha" id="captchaImg" />
+    </div>
+    <div>
+        Điền mã bảo vệ :
+        <input type="text" style="width: 200px;" id="captcha" name="captcha"/>
+    </div>
+    <div><a href="javascript:sendActiveReques();" class="buttons" id="addPr_od"><i class="fa fa-plus"></i>Gửi thông tin xác thực</a></div>
+
+    }
+</div>
+
+<script src="~/Scripts/security/uploadFile.js"></script>
+<script>
+    var capchaId = 1;
+    $(document).ready(function () {
+        $("#cmtFile").change(function () {
+            uploadFile("#cmtFile", "#cmtImg", "src");
+        });
+        $("#cardFile").change(function () {
+            uploadFile("#cardFile", "#cardImg", "src");
+        });
+    });
+    function sendActiveReques() {
+        var valid = true;
+        var cmtImg = $("#cmtImg").attr("src");
+        var cardImg = $("#cardImg").attr("src");
+        var _captcha = $("#captcha").val();
+        if (cmtImg == "/images/profile/hochieu.jpg") {
+            valid = false;
+            showNotice("Thiếu thông tin", "Vui lòng cập nhật ảnh CMT hoặc hộ chiểu");
+        }
+        if (cardImg == "/images/profile/VISAPlatinumFRONT.jpg") {
+            valid = false;
+            showNotice("Thiếu thông tin", "Vui lòng cập nhật ảnh thẻ thanh toán");
+        }
+        if (_captcha.trim() == "") {
+            capchaId = capchaId + 1;
+            $("#captchaImg").attr("src", "/captcha?id=" + capchaId);
+            valid = false;
+            showNotice("Thiếu thông tin", "Vui lòng nhập mã bảo vệ");
+            showNotify("#captcha");
+        }
+        if (valid) {
+            $.ajax({
+                type: "post",
+                datatype: "text/plain",
+                data: { op: "sendActiveRq", captcha: _captcha, cmt: cmtImg, card: cardImg, addid: getParameterByName("id") },
+                url: "/handler/address.ashx",
+                success: function (msg) {
+                    if (msg == 0 || msg == -1) {
+                        capchaId = capchaId + 1;
+                        $("#captchaImg").attr("src", "/captcha?id=" + capchaId);
+                        alert("Bạn đã gửi yêu cầu xác minh rồi. Vui lòng liên hệ addmin để được cập nhật lại");
+                    }
+                    if (msg == 1) {
+                        alert("Gửi yêu cầu xác minh thành công");
+                        window.location.href = "/shipping";
+                    }
+                }
+            });
+        }
+
+    }
+</script>

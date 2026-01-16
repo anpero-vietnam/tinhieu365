@@ -1,0 +1,48 @@
+﻿@Html.Partial("_partial/_Partial_newsTittle")
+<div >
+     <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Thumb</th>
+                    <th>Miêu Tả ngắn</th>
+                    <th>Ngày Đăng</th>
+                    <th>Người đăng</th>                 
+                    <th>Lượt xem</th>
+                      <th>Xóa</th>
+                    <th>Chỉnh sửa</th>
+                </tr>
+            </thead>
+
+    @if (ViewData["topNewsNew"] != null)
+    {
+       
+
+        System.Data.DataTable tablenNewes = (System.Data.DataTable)ViewData["topNewsNew"];
+        for (int i = 0; i < tablenNewes.Rows.Count; i++)
+        {
+            Dal.UserProfile u = new Dal.UserProfile();
+            u.getUserProfileById(tablenNewes.Rows[i]["author"].ToString(),"-1");
+          <tr>
+              <td class="thumbCl">
+                  <img src="@tablenNewes.Rows[i]["thumb"]" itemprop="image" alt="@tablenNewes.Rows[i]["tittle"].ToString()"/>
+              </td>
+              <td>
+                  <a href="/@Dal.StringManager.toURLgach(tablenNewes.Rows[i]["subcatname"].ToString())@Html.Raw("/")@Dal.StringManager.toURLgach(tablenNewes.Rows[i]["tittle"].ToString())@Html.Raw("-Tin")@tablenNewes.Rows[i]["Id"]" itemprop="url" title="@Html.Raw(StringMng.StringManager.toHtmlDecode(tablenNewes.Rows[i]["tittle"].ToString()))" target="_blank">@Dal.StringManager.SubString(50, tablenNewes.Rows[i]["tittle"].ToString())</a>
+              </td>
+              <td>
+                  @Dal.Times.GetTimeFromYYYYmmddhhmmss(tablenNewes.Rows[i]["datepost"].ToString())
+              </td>
+              <td><img src="@u.Thumb"/><br />
+                  <a href="/account/addusertorole?userName=@tablenNewes.Rows[i]["author"]"><span>@u.UserName</span></a></td>
+           
+               <td>@tablenNewes.Rows[i]["viewtime"]</td>
+               <td><a href="javascript:void(0);" onclick="delNews(@tablenNewes.Rows[i]["id"]);"><img src="/images/MasterTheme/bin.png" alt="xóa" title="xóa" /></a></td>
+              <td><a href="/@Dal.StringManager.toURLgach(tablenNewes.Rows[i]["subcatname"].ToString())@Html.Raw("/")@Dal.StringManager.toURLgach(tablenNewes.Rows[i]["tittle"].ToString())@Html.Raw("-")@tablenNewes.Rows[i]["Id"]" itemprop="url" title="@Html.Raw(StringMng.StringManager.toHtmlDecode(tablenNewes.Rows[i]["tittle"].ToString()))">Chỉnh sửa</a></td>
+          </tr>
+            }
+
+       
+    }
+          </table>
+</div>
+@Html.Raw(ViewBag.pager)

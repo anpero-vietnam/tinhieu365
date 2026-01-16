@@ -1,0 +1,173 @@
+﻿@{
+    ViewBag.Title = "CẬP NHẬT CỬA HÀNG";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    <link href="~/assets/global/css/components-md.min.css" rel="stylesheet" />
+}
+@section head{
+    <script src='https://www.google.com/recaptcha/api.js?onload=onRecaptchaloadCallback'></script>
+}
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption font-green-sharp">
+            <span class="caption-subject bold uppercase">Cập nhật cửa hàng</span>
+            <span class="caption-helper"></span>
+        </div>
+    </div>
+    <div class="form-body">
+        @{
+            Models.StoreInfo si = (Models.StoreInfo)ViewData["curentStore"];
+            <div class="form-group col-md-12">
+                <label class="control-label col-md-3">
+                    Tên cửa hàng
+                    <span class="required" aria-required="true"> * </span>
+                </label>
+                <div class="col-md-5">
+                    <input name="storeName" id="storeName" class="form-control" value="@si.AgenName" />
+                    <span class="help-block"> Tối đa 50 ký tự </span>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label col-md-3">
+                    Logo (.jpg,.png,.gif):
+
+                </label>
+                <div class="col-md-6">
+                    @*<input type="file" id="uploadFile" />*@
+                    <button type="button" class="btn blue start" id="uploadFile">
+                        <i class="fa fa-upload"></i>
+                        <span> Chọn file ảnh </span>
+                    </button>
+                    <div class="help-block"> Dùng trong các bản in đơn hàng và nhiều nơi khác</div>
+                    <img src="@si.Thumb" id="thumb" style="max-width:100%;" />
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label col-md-3">
+                    Favicon (.ico)
+
+                </label>
+                <div class="col-md-6">
+                    @*<input type="file" id="uploadFileFavicon" />*@
+                    <button type="button" class="btn blue start" id="uploadFileFavicon">
+                        <i class="fa fa-upload"></i>
+                        <span> Chọn file ảnh </span>
+                    </button>
+                    <img src="@si.Favicon" id="thumbFavicon" style="max-width:100%;" />
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label col-md-3">
+                    Miêu tả ngắn
+                </label>
+                <div class="col-md-5">
+                    <input name="desc" id="desc" class="form-control" value="@si.ShotDesc" />
+                    <span class="help-block"> Tối đa 50 ký tự </span>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label col-md-3">
+                    Loại sản phẩm
+                </label>
+                <div class="col-md-5">
+                    <select name="prType" id="prType" class="form-control">
+                        <option value="0">-- Chọn để đổi</option>
+                        <option value="1">-- Hàng hóa</option>
+                        <option value="2">-- Nhân sự</option>
+                        <option value="3">-- Bất động sản</option>
+                        <option value="4">-- Trang tin không có sản phẩm</option>
+                    </select>
+                    <span class="help-block"> Tối đa 50 ký tự </span>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label col-md-3">
+                    Id kết nối
+                </label>
+                <div class="col-md-4" id="appId">@si.AgenId</div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label col-md-3">
+                    API Token Key
+                </label>
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <input type="text" class="form-control" value="@si.Token" id="txtToken" />
+                        <span class="input-group-addon"><a href="javascript:void(0);" id="tkIco"><i class="fa fa-refresh"></i></a></span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group col-md-12  has-warning" id="seriaConten" style="display:none;">
+                <label class="control-label col-md-3">
+                    Seria
+                    <span class="required" aria-required="true"> * </span>
+                </label>
+                <div class="col-md-5">
+                    <input name="seria" id="seria" class="form-control" />
+                    <span class="help-block"> Nhập seria gia hạn </span>
+                </div>
+            </div>
+            <div class="form-group col-md-12 red" id="srTongg">
+                <span class="help-block" id="srask"> Nếu bạn có seria click vào <span class="btn green button-submit">đây</span> gia hạn</span>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label col-md-3">
+                    Mã kiểm tra
+                    <span class="required" aria-required="true"> * </span>
+                </label>
+                <div class="col-md-9">
+                    <div id="g-recaptcha"></div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-9">
+                        <input type="button" class="btn green button-submi" id="stUpdate" value="Cập nhật thông tin cửa hàng" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="/Scripts/Modul/Small-fileUpload/Small-fileUpload.js"></script>
+<link href="~/Scripts/Modul/Small-fileUpload/Small-fileUpload.css" rel="stylesheet" />
+<script src="~/Scripts/store/StoreHandler.js"></script>
+
+<style>
+    .control-label {
+        text-align: right;
+    }
+</style>
+<script>
+     var googleCatcha;
+        function onRecaptchaloadCallback() {
+             googleCatcha = grecaptcha.render('g-recaptcha', {
+            'sitekey': '@System.Configuration.ConfigurationManager.AppSettings["googleCapchaSitekey"]',
+            'theme': 'light',
+            'hl': 'vi'
+        });
+    }
+    var isChangeToken = false;
+    var oldToken = $("#txtToken").val();
+    $(document).ready(function () {
+        Store.init();
+        $("#tkIco").click(function () {
+            Store.GetNewToken();
+            isChangeToken = true;
+        });
+        $("#txtToken").change(function () {
+            isChangeToken = true;
+        });
+        $("#txtToken").click(function () {
+            var oldToken = $("#txtToken").val();
+            Common.CopyToClipboard("#txtToken");
+            $("#txtToken").val("Đã copy Token key ...");
+            setTimeout(function () {
+                $("#txtToken").val(oldToken);
+            },2000);
+
+        });
+
+
+    })
+</script>

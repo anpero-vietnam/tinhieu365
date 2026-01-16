@@ -1,0 +1,57 @@
+﻿@using Models.Modul.Common;
+@model List<KeyValueConfigModel>
+@{
+    ViewBag.Title = "UpdateKeyValue";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<div class="col-md-12 ">
+    <div class="portlet light bordered">
+        <h2>Update config</h2>
+        <div class="portlet-body form">
+            <table class="table table-bordered table-scrollable">
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                    <th>Miêu tả</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Key</td>
+                        <td><input type="number" id="val-@item.Key" class="form-control" value="@item.Value" /></td>
+                        <td><textarea id="des-@item.Key" class="form-control"> @item.Description</textarea></td>
+                        <td><button class="btn btn-danger btn-updateKey" data-id="@item.Key">Cập nhật</button></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $(".btn-updateKey").click(function () {
+                var _key = $(this).data("id");
+                var _data = {
+                    Key: _key,
+                    Description: $("#des-" + _key).val(),
+                    Value: $("#val-" + _key).val()
+                }
+               
+                $.ajax({
+                    type: "post",
+                    url: "/webconfig/UpdateKeyValue",
+                    data:_data,
+                    success: function (rs) {
+                        window.location.reload();
+                    }
+                });
+
+            });
+        });
+        
+    </script>
+
+    
+}

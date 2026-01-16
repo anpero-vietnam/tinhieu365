@@ -1,0 +1,143 @@
+.banner-shop {
+    &:before {
+      background-image: url("../../images/img-86.jpg");
+    }
+  }
+  
+  .box-page-shop {
+    margin-top: 40px;
+    .box-title {
+      .text {
+        font-size: 22px;
+      }
+      
+      .box-view {
+        min-width: 265px;
+      }
+    }
+  }
+  
+  .box-list-item-shop {
+    .title {
+      margin: 0 0 35px 0;
+    }
+    
+    .box-pagination {
+      margin-bottom: 40px;
+    }
+    
+    .box-content {
+      margin-top: 0;
+    }
+    
+    + .box-list-item-shop {
+      border-top: 1px solid #b4b4b4;
+      .box-pagination {
+        margin-top: 13px;
+      }
+      
+      .title {
+        margin-top: 45px;
+      }
+    }
+  }
+  
+  .number-cost-1 {
+    height: 46px; line-height: 46px; @include border-radius(5px); width: auto; overflow: hidden;
+    border-color: #d5d6d6;
+    * {
+      height: 46px; line-height: 46px;
+    }
+    .minus, .plus {
+        background-color: #d5d6d6; width: 30px; font-size: 16px;
+      i {
+        width: 100%; display: block;
+      }
+    }
+    input {
+      width: 66px; border: none;
+    }
+  }
+  
+  .info-content, .box-cost, .main-content-detail {
+    padding: 40px 0; border-top: 1px solid #e5e5e5;
+  }
+  
+  .info-content {
+    border-top: none;
+  }
+  
+  .item-info-content {
+    line-height: 36px; font-size: 24px;
+    .lable-info {
+      font-weight: 700; margin-right: 5px;
+    }
+    .list-info {
+      li {
+          .button {
+            border-width: 3px; @include border-radius(8px); padding: 0 12px; margin-left: 11px;
+            height: 36px; font-size: 14px; font-weight: 700; line-height: 30px;
+            &.active {
+              background-color: #676767 !important; color: #fff !important;
+            }
+          }
+        }
+      }
+    + .item-info-content {
+      margin-top: 8px;
+    }
+  }
+  
+  .box-cost {
+    font-size: 18px;
+    .price {
+      margin-bottom: 25px;
+      .old {
+        font-size: 22px;
+      }
+      .new {
+        font-size: 36px;
+      }
+    }
+    
+    .box-chose-result {
+      .text {
+        margin-bottom: 13px;
+      }
+      
+      .button {
+        @include border-radius(5px);  margin-left: 20px;
+      }
+    }
+  }
+  
+  .detail-default {
+    .top-detail {
+      margin-left: 0;
+      @media all and (min-width: 1367px) {
+        margin-left: 10px;
+      }
+    }
+    .main-content-detail {
+      font-size: 18px; color: $color-text; line-height: 2.0;
+      p {
+        margin: 0;
+      }
+      h2,h3,h4,h5,h6 {
+        margin-top: .5rem;
+      }
+    }
+    .bottom-content {
+      font-size: 14.5px; color: #a8a8a8; line-height: 1.4; border-top: 1px solid #e5e5e5;
+      margin-top: 25px; padding-top: 35px;
+    }
+  }
+  
+  .box-shop-detail {
+    margin-bottom: 30px;
+  }
+  
+  .box-slide-shop {
+    height: 800px; margin-bottom: 30px;
+  }
+  

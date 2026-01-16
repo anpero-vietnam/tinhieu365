@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "mailNotice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <h3 class="form-title font-green">Khôi phục mật khẩu</h3>
+    
+    <div class="form-group">
+        <span id="noticeMail"></span>
+      
+    </div>
+    <div class="create-account">
+        <p>
+            <a href="/Account/Login"  class="uppercase">Về đăng nhập</a>
+        </p>
+    </div>
+    </div>
+    <script src="~/Scripts/webScipt.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            var rs = getParameterByName("rs");
+            switch (rs) {
+                case "3":
+                    showNotice("Khôi phục mật khẩu", "Email không đúng định dạng");
+                    $("#noticeMail").html("Email không đúng định dạng");
+                    break;
+                case "4":
+                    showNotice("Người dùng này đăng ký bằng tài khoản google hoặc faceBook nên chưa có mật khẩu trên hệ thống chúng tôi, đổi mật khẩu thất bại");
+                    $("#noticeMail").html("Người dùng này đăng ký bằng tài khoản google hoặc faceBook nên chưa có mật khẩu, đổi mật khẩu thất bại");
+                    break;
+                case "1":
+                    showNotice("Khôi phục mật khẩu", "Email không tồn tại");
+                    $("#noticeMail").html("Email không tồn tại");
+                    break;
+                case "2":
+                    showNotice("Khôi phục mật khẩu", "Link xác nhận đã hết hạn");
+                    $("#noticeMail").html("Vui lòng reset lại mật khẩu");
+                    break;
+                default:
+                    showNotice("Khôi phục mật khẩu", "Link xác nhận đã được gửi đến mail");
+                    $("#noticeMail").html("<div>Xác nhận email thành công.</div> Link đổi mật khẩu đã được gửi tới mail, vui lòng kiểm tra hòm thư spam nếu không thấy thư tới");
+                    break;
+            }
+
+
+        });
+    </script>
